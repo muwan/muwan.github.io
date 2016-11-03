@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Mac上搭建shadowsocks服务 | 芝麻开源</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="之前看着教程自己也乱七八糟的搭建了一个ss的服务端，但是感觉一团糟，于是趁着自己有时间，就重新搭建一下，顺便好好记录下搭建的过程，方便自己，也希望能给其他刚接触的一点帮助。首先我自己的是一台Mac，所以主要记录的也是Mac上的操作，我的vps买的是搬瓦工19.99$的，目前使用感觉还行。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac上搭建shadowsocks服务">
+<meta property="og:url" content="http://www.luholi.xyz/2016/10/27/Mac上搭建shadowsocks服务/index.html">
+<meta property="og:site_name" content="芝麻开源">
+<meta property="og:description" content="之前看着教程自己也乱七八糟的搭建了一个ss的服务端，但是感觉一团糟，于是趁着自己有时间，就重新搭建一下，顺便好好记录下搭建的过程，方便自己，也希望能给其他刚接触的一点帮助。首先我自己的是一台Mac，所以主要记录的也是Mac上的操作，我的vps买的是搬瓦工19.99$的，目前使用感觉还行。">
+<meta property="og:image" content="http://www.luholi.xyz/img/update-2016-10-27.png">
+<meta property="og:updated_time" content="2016-11-01T04:48:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mac上搭建shadowsocks服务">
+<meta name="twitter:description" content="之前看着教程自己也乱七八糟的搭建了一个ss的服务端，但是感觉一团糟，于是趁着自己有时间，就重新搭建一下，顺便好好记录下搭建的过程，方便自己，也希望能给其他刚接触的一点帮助。首先我自己的是一台Mac，所以主要记录的也是Mac上的操作，我的vps买的是搬瓦工19.99$的，目前使用感觉还行。">
+<meta name="twitter:image" content="http://www.luholi.xyz/img/update-2016-10-27.png">
+  
+    <link rel="alternative" href="/atom.xml" title="芝麻开源" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/author.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">muwan</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">对大海情有独钟却又怀有敬意，很懒的一个理科男。</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/转载">转载</a></li>
+				        
+							<li><a href="/tags/iOS">iOS</a></li>
+				        
+							<li><a href="/tags/碎碎念">碎碎念</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/muwan" title="github">github</a>
+					        
+								<a class="mail" target="_blank" href="mailto:wanrumu@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/健身/" style="font-size: 10px;">健身</a> <a href="/tags/工具/" style="font-size: 16.67px;">工具</a> <a href="/tags/碎碎念/" style="font-size: 16.67px;">碎碎念</a> <a href="/tags/笔记/" style="font-size: 13.33px;">笔记</a> <a href="/tags/翻墙/" style="font-size: 10px;">翻墙</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/随笔/" style="font-size: 13.33px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.crazyhao.com">施明皓的主页</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://a1.chenky.com/">一个忙碌的程序猿</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">热爱旅行想要探索世界，可惜兜里没有钱。目前是一枚iOS开发者，这是我建立的QQ群: 414457229，目前有5人了，欢迎加入。</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">muwan</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/author.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">muwan</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">对大海情有独钟却又怀有敬意，很懒的一个理科男。</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/转载">转载</a></li>
+		        
+					<li><a href="/tags/iOS">iOS</a></li>
+		        
+					<li><a href="/tags/碎碎念">碎碎念</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/muwan" title="github">github</a>
+			        
+						<a class="mail" target="_blank" href="mailto:wanrumu@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Mac上搭建shadowsocks服务" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/27/Mac上搭建shadowsocks服务/" class="article-date">
+  	<time datetime="2016-10-27T06:27:24.000Z" itemprop="datePublished">2016-10-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Mac上搭建shadowsocks服务
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Shadowsocks/">Shadowsocks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工具/">工具</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/翻墙/">翻墙</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前看着教程自己也乱七八糟的搭建了一个ss的服务端，但是感觉一团糟，于是趁着自己有时间，就重新搭建一下，顺便好好记录下搭建的过程，方便自己，也希望能给其他刚接触的一点帮助。<br>首先我自己的是一台Mac，所以主要记录的也是Mac上的操作，我的vps买的是搬瓦工19.99$的，目前使用感觉还行。<br><a id="more"></a></p>
+<h1 id="写在最前面：为什么翻墙？"><a href="#写在最前面：为什么翻墙？" class="headerlink" title="写在最前面：为什么翻墙？"></a>写在最前面：为什么翻墙？</h1><p>应该每个人都有自己的原因，总的来说，还是”赵家人“管得太宽，各种访问不了<br>目前使用的工具也是种类繁多，很多免费的不稳定，速度慢，使用起来也不见得安全，付费的虽然好点，但是依然是使用的别人的代理服务器。<br>因此，还是我们自己来搭一个吧，至于为什么选择ss，主要是觉得搭建比较方便，而且安全性想对较好</p>
+<h1 id="需要准备哪些"><a href="#需要准备哪些" class="headerlink" title="需要准备哪些"></a>需要准备哪些</h1><p>电脑（Mac）、vps（ubuntu 16 ＊ 64）</p>
+<h1 id="shadowsocks-服务器安装"><a href="#shadowsocks-服务器安装" class="headerlink" title="shadowsocks 服务器安装"></a>shadowsocks 服务器安装</h1><h2 id="登陆你的远程服务器"><a href="#登陆你的远程服务器" class="headerlink" title="登陆你的远程服务器"></a>登陆你的远程服务器</h2><p>打开Mac自带的终端<br>ssh root@你的ip -p 你的ssh端口，若没有特殊分配，一般都是22</p>
+<h2 id="更新源软件"><a href="#更新源软件" class="headerlink" title="更新源软件"></a>更新源软件</h2><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root<span class="variable">@localhost:</span>~# sudo apt-get update</div></pre></td></tr></table></figure>
+<p>更新完成后，会有提示<br><img src="/img/update-2016-10-27.png" alt="更新源"></p>
+<h2 id="安装PIP环境"><a href="#安装PIP环境" class="headerlink" title="安装PIP环境"></a>安装PIP环境</h2><p><del>root@localhost:~# sudo apt-get install python-pip</del><br>由于原作者已经不再更新 pip 下的源代码，故不再使用 pip 安装 Shadowsocks。</p>
+<h2 id="安装shadowsocks"><a href="#安装shadowsocks" class="headerlink" title="安装shadowsocks"></a>安装shadowsocks</h2><p> <del>pip install shadowsocks</del></p>
+<p>由于原作者已经不再更新 pip 下的源代码，故不再使用 pip 安装 Shadowsocks，而是改为下载 Github 的 master 分支来安装。如果在一段时间后，版本升级了，则先卸载，并再次执行本脚本就可以升级为最新版。这里采用了<a href="https://teddysun.com/342.html" target="_blank" rel="external">秋水逸冰的博客</a>，采用该一键安装 Python 版 Shadowsocks 的最新版，同时安装了 Python 包管理工具 pip。</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget --<span class="keyword">no</span>-check-certificate http<span class="variable">s:</span>//raw.githubusercontent.<span class="keyword">com</span>/teddysun/shadowsocks_install/master/shadowsocks.<span class="keyword">sh</span></div><div class="line">chmod +<span class="keyword">x</span> shadowsocks.<span class="keyword">sh</span></div><div class="line">./shadowsocks.<span class="keyword">sh</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span> | tee shadowsocks.<span class="built_in">log</span></div></pre></td></tr></table></figure>
+<p>安装完成后，脚本提示如下<br><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Congratulations, shadowsocks install completed!</div><div class="line">Your Server IP:your_server_ip</div><div class="line">Your Server Port:your_server_port</div><div class="line">Your Password:your_password</div><div class="line">Your Local IP:<span class="number">127.0</span>.<span class="number">0.1</span></div><div class="line">Your Local Port:<span class="number">1080</span></div><div class="line">Your Encryption <span class="function"><span class="keyword">Method</span>:</span>aes-<span class="number">256</span>-cfb</div><div class="line"></div><div class="line">Welcome <span class="keyword">to</span> visit:https:<span class="comment">//teddysun.com/342.html</span></div><div class="line">Enjoy it!</div></pre></td></tr></table></figure></p>
+<h2 id="卸载方法"><a href="#卸载方法" class="headerlink" title="卸载方法"></a>卸载方法</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./shadowsocks<span class="selector-class">.sh</span> uninstall</div></pre></td></tr></table></figure>
+<h2 id="进入配置"><a href="#进入配置" class="headerlink" title="进入配置"></a>进入配置</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi <span class="regexp">/etc/</span>shadowsocks.json</div></pre></td></tr></table></figure>
+<p>键盘上按下「i」键，进入Insert mode</p>
+<h3 id="单用户配置文件"><a href="#单用户配置文件" class="headerlink" title="单用户配置文件"></a>单用户配置文件</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"><span class="attr">"server"</span>:<span class="string">"0.0.0.0"</span>,</div><div class="line"><span class="attr">"server_port"</span>:<span class="number">8989</span>,</div><div class="line"><span class="attr">"local_address"</span>:<span class="string">"127.0.0.1"</span>,</div><div class="line"><span class="attr">"local_port"</span>:<span class="number">1080</span>,</div><div class="line"><span class="attr">"password"</span>:<span class="string">"yourpassword"</span>,</div><div class="line"><span class="attr">"timeout"</span>:<span class="number">300</span>,</div><div class="line"><span class="attr">"method"</span>:<span class="string">"aes-256-cfb"</span>,</div><div class="line"><span class="attr">"fast_open"</span>: <span class="literal">false</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="多用户配置文件"><a href="#多用户配置文件" class="headerlink" title="多用户配置文件"></a>多用户配置文件</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"><span class="attr">"server"</span>:<span class="string">"0.0.0.0"</span>,</div><div class="line"><span class="attr">"local_address"</span>:<span class="string">"127.0.0.1"</span>,</div><div class="line"><span class="attr">"local_port"</span>:<span class="number">1080</span>,</div><div class="line"><span class="attr">"port_password"</span>:&#123;</div><div class="line"><span class="attr">"8989"</span>:<span class="string">"password0"</span>,</div><div class="line"><span class="attr">"9001"</span>:<span class="string">"password1"</span>,</div><div class="line"><span class="attr">"9002"</span>:<span class="string">"password2"</span>,</div><div class="line"><span class="attr">"9003"</span>:<span class="string">"password3"</span>,</div><div class="line"><span class="attr">"9004"</span>:<span class="string">"password4"</span></div><div class="line">&#125;,</div><div class="line"><span class="attr">"timeout"</span>:<span class="number">300</span>,</div><div class="line"><span class="attr">"method"</span>:<span class="string">"aes-256-cfb"</span>,</div><div class="line"><span class="attr">"fast_open"</span>: <span class="literal">false</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里需要注意,””{}不要漏了<br>配置完成之后，先按「esc」退出，然后按一下「：」冒号键进入「Last line mode」，例如： </p>
+<p>: w filename （输入 「w filename」将文章以指定的文件名filename保存） </p>
+<p>: wq (输入「wq」，存盘并退出vi) </p>
+<p>: q! (输入q!， 不存盘强制退出vi)<br>这里我们直接存盘并退出，「：wq」</p>
+<h2 id="使用命令"><a href="#使用命令" class="headerlink" title="使用命令"></a>使用命令</h2><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">启动：<span class="meta-keyword">/etc/</span>init.d/shadowsocks start</div><div class="line">停止：<span class="meta-keyword">/etc/</span>init.d/shadowsocks stop</div><div class="line">重启：<span class="meta-keyword">/etc/</span>init.d/shadowsocks restart</div><div class="line">状态：<span class="meta-keyword">/etc/</span>init.d/shadowsocks status</div></pre></td></tr></table></figure>
+<p>参考链接<br><a href="http://jiji262.github.io/2016/09/28/setup-Shadowsocks-on-ubuntu-1604/" target="_blank" rel="external">http://jiji262.github.io/2016/09/28/setup-Shadowsocks-on-ubuntu-1604/</a><br><a href="https://teddysun.com/342.html" target="_blank" rel="external">https://teddysun.com/342.html</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/03/add-SSH-Key-to-Your-remote-clint/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Add SSH Key to Your Remote Client
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/10/Effective-Objective-C-2-0笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Effective-Objective-C 2.0笔记</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Mac上搭建shadowsocks服务" data-title="Mac上搭建shadowsocks服务" data-url="http://www.luholi.xyz/2016/10/27/Mac上搭建shadowsocks服务/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"zhimakaiyuan"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 muwan
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+	</div>
+    </div>
+      	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	</br>
+	<span id="busuanzi_container_site_uv" style="font-family:sans-serif;color:#2B2B2B" >您是本博客的第<span id="busuanzi_value_site_uv"></span>个小伙伴
+	</span>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

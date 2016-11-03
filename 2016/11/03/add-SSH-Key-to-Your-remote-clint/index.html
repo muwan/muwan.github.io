@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Add SSH Key to Your Remote Client | 芝麻开源</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前段时间，买了Vultr家的VPS用作shadowsocks，最近突然很感兴趣，于是捣鼓了下，每次登录的时候都需要输入密码有点麻烦，就找到了如何用ssh登录的方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Add SSH Key to Your Remote Client">
+<meta property="og:url" content="http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/index.html">
+<meta property="og:site_name" content="芝麻开源">
+<meta property="og:description" content="前段时间，买了Vultr家的VPS用作shadowsocks，最近突然很感兴趣，于是捣鼓了下，每次登录的时候都需要输入密码有点麻烦，就找到了如何用ssh登录的方法。">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/309640-f478035471497323.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-11-03T07:04:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Add SSH Key to Your Remote Client">
+<meta name="twitter:description" content="前段时间，买了Vultr家的VPS用作shadowsocks，最近突然很感兴趣，于是捣鼓了下，每次登录的时候都需要输入密码有点麻烦，就找到了如何用ssh登录的方法。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/309640-f478035471497323.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternative" href="/atom.xml" title="芝麻开源" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/author.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">muwan</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">对大海情有独钟却又怀有敬意，很懒的一个理科男。</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/转载">转载</a></li>
+				        
+							<li><a href="/tags/iOS">iOS</a></li>
+				        
+							<li><a href="/tags/碎碎念">碎碎念</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/muwan" title="github">github</a>
+					        
+								<a class="mail" target="_blank" href="mailto:wanrumu@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/健身/" style="font-size: 10px;">健身</a> <a href="/tags/工具/" style="font-size: 16.67px;">工具</a> <a href="/tags/碎碎念/" style="font-size: 16.67px;">碎碎念</a> <a href="/tags/笔记/" style="font-size: 13.33px;">笔记</a> <a href="/tags/翻墙/" style="font-size: 10px;">翻墙</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/随笔/" style="font-size: 13.33px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.crazyhao.com">施明皓的主页</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://a1.chenky.com/">一个忙碌的程序猿</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">热爱旅行想要探索世界，可惜兜里没有钱。目前是一枚iOS开发者，这是我建立的QQ群: 414457229，目前有5人了，欢迎加入。</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">muwan</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/author.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">muwan</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">对大海情有独钟却又怀有敬意，很懒的一个理科男。</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/转载">转载</a></li>
+		        
+					<li><a href="/tags/iOS">iOS</a></li>
+		        
+					<li><a href="/tags/碎碎念">碎碎念</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/muwan" title="github">github</a>
+			        
+						<a class="mail" target="_blank" href="mailto:wanrumu@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-add-SSH-Key-to-Your-remote-clint" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/03/add-SSH-Key-to-Your-remote-clint/" class="article-date">
+  	<time datetime="2016-11-03T05:26:30.000Z" itemprop="datePublished">2016-11-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Add SSH Key to Your Remote Client
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VPS/">VPS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工具/">工具</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前段时间，买了<a href="http://www.vultr.com/?ref=7026654-3B" target="_blank" rel="external">Vultr</a>家的VPS用作shadowsocks，最近突然很感兴趣，于是捣鼓了下，每次登录的时候都需要输入密码有点麻烦，就找到了如何用ssh登录的方法。<br><a id="more"></a></p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>Mac、VPS（安装的是ubuntu 16.0）</p>
+<h1 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h1><p>ssh除了使用密码验证外，还提供了一种公私密钥的验证方式。客户端生成一个私钥，并生成一个与之对应的公钥，然后将公钥上传到服务器上。</p>
+<h1 id="开始准备"><a href="#开始准备" class="headerlink" title="开始准备"></a>开始准备</h1><ol>
+<li>在本地机器创建公钥<br>在客户端生成私钥、公钥（注意，在Mac 上完成）<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -<span class="keyword">C</span>  <span class="string">'your email'</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>然后一路回车，生成你自己的密钥对，成功截图如下</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/309640-f478035471497323.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="密钥对截图"></p>
+<ol>
+<li>将公钥复制到ssh服务器<br>将前一步骤生成的公钥~/id_rsa.pub文件，复制到ssh服务器对应用户下的~/.ssh/authorized_keys文件,可以有多种方式，这里只介绍常用的一种。<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">brew install ssh-<span class="keyword">copy</span>-<span class="built_in">id</span></div><div class="line">ssh-<span class="keyword">copy</span>-<span class="built_in">id</span> username@hostname  <span class="comment">#将username和hostname替换为你的ssh服务器用户名和IP</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>当ssh服务器username用户目录下尚未有.ssh目录时使用此方式<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat ~<span class="regexp">/.ssh/id</span>_rsa.pub | ssh username<span class="variable">@hostname</span> <span class="string">"mkdir ~/.ssh; cat &gt;&gt; ~/.ssh/authorized_keys"</span></div></pre></td></tr></table></figure></p>
+<p>通用方式<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">scp ~<span class="regexp">/.ssh/id</span>_rsa.pub username@hostname<span class="symbol">:~/</span> <span class="comment">#将公钥文件复制至ssh服务器</span></div><div class="line">ssh username@hostname <span class="comment">#使用用户名和密码方式登录至ssh服务器</span></div><div class="line">mkdir .ssh  <span class="comment">#若.ssh目录已存在，可省略此步</span></div><div class="line">cat id_rsa.pub <span class="meta">&gt;&gt; </span>.ssh/authorized_keys  <span class="comment">#将公钥文件id_rsa.pub文件内容追加到authorized_keys文件</span></div></pre></td></tr></table></figure></p>
+<ol>
+<li>快捷登录<br>完成以上步骤后，即可使用以下命令直接登录ssh服务器，妈妈再也不用担心你记不住密码了<br>以后登录ssh，只需要在你的Mac上输入 <figure class="highlight plain"><figcaption><span>username@hostname``` 即可不用输入密码啦～</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"># 思考</div><div class="line">即使这样，我们还是需要输入远程服务器的ip地址，有时候真的脑容量不够啊，怎么办，怎么办，怎么办！！！</div><div class="line"></div><div class="line">没关系，我们还能实现本地一条命令就能登录</div><div class="line"></div><div class="line">**ssh本身也提供了一种快捷的方式来解决这个问题，往~/.ssh/config配置文件添加你的ssh服务器信息即可**</div><div class="line"></div><div class="line">在本地可客户端（你的Mac）输入</div></pre></td></tr></table></figure></li>
+</ol>
+<p>vim ~/.ssh/config<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">然后在终端输入 <span class="selector-tag">i</span> 开始插入如下内容：</div></pre></td></tr></table></figure></p>
+<p>Host                  name#自定义别名<br>HostName              hostname  #替换为你的ssh服务器ip或domain<br>Port                  22 #ssh服务器端口，默认为22<br>User                  root #ssh服务器用户名<br>IdentityFile          ~/.ssh/id_rsa #第一个步骤生成的公钥文件对应的私钥文件<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">按下<span class="selector-tag">ESC</span>，然后依次输入 <span class="selector-pseudo">:wq</span></div><div class="line">保存并退出</div><div class="line"></div><div class="line">最终，我们只需要在终端输入</div></pre></td></tr></table></figure></p>
+<p>ssh name<br>```<br>就能远程登录我们的VPS啦～</p>
+<p>写在最后<br>这篇文章多亏了我们的黄小贱同学 </p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/10/27/Mac上搭建shadowsocks服务/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Mac上搭建shadowsocks服务</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="add-SSH-Key-to-Your-remote-clint" data-title="Add SSH Key to Your Remote Client" data-url="http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"zhimakaiyuan"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 muwan
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+	</div>
+    </div>
+      	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	</br>
+	<span id="busuanzi_container_site_uv" style="font-family:sans-serif;color:#2B2B2B" >您是本博客的第<span id="busuanzi_value_site_uv"></span>个小伙伴
+	</span>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

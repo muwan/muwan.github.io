@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>CocoaPods的使用与安装 | 芝麻开源</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="什么是CocoaPodsCocoaPods是开发 OS X 和 iOS 应用程序的一个第三方库的依赖管理工具，而其本身是利用ruby的依赖管理gem进行构建的。因此，在解析整合过程中，最重要的几个gems分别是：CocoaPods/CocoaPods, CocoaPods/Core, 和 CocoaPods/Xcodeproj。在我们的工程里面会用到JSONKit、AFNetWorking等第三方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CocoaPods的使用与安装">
+<meta property="og:url" content="http://www.luholi.xyz/2016/01/12/CocoaPods的使用与安装/index.html">
+<meta property="og:site_name" content="芝麻开源">
+<meta property="og:description" content="什么是CocoaPodsCocoaPods是开发 OS X 和 iOS 应用程序的一个第三方库的依赖管理工具，而其本身是利用ruby的依赖管理gem进行构建的。因此，在解析整合过程中，最重要的几个gems分别是：CocoaPods/CocoaPods, CocoaPods/Core, 和 CocoaPods/Xcodeproj。在我们的工程里面会用到JSONKit、AFNetWorking等第三方">
+<meta property="og:image" content="http://www.luholi.xyz/img/2016-01-12.PNG">
+<meta property="og:image" content="http://www.luholi.xyz/img/89744051-0CCB-4D1E-9CC0-7AE6BCEFB0B1.png">
+<meta property="og:image" content="http://www.luholi.xyz/img/4AF9C273-72BA-45C0-9F35-9E389EC9118B.png">
+<meta property="og:image" content="http://www.luholi.xyz/img/77C9BAB1-E831-4C0A-BA3C-A670AE8464B9.png">
+<meta property="og:image" content="http://www.luholi.xyz/img/2016-01-12%2012-2.PNG">
+<meta property="og:image" content="http://www.luholi.xyz/img/0BDE439B-CD6B-4A34-A7EE-2ED5C450AAFA.png">
+<meta property="og:image" content="http://www.luholi.xyz/img/2016-01-12%2012.37.59.png">
+<meta property="og:image" content="http://www.luholi.xyz/img/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-01-12%2012.31.42.png">
+<meta property="og:updated_time" content="2016-01-12T05:36:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CocoaPods的使用与安装">
+<meta name="twitter:description" content="什么是CocoaPodsCocoaPods是开发 OS X 和 iOS 应用程序的一个第三方库的依赖管理工具，而其本身是利用ruby的依赖管理gem进行构建的。因此，在解析整合过程中，最重要的几个gems分别是：CocoaPods/CocoaPods, CocoaPods/Core, 和 CocoaPods/Xcodeproj。在我们的工程里面会用到JSONKit、AFNetWorking等第三方">
+<meta name="twitter:image" content="http://www.luholi.xyz/img/2016-01-12.PNG">
+  
+    <link rel="alternative" href="/atom.xml" title="芝麻开源" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/author.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">muwan</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">对大海情有独钟却又怀有敬意，很懒的一个理科男。</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/转载">转载</a></li>
+				        
+							<li><a href="/tags/iOS">iOS</a></li>
+				        
+							<li><a href="/tags/碎碎念">碎碎念</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/muwan" title="github">github</a>
+					        
+								<a class="mail" target="_blank" href="mailto:wanrumu@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/健身/" style="font-size: 10px;">健身</a> <a href="/tags/工具/" style="font-size: 16.67px;">工具</a> <a href="/tags/碎碎念/" style="font-size: 16.67px;">碎碎念</a> <a href="/tags/笔记/" style="font-size: 13.33px;">笔记</a> <a href="/tags/翻墙/" style="font-size: 10px;">翻墙</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/随笔/" style="font-size: 13.33px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.crazyhao.com">施明皓的主页</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://a1.chenky.com/">一个忙碌的程序猿</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">热爱旅行想要探索世界，可惜兜里没有钱。目前是一枚iOS开发者，这是我建立的QQ群: 414457229，目前有5人了，欢迎加入。</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">muwan</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/author.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">muwan</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">对大海情有独钟却又怀有敬意，很懒的一个理科男。</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/转载">转载</a></li>
+		        
+					<li><a href="/tags/iOS">iOS</a></li>
+		        
+					<li><a href="/tags/碎碎念">碎碎念</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/muwan" title="github">github</a>
+			        
+						<a class="mail" target="_blank" href="mailto:wanrumu@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-CocoaPods的使用与安装" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/12/CocoaPods的使用与安装/" class="article-date">
+  	<time datetime="2016-01-12T05:07:11.000Z" itemprop="datePublished">2016-01-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CocoaPods的使用与安装
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工具/">工具</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="什么是CocoaPods"><a href="#什么是CocoaPods" class="headerlink" title="什么是CocoaPods"></a>什么是CocoaPods</h2><p>CocoaPods是开发 OS X 和 iOS 应用程序的一个第三方库的依赖管理工具，而其本身是利用ruby的依赖管理gem进行构建的。因此，在解析整合过程中，最重要的几个gems分别是：CocoaPods/CocoaPods, CocoaPods/Core, 和 CocoaPods/Xcodeproj。<br>在我们的工程里面会用到JSONKit、AFNetWorking等第三方开源库，首次在工程中引入这些第三方库的时候，会涉及许多配置，尤其是在build phases和linker flags配置中过程中，会引起许多人为因素的错误。CocoaPods的出现简化了这一切，并且可以通过CocoaPods查找新的第三方库。<br><a id="more"></a></p>
+<h2 id="CocoaPods的工作原理"><a href="#CocoaPods的工作原理" class="headerlink" title="CocoaPods的工作原理"></a>CocoaPods的工作原理</h2><p>CocoaPods的原理是将所有的依赖库都放到另一个名为Pods的项目中，然后让主项目依赖Pods项目，这样，源码管理工作都从主项目移到了Pods项目中。Pods项目最终会编译成一个名为libPods.a的文件，主项目只需要依赖这个 .a文件即可。</p>
+<h2 id="CocoaPods的安装"><a href="#CocoaPods的安装" class="headerlink" title="CocoaPods的安装"></a>CocoaPods的安装</h2><p>上面已经提到了，CocoaPods是利用Ruby的依赖管理gem进行构建，因此安装CocoaPods需要在ruby的环境下。</p>
+<h3 id="1-Ruby环境搭建"><a href="#1-Ruby环境搭建" class="headerlink" title="1.Ruby环境搭建"></a>1.Ruby环境搭建</h3><p>Mac OS是自带ruby环境的，但是保险起见，还是需要更新一下。<br>a.查看当前ruby版本<br>打开Mac的terminal 输入ruby -v代码如下<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ruby -v</div><div class="line">ruby <span class="number">2.0</span>.0p645 (<span class="number">2015</span>-<span class="number">04</span>-<span class="number">13</span> revision <span class="number">50299</span>) [universal.x86_64-darwin15](<span class="comment">#)</span></div></pre></td></tr></table></figure></p>
+<p>b.更换ruby源<br>终端输入如下命令（ruby的软件源rubygems.org因为使用的亚马逊的云服务，所以被墙了，需要更新一下ruby的源，国内常用的镜像服务有淘宝阿里云的<a href="https://ruby.taobao.org/" target="_blank" rel="external"></a>，山东理工大学的<a href="http://ruby.sdutlinux.org/" target="_blank" rel="external"></a>,一般使用淘宝的）<br>gem sources –remove <a href="https://rubygems.org/" target="_blank" rel="external">https://rubygems.org/</a><br>gem sources -a <a href="https://ruby.taobao.org/" target="_blank" rel="external">https://ruby.taobao.org/</a><br>gem sources -l  （用来检查使用替换镜像位置成功）<br>代码如下<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ gem sources --remove <span class="string">https:</span><span class="comment">//rubygems.org/</span></div><div class="line"><span class="string">https:</span><span class="comment">//rubygems.org/ removed from sources</span></div><div class="line">$ gem sources -a <span class="string">https:</span><span class="comment">//ruby.taobao.org/</span></div><div class="line"><span class="string">https:</span><span class="comment">//ruby.taobao.org/ added to sources</span></div><div class="line">$ gem sources -l</div><div class="line">*** CURRENT SOURCES ***</div><div class="line"><span class="symbol"></span></div><div class="line">http:<span class="comment">//rubygems-china.oss.aliyuncs.com</span></div><div class="line"><span class="string">https:</span><span class="comment">//ruby.taobao.org/</span></div></pre></td></tr></table></figure></p>
+<h3 id="2-升级gem"><a href="#2-升级gem" class="headerlink" title="2.升级gem"></a>2.升级gem</h3><p>sudo gem update –system<br>升级成功后，代码如下<br><img src="/img/2016-01-12.PNG" alt=""></p>
+<h3 id="3-下载安装CocoaPods"><a href="#3-下载安装CocoaPods" class="headerlink" title="3.下载安装CocoaPods"></a>3.下载安装CocoaPods</h3><p>安装CocoaPods（OS X 10.11以前）</p>
+<ul>
+<li>sudo gem install cocoapods<br>安装CocoaPods（10.11后苹果升级了安全策略）</li>
+<li>sudo gem install -n /usr/local/bin cocoapods<br>安装更新后，会有 gem installed提示</li>
+</ul>
+<p>所有的项目的Podspec文件都托管在<a href="https://github.com/CocoaPods/Specs。第一次执行pod" target="_blank" rel="external">https://github.com/CocoaPods/Specs。第一次执行pod</a> setup时，CocoaPods会将这些podspec索引文件更新到本地的 /.cocoapods/目录下，这个索引文件比较大，有80M左右。所以第一次更新时非常慢，一般更新了将近1个小时才完成。<br>一个叫akinliu的朋友在gitcafe和oschina上建立了CocoaPods索引库的镜像，因为gitcafe和oschina都是国内的服务器，所以在执行索引更新操作时，会快很多。如下操作可以将CocoaPods设置成使用gitcafe镜像：<br>1.移除原有服务器</p>
+<ul>
+<li>pod repo remove master<br>2.添加境内服务器（建议使用第一个）</li>
+<li>pod repo add master <a href="https://gitcafe.com/akuandev/Specs.git" target="_blank" rel="external">https://gitcafe.com/akuandev/Specs.git</a></li>
+<li>pod repo add master <a href="http://git.oschina.net/akuandev/Specs.git(开源中国较慢" target="_blank" rel="external">http://git.oschina.net/akuandev/Specs.git(开源中国较慢</a>)<br>使用及截图如下<br><img src="/img/89744051-0CCB-4D1E-9CC0-7AE6BCEFB0B1.png" alt="" title="移除原有服务器"><br><img src="/img/4AF9C273-72BA-45C0-9F35-9E389EC9118B.png" alt="" title="添加 repo 镜像国内服务器"><br><img src="/img/77C9BAB1-E831-4C0A-BA3C-A670AE8464B9.png" alt="" title="替换成功"></li>
+</ul>
+<p>完成后，执行操作：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="built_in">setup</span></div></pre></td></tr></table></figure></p>
+<p>执行结束后代码如下图：<br><img src="/img/2016-01-12%2012-2.PNG" alt=""><br>至此，CocoaPods就完全安装结束，so easy！</p>
+<h2 id="CocoaPods的使用"><a href="#CocoaPods的使用" class="headerlink" title="CocoaPods的使用"></a>CocoaPods的使用</h2><h3 id="1-新建Podfile文件"><a href="#1-新建Podfile文件" class="headerlink" title="1.新建Podfile文件"></a>1.新建Podfile文件</h3><p>使用时需要在你的项目根目录下新建一个名为Podfile的文件，将依赖的库名字依次列在文件中即可<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">promote:</span> lhl$ cd <span class="regexp">/Users/</span>chengmei<span class="regexp">/Desktop/</span>Test </div><div class="line"><span class="string">promote:</span>Test lhl$ touch Podfile</div></pre></td></tr></table></figure></p>
+<p>这时候，在你的工程文件中就新建了一个名为Podfile的文件。</p>
+<h3 id="2-编辑Podfile文件"><a href="#2-编辑Podfile文件" class="headerlink" title="2.编辑Podfile文件"></a>2.编辑Podfile文件</h3><p>用文本编辑器打开刚才新建的Podfile文件，此时的文件应是空白的，Podfile 文件的格式应该类似以下：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">platform <span class="symbol">:ios</span>, <span class="string">'7.0'</span></div><div class="line">pod <span class="string">'AFNetworking'</span>， <span class="string">'&gt; 3.0.4'</span></div><div class="line">pod <span class="string">'LCTabBarController'</span>， <span class="string">'&gt; 1.2.2'</span></div><div class="line">pod <span class="string">'LCBannerView'</span></div></pre></td></tr></table></figure></p>
+<p><strong>注意</strong><br><em>*</em>a. platform 那一行，ios 三个字母都要小写，而且与前面的冒号之间不能有间隔。<br>b. 后面的版本号也可以不写，但是有些开源库对版本是有要求的，比如要在 iOS 7.0 以上才能运行，遇到这样的开源库就需要写上版本号。<br>c. platform 下面就是 CocoaPods 需要集成的开源库，根据你的需要确定集成成些库。</p>
+<hr>
+<h3 id="3-查找所需要的类库"><a href="#3-查找所需要的类库" class="headerlink" title="3.查找所需要的类库"></a>3.查找所需要的类库</h3><p>例如，我们需要在工程文件中添加AFNetworking，首先需要在 CocoaPods 里面先搜索是否有需要的库，在 Terminal 中输入：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">pod search AFNetworking</span></div></pre></td></tr></table></figure></p>
+<p>所显示代码如下：<br><img src="/img/0BDE439B-CD6B-4A34-A7EE-2ED5C450AAFA.png" alt=""><br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">pod</span> <span class="string">'AFNetworking'</span>, <span class="string">'&gt; 3.0.4'</span></div></pre></td></tr></table></figure></p>
+<p>就是需要我们在Podfile文件里面写的,把它复制，粘贴进去，并保存。</p>
+<h3 id="4-执行导入命令"><a href="#4-执行导入命令" class="headerlink" title="4.执行导入命令"></a>4.执行导入命令</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cd <span class="regexp">/Users/</span>chengmei<span class="regexp">/Desktop/</span>Test</div><div class="line">$ pod install</div></pre></td></tr></table></figure>
+<p>导入成功后，如下截图所示<br><img src="/img/2016-01-12%2012.37.59.png" alt=""><br>pod install命令执行成功后，会看到工程目录下多出CocoaPodsTest.xcworkspace、Podfile.lock文件和Pods目录。再看看刚才执行完pod install命令打印出来的内容的最后一行：<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="string">!</span>](<span class="link">#</span>) Please close any current Xcode sessions and use <span class="code">`Test.xcworkspace`</span> for this project from now on.</div></pre></td></tr></table></figure></p>
+<p>提示我们从现在起，我们需要使用CocoaPodsTest.xcworkspace文件来开发。</p>
+<h3 id="5-第三方库更新与添加"><a href="#5-第三方库更新与添加" class="headerlink" title="5.第三方库更新与添加"></a>5.第三方库更新与添加</h3><p>当需要添加第三方库时，只需要直接在Podfile里面添加第三方库信息，在terminal里面导入执行命令：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="keyword">cd</span> /Users/chengmei/Desktop/<span class="keyword">Test</span></div><div class="line">$ pod <span class="keyword">update</span></div></pre></td></tr></table></figure></p>
+<p>即可添加并更新成功。<br>至此，我们CocoaPods的安装与使用就全部结束，往后我们只需在.xcworkspace文件里面编写即可。</p>
+<h2 id="遇到过的坑"><a href="#遇到过的坑" class="headerlink" title="遇到过的坑"></a>遇到过的坑</h2><ol>
+<li>首先就是系统升级成10.11后，由于苹果加强了安全策略，原来的sudo gem install cocoapods命令不再起作用，在10.11以前的系统中任然适用。10.11后需要适用命令sudo gem install -n /usr/local/bin cocoapods</li>
+<li><img src="/img/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-01-12%2012.31.42.png" alt=""><br>这个问题折腾我好久，最后发现是在ios, ‘7.0’这个逗号后面我多输入了一个空格。</li>
+</ol>
+<p>3<br><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[!] Invalid Podfile file: undefined local variable <span class="keyword">or</span> <span class="function"><span class="keyword">method</span> '<span class="title">en_US</span>' <span class="title">for</span> #&lt;<span class="title">Pod</span>:</span>:Podfile:<span class="number">0</span>x00000102a5d8b0&gt;. Updating CocoaPods might fix the issue.</div></pre></td></tr></table></figure></p>
+<p>此错误也是常见的，原因：单引号格式，可能是手动输入导致<br>解决办法：前往 系统偏好设置 - 键盘 - 文本 - 将“使用智能引号和破折号”一项取消勾选 - 再将 Podfile 里面的单（双）引号修改一下。<br><strong><em>如果遇到了神奇的报错，执行下面的命令</em></strong></p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">$</span> sudo gem update --<span class="keyword">system</span></div><div class="line"><span class="symbol">$</span> sudo gem install cocoapods</div><div class="line"><span class="symbol">$</span> pod setup</div></pre></td></tr></table></figure>
+<p>重装吧</p>
+<h2 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h2><p>1、pod install提速<br>每次执行pod install和pod update的时候，cocoapods都会默认更新一次spec仓库。这是一个比较耗时的操作。在确认spec版本库不需要更新时，给这两个命令加一个参数跳过spec版本库更新,可以明显提高这两个命令的执行速度。<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pod install --<span class="keyword">verbose</span> --<span class="keyword">no</span>-repo-<span class="keyword">update</span></div><div class="line">pod <span class="keyword">update</span> --<span class="keyword">verbose</span> --<span class="keyword">no</span>-repo-<span class="keyword">update</span></div></pre></td></tr></table></figure></p>
+<p>2、关于Podfile文件编辑时，第三方库版本号的各种写法<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">pod ‘AFNetworking’ <span class="comment">//不显式指定依赖库版本，表示每次都获取最新版本</span></div><div class="line">pod ‘AFNetworking’, ‘<span class="number">2.0</span>’ <span class="comment">//只使用2.0版本</span></div><div class="line">pod ‘AFNetworking’, ‘\&gt;<span class="number">2.0</span>′ <span class="comment">//使用高于2.0的版本</span></div><div class="line">pod ‘AFNetworking’, ‘\&gt;=<span class="number">2.0</span>′ <span class="comment">//使用大于或等于2.0的版本</span></div><div class="line">pod ‘AFNetworking’, ‘\&lt;<span class="number">2.0</span>′ <span class="comment">//使用小于2.0的版本</span></div><div class="line">pod ‘AFNetworking’, ‘\&lt;=<span class="number">2.0</span>′ <span class="comment">//使用小于或等于2.0的版本</span></div><div class="line">pod ‘AFNetworking’, ‘&gt;<span class="number">0.1</span><span class="number">.2</span>′ <span class="comment">//使用大于等于0.1.2但小于0.2的版本，相当于&gt;=0.1.2并且&lt;0.2.0</span></div><div class="line">pod ‘AFNetworking’, ‘&gt;<span class="number">0.1</span>′ <span class="comment">//使用大于等于0.1但小于1.0的版本</span></div><div class="line">pod ‘AFNetworking’, ‘&gt;<span class="number">0</span>′ <span class="comment">//高于0的版本，写这个限制和什么都不写是一个效果，都表示使用最新版本</span></div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/15/开始健身/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          开始健身
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/08/2015年终小结/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">2015年终小结</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="CocoaPods的使用与安装" data-title="CocoaPods的使用与安装" data-url="http://www.luholi.xyz/2016/01/12/CocoaPods的使用与安装/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"zhimakaiyuan"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 muwan
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+	</div>
+    </div>
+      	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	</br>
+	<span id="busuanzi_container_site_uv" style="font-family:sans-serif;color:#2B2B2B" >您是本博客的第<span id="busuanzi_value_site_uv"></span>个小伙伴
+	</span>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
