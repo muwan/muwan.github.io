@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>芝麻开源</title>
+  <subtitle>对大海情有独钟却又怀有敬意，很懒的一个理科男。</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://www.luholi.xyz/"/>
+  <updated>2016-12-14T02:45:48.000Z</updated>
+  <id>http://www.luholi.xyz/</id>
+  
+  <author>
+    <name>muwan</name>
+    <email>wanrumu@gmail.com</email>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Xcode8在Objective-C中不要用Cocoapods集成Charts（全是坑！！！）</title>
+    <link href="http://www.luholi.xyz/2016/12/06/Xcode8-Uses-Charts-Objective-C/"/>
+    <id>http://www.luholi.xyz/2016/12/06/Xcode8-Uses-Charts-Objective-C/</id>
+    <published>2016-12-06T09:04:26.000Z</published>
+    <updated>2016-12-14T02:45:48.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>用cocoapods集成Charts说多了都是泪，全是坑！<br><a id="more"></a><br> 不知咋滴，一大早起来后把项目clean了一下，然后把pod文件全删了，重新运行<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="keyword">install</span></div></pre></td></tr></table></figure></p>
+<p>然后再clean，居然好了。。。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;用cocoapods集成Charts说多了都是泪，全是坑！&lt;br&gt;
+    
+    </summary>
+    
+      <category term="吐槽" scheme="http://www.luholi.xyz/categories/%E5%90%90%E6%A7%BD/"/>
+    
+      <category term="技术" scheme="http://www.luholi.xyz/categories/%E5%90%90%E6%A7%BD/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="iOS" scheme="http://www.luholi.xyz/tags/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Add SSH Key to Your Remote Client</title>
+    <link href="http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/"/>
+    <id>http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/</id>
+    <published>2016-11-03T05:26:30.000Z</published>
+    <updated>2016-12-14T02:41:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>前段时间，买了<a href="http://www.vultr.com/?ref=7026654-3B" target="_blank" rel="external">Vultr</a>家的VPS用作shadowsocks，最近突然很感兴趣，于是捣鼓了下，每次登录的时候都需要输入密码有点麻烦，就找到了如何用ssh登录的方法。<br><a id="more"></a></p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>Mac、VPS（安装的是ubuntu 16.0）</p>
+<h1 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h1><p>ssh除了使用密码验证外，还提供了一种公私密钥的验证方式。客户端生成一个私钥，并生成一个与之对应的公钥，然后将公钥上传到服务器上。</p>
+<h1 id="开始准备"><a href="#开始准备" class="headerlink" title="开始准备"></a>开始准备</h1><ol>
+<li>在本地机器创建公钥<br>在客户端生成私钥、公钥（注意，在Mac 上完成）<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -<span class="keyword">C</span>  <span class="string">'your email'</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>然后一路回车，生成你自己的密钥对，成功截图如下</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/309640-f478035471497323.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="密钥对截图" title="">
+                </div>
+                <div class="image-caption">密钥对截图</div>
+            </figure>
+<ol>
+<li>将公钥复制到ssh服务器<br>将前一步骤生成的公钥~/id_rsa.pub文件，复制到ssh服务器对应用户下的~/.ssh/authorized_keys文件,可以有多种方式，这里只介绍常用的一种。<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">brew install ssh-<span class="keyword">copy</span>-<span class="built_in">id</span></div><div class="line">ssh-<span class="keyword">copy</span>-<span class="built_in">id</span> username@hostname  <span class="comment">#将username和hostname替换为你的ssh服务器用户名和IP</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>当ssh服务器username用户目录下尚未有.ssh目录时使用此方式<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat ~<span class="regexp">/.ssh/id</span>_rsa.pub | ssh username<span class="variable">@hostname</span> <span class="string">"mkdir ~/.ssh; cat &gt;&gt; ~/.ssh/authorized_keys"</span></div></pre></td></tr></table></figure></p>
+<p>通用方式<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">scp ~<span class="regexp">/.ssh/id</span>_rsa.pub username@hostname<span class="symbol">:~/</span> <span class="comment">#将公钥文件复制至ssh服务器</span></div><div class="line">ssh username@hostname <span class="comment">#使用用户名和密码方式登录至ssh服务器</span></div><div class="line">mkdir .ssh  <span class="comment">#若.ssh目录已存在，可省略此步</span></div><div class="line">cat id_rsa.pub <span class="meta">&gt;&gt; </span>.ssh/authorized_keys  <span class="comment">#将公钥文件id_rsa.pub文件内容追加到authorized_keys文件</span></div></pre></td></tr></table></figure></p>
+<ol>
+<li>快捷登录<br>完成以上步骤后，即可使用以下命令直接登录ssh服务器，妈妈再也不用担心你记不住密码了<br>以后登录ssh，只需要在你的Mac上输入 <figure class="highlight plain"><figcaption><span>username@hostname``` 即可不用输入密码啦～</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"># 思考</div><div class="line">即使这样，我们还是需要输入远程服务器的ip地址，有时候真的脑容量不够啊，怎么办，怎么办，怎么办！！！</div><div class="line"></div><div class="line">没关系，我们还能实现本地一条命令就能登录</div><div class="line"></div><div class="line">**ssh本身也提供了一种快捷的方式来解决这个问题，往~/.ssh/config配置文件添加你的ssh服务器信息即可**</div><div class="line"></div><div class="line">在本地可客户端（你的Mac）输入</div></pre></td></tr></table></figure></li>
+</ol>
+<p>vim ~/.ssh/config<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">然后在终端输入 <span class="selector-tag">i</span> 开始插入如下内容：</div></pre></td></tr></table></figure></p>
+<p>Host                  name#自定义别名<br>HostName              hostname  #替换为你的ssh服务器ip或domain<br>Port                  22 #ssh服务器端口，默认为22<br>User                  root #ssh服务器用户名<br>IdentityFile          ~/.ssh/id_rsa #第一个步骤生成的公钥文件对应的私钥文件<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">按下ESC，然后依次输入 <span class="symbol">:wq</span></div><div class="line">保存并退出</div><div class="line"></div><div class="line">最终，我们只需要在终端输入</div></pre></td></tr></table></figure></p>
+<p>ssh name<br>```<br>就能远程登录我们的VPS啦～</p>
+<p>写在最后<br>这篇文章多亏了我们的黄小贱同学 </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前段时间，买了&lt;a href=&quot;http://www.vultr.com/?ref=7026654-3B&quot;&gt;Vultr&lt;/a&gt;家的VPS用作shadowsocks，最近突然很感兴趣，于是捣鼓了下，每次登录的时候都需要输入密码有点麻烦，就找到了如何用ssh登录的方法。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="技术" scheme="http://www.luholi.xyz/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="工具" scheme="http://www.luholi.xyz/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+      <category term="VPS" scheme="http://www.luholi.xyz/tags/VPS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mac上搭建shadowsocks服务</title>
+    <link href="http://www.luholi.xyz/2016/10/27/Mac%E4%B8%8A%E6%90%AD%E5%BB%BAshadowsocks%E6%9C%8D%E5%8A%A1/"/>
+    <id>http://www.luholi.xyz/2016/10/27/Mac上搭建shadowsocks服务/</id>
+    <published>2016-10-27T06:27:24.000Z</published>
+    <updated>2016-12-14T02:42:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前看着教程自己也乱七八糟的搭建了一个ss的服务端，但是感觉一团糟，于是趁着自己有时间，就重新搭建一下，顺便好好记录下搭建的过程，方便自己，也希望能给其他刚接触的一点帮助。<br>首先我自己的是一台Mac，所以主要记录的也是Mac上的操作，我的vps买的是搬瓦工19.99$的，目前使用感觉还行。<br><a id="more"></a></p>
+<h1 id="写在最前面：为什么翻墙？"><a href="#写在最前面：为什么翻墙？" class="headerlink" title="写在最前面：为什么翻墙？"></a>写在最前面：为什么翻墙？</h1><p>应该每个人都有自己的原因，总的来说，还是”赵家人“管得太宽，各种访问不了<br>目前使用的工具也是种类繁多，很多免费的不稳定，速度慢，使用起来也不见得安全，付费的虽然好点，但是依然是使用的别人的代理服务器。<br>因此，还是我们自己来搭一个吧，至于为什么选择ss，主要是觉得搭建比较方便，而且安全性想对较好</p>
+<h1 id="需要准备哪些"><a href="#需要准备哪些" class="headerlink" title="需要准备哪些"></a>需要准备哪些</h1><p>电脑（Mac）、vps（ubuntu 16 ＊ 64）</p>
+<h1 id="shadowsocks-服务器安装"><a href="#shadowsocks-服务器安装" class="headerlink" title="shadowsocks 服务器安装"></a>shadowsocks 服务器安装</h1><h2 id="登陆你的远程服务器"><a href="#登陆你的远程服务器" class="headerlink" title="登陆你的远程服务器"></a>登陆你的远程服务器</h2><p>打开Mac自带的终端<br>ssh root@你的ip -p 你的ssh端口，若没有特殊分配，一般都是22</p>
+<h2 id="更新源软件"><a href="#更新源软件" class="headerlink" title="更新源软件"></a>更新源软件</h2><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root<span class="variable">@localhost:</span>~# sudo apt-get update</div></pre></td></tr></table></figure>
+<p>更新完成后，会有提示<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/update-2016-10-27.png" alt="更新源" title="">
+                </div>
+                <div class="image-caption">更新源</div>
+            </figure></p>
+<h2 id="安装PIP环境"><a href="#安装PIP环境" class="headerlink" title="安装PIP环境"></a>安装PIP环境</h2><p><del>root@localhost:~# sudo apt-get install python-pip</del><br>由于原作者已经不再更新 pip 下的源代码，故不再使用 pip 安装 Shadowsocks。</p>
+<h2 id="安装shadowsocks"><a href="#安装shadowsocks" class="headerlink" title="安装shadowsocks"></a>安装shadowsocks</h2><p> <del>pip install shadowsocks</del></p>
+<p>由于原作者已经不再更新 pip 下的源代码，故不再使用 pip 安装 Shadowsocks，而是改为下载 Github 的 master 分支来安装。如果在一段时间后，版本升级了，则先卸载，并再次执行本脚本就可以升级为最新版。这里采用了<a href="https://teddysun.com/342.html" target="_blank" rel="external">秋水逸冰的博客</a>，采用该一键安装 Python 版 Shadowsocks 的最新版，同时安装了 Python 包管理工具 pip。</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget --<span class="keyword">no</span>-check-certificate http<span class="variable">s:</span>//raw.githubusercontent.<span class="keyword">com</span>/teddysun/shadowsocks_install/master/shadowsocks.<span class="keyword">sh</span></div><div class="line">chmod +<span class="keyword">x</span> shadowsocks.<span class="keyword">sh</span></div><div class="line">./shadowsocks.<span class="keyword">sh</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span> | tee shadowsocks.<span class="built_in">log</span></div></pre></td></tr></table></figure>
+<p>安装完成后，脚本提示如下<br><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Congratulations, shadowsocks install completed!</div><div class="line">Your Server IP:your_server_ip</div><div class="line">Your Server Port:your_server_port</div><div class="line">Your Password:your_password</div><div class="line">Your Local IP:<span class="number">127.0</span>.<span class="number">0.1</span></div><div class="line">Your Local Port:<span class="number">1080</span></div><div class="line">Your Encryption <span class="function"><span class="keyword">Method</span>:</span>aes-<span class="number">256</span>-cfb</div><div class="line"></div><div class="line">Welcome <span class="keyword">to</span> visit:https:<span class="comment">//teddysun.com/342.html</span></div><div class="line">Enjoy it!</div></pre></td></tr></table></figure></p>
+<h2 id="卸载方法"><a href="#卸载方法" class="headerlink" title="卸载方法"></a>卸载方法</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./shadowsocks<span class="selector-class">.sh</span> uninstall</div></pre></td></tr></table></figure>
+<h2 id="进入配置"><a href="#进入配置" class="headerlink" title="进入配置"></a>进入配置</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi <span class="regexp">/etc/</span>shadowsocks.json</div></pre></td></tr></table></figure>
+<p>键盘上按下「i」键，进入Insert mode</p>
+<h3 id="单用户配置文件"><a href="#单用户配置文件" class="headerlink" title="单用户配置文件"></a>单用户配置文件</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"><span class="attr">"server"</span>:<span class="string">"0.0.0.0"</span>,</div><div class="line"><span class="attr">"server_port"</span>:<span class="number">8989</span>,</div><div class="line"><span class="attr">"local_address"</span>:<span class="string">"127.0.0.1"</span>,</div><div class="line"><span class="attr">"local_port"</span>:<span class="number">1080</span>,</div><div class="line"><span class="attr">"password"</span>:<span class="string">"yourpassword"</span>,</div><div class="line"><span class="attr">"timeout"</span>:<span class="number">300</span>,</div><div class="line"><span class="attr">"method"</span>:<span class="string">"aes-256-cfb"</span>,</div><div class="line"><span class="attr">"fast_open"</span>: <span class="literal">false</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="多用户配置文件"><a href="#多用户配置文件" class="headerlink" title="多用户配置文件"></a>多用户配置文件</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"><span class="attr">"server"</span>:<span class="string">"0.0.0.0"</span>,</div><div class="line"><span class="attr">"local_address"</span>:<span class="string">"127.0.0.1"</span>,</div><div class="line"><span class="attr">"local_port"</span>:<span class="number">1080</span>,</div><div class="line"><span class="attr">"port_password"</span>:&#123;</div><div class="line"><span class="attr">"8989"</span>:<span class="string">"password0"</span>,</div><div class="line"><span class="attr">"9001"</span>:<span class="string">"password1"</span>,</div><div class="line"><span class="attr">"9002"</span>:<span class="string">"password2"</span>,</div><div class="line"><span class="attr">"9003"</span>:<span class="string">"password3"</span>,</div><div class="line"><span class="attr">"9004"</span>:<span class="string">"password4"</span></div><div class="line">&#125;,</div><div class="line"><span class="attr">"timeout"</span>:<span class="number">300</span>,</div><div class="line"><span class="attr">"method"</span>:<span class="string">"aes-256-cfb"</span>,</div><div class="line"><span class="attr">"fast_open"</span>: <span class="literal">false</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里需要注意,””{}不要漏了<br>配置完成之后，先按「esc」退出，然后按一下「：」冒号键进入「Last line mode」，例如： </p>
+<p>: w filename （输入 「w filename」将文章以指定的文件名filename保存） </p>
+<p>: wq (输入「wq」，存盘并退出vi) </p>
+<p>: q! (输入q!， 不存盘强制退出vi)<br>这里我们直接存盘并退出，「：wq」</p>
+<h2 id="使用命令"><a href="#使用命令" class="headerlink" title="使用命令"></a>使用命令</h2><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">启动：<span class="meta-keyword">/etc/</span>init.d/shadowsocks start</div><div class="line">停止：<span class="meta-keyword">/etc/</span>init.d/shadowsocks stop</div><div class="line">重启：<span class="meta-keyword">/etc/</span>init.d/shadowsocks restart</div><div class="line">状态：<span class="meta-keyword">/etc/</span>init.d/shadowsocks status</div></pre></td></tr></table></figure>
+<p>参考链接<br><a href="http://jiji262.github.io/2016/09/28/setup-Shadowsocks-on-ubuntu-1604/" target="_blank" rel="external">http://jiji262.github.io/2016/09/28/setup-Shadowsocks-on-ubuntu-1604/</a><br><a href="https://teddysun.com/342.html" target="_blank" rel="external">https://teddysun.com/342.html</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;之前看着教程自己也乱七八糟的搭建了一个ss的服务端，但是感觉一团糟，于是趁着自己有时间，就重新搭建一下，顺便好好记录下搭建的过程，方便自己，也希望能给其他刚接触的一点帮助。&lt;br&gt;首先我自己的是一台Mac，所以主要记录的也是Mac上的操作，我的vps买的是搬瓦工19.99$的，目前使用感觉还行。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="技术" scheme="http://www.luholi.xyz/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="工具" scheme="http://www.luholi.xyz/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+      <category term="翻墙" scheme="http://www.luholi.xyz/tags/%E7%BF%BB%E5%A2%99/"/>
+    
+      <category term="Shadowsocks" scheme="http://www.luholi.xyz/tags/Shadowsocks/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Effective-Objective-C 2.0笔记</title>
+    <link href="http://www.luholi.xyz/2016/10/10/Effective-Objective-C-2-0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://www.luholi.xyz/2016/10/10/Effective-Objective-C-2-0笔记/</id>
+    <published>2016-10-10T02:51:38.000Z</published>
+    <updated>2016-12-14T02:41:47.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>上一个博客写了Effective Objective-C 2.0 的总的概览，这一章准备记录一下本书中提到的编写高质量iOS 与 OS X 代码的52个有效方法</p>
+<a id="more"></a>
+<p><em>第1条:了解 Objective-C 语言的起源</em><br><em>第2条:在类的头文件中尽量少引入其他文件</em><br><em>第3条:多用字面量语法，少用与之等价的方法</em><br><em>第4条:多用类型常量，少用 #define 预处理指令</em><br><em>第5条:用枚举表示状态、选项、状态码</em></p>
+<p><em>第6条:理解“属性”这一概念</em><br><em>第7条:在对象内部尽量直接访问实例变量</em><br><em>第8条:理解“对象等同性”这一概念</em><br><em>第9条:以“类族模式”隐藏实现细节</em><br><em>第10条:在既有类中使用关联对象存放自定义数据</em><br><em>第11条:理解 obje_msgSend 的作用</em><br><em>第12条:理解消息转发机制</em><br><em>第13条:用“方法调配技术”测试“黑盒方法”</em><br><em>第14条:理解“类对象”的用意</em></p>
+<p><em>第15条:用前缀避免命名空间冲突</em><br><em>第16条:提供“全能初始化方法”</em><br><em>第17条:实现 description 方法</em><br><em>第18条:尽量使用不可变对象</em><br><em>第19条:使用清晰而协调的命名方式</em><br><em>第20条:为私有方法名加前缀</em><br><em>第21条:理解 Objective-C 错误模型</em><br><em>第22条:理解 NSCopying</em></p>
+<p><em>第23条:通过委托与数据源协议进行对象间通信</em><br><em>第24条:将类的实现代码分散到便于管理的数个分类之中</em><br><em>第25条:总是为第三方类的分类名称加前缀</em><br><em>第26条:勿在分类中声明属性</em><br><em>第27条:使用 “class-continuation 分类”隐藏实现细节</em><br><em>第28条:通过协议提供匿名对象</em></p>
+<p><em>第29条:理解引用计数</em><br><em>第30条:以 ARC 简化引用计数</em><br><em>第31条:</em></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;上一个博客写了Effective Objective-C 2.0 的总的概览，这一章准备记录一下本书中提到的编写高质量iOS 与 OS X 代码的52个有效方法&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习" scheme="http://www.luholi.xyz/categories/%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="iOS" scheme="http://www.luholi.xyz/tags/iOS/"/>
+    
+      <category term="笔记" scheme="http://www.luholi.xyz/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Effective-Objective-C 2.0笔记（概览）</title>
+    <link href="http://www.luholi.xyz/2016/02/01/Effective-Objective-C-2-0%E7%AC%94%E8%AE%B0%EF%BC%88%E6%A6%82%E8%A7%88%EF%BC%89/"/>
+    <id>http://www.luholi.xyz/2016/02/01/Effective-Objective-C-2-0笔记（概览）/</id>
+    <published>2016-02-01T07:19:23.000Z</published>
+    <updated>2016-12-14T02:41:57.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>一直想说要读完这本书，结果在咸鱼老湿的督促下，还是没能看完，努力还是要靠自己啊，今天正好有时间，就先把标题里在这里。<br>我们先定个小目标，比方说，先把这52个有效方法写出来，以后再慢慢填充。<br>编写高质量iOS与OS X代码的52个有效方法。<br><a id="more"></a><br>本书分为七章，分别是</p>
+<ol>
+<li><p>熟悉 Objective-C<br>通论该语言的核心概念</p>
+</li>
+<li><p>对象、消息、运行期<br>对象之间能够关联与交互，这是面向对象语言的重要特征。贲张讲述这些特性，并深入研究代码在运行期的行为。</p>
+</li>
+<li><p>接口与 API 设计<br>很少有那种写完就不再复用的代码。即使代码不向更多人公开，也依然有可能用在自己的多个项目中。本章讲解如何编写与 Objective-C 搭配得宜的类。</p>
+</li>
+<li><p>协议与分类<br>协议与分类是两个需要掌握的重要语言特性。若运用得当，则可以令代码易读、易维护且少出错。本章将帮助读者精通这两个概念。</p>
+</li>
+<li><p>内存管理<br>Objective-C 语言以引用计数来管理内存，这令许多初学者纠结，要是用过以“垃圾收集器” (garbage collector)来管理内存的语言，那么更会如此。“自动引用计数”机制缓解了此问题，不过使用时有很多重要的注意事项，以确保对象模型正确，不致内存泄漏。本章提醒读者注意内存管理中易犯的错误。</p>
+</li>
+<li><p>块与大中枢派发<br>苹果公司引入了“块”这一概念，其余法类似于 C 语言扩展中的“闭包”(closure)。在 Objective-C 语言中，我们通常采用块来实现一些原来需要很多样板代码才能完成的事情，块还能实现“代码分离”(code separation)。“大中枢派发”(Grand Central Dispatch,GCD) 提供了一套用于多线程环境的简单接口。“块”可视为GCD的任务，根据系统资源状况，这些任务也许能并发执行。本章将教会读者如何充分运用这两项核心技术。</p>
+</li>
+<li><p>系统框架<br>大家通常会用 Objective-C 开开发Mac OS X 或 iOS 程序。在这两种情况下都有一套完整的系统框架可供使用，前者名为 Cocoa ，后者名为 Cocoa Touch。本章将总览这些框架，并深入研究其中某些类。</p>
+</li>
+</ol>
+<p>共有52个有效方法，会在下一章博客中写出来</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一直想说要读完这本书，结果在咸鱼老湿的督促下，还是没能看完，努力还是要靠自己啊，今天正好有时间，就先把标题里在这里。&lt;br&gt;我们先定个小目标，比方说，先把这52个有效方法写出来，以后再慢慢填充。&lt;br&gt;编写高质量iOS与OS X代码的52个有效方法。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="学习" scheme="http://www.luholi.xyz/categories/%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="iOS" scheme="http://www.luholi.xyz/tags/iOS/"/>
+    
+      <category term="笔记" scheme="http://www.luholi.xyz/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>开始健身</title>
+    <link href="http://www.luholi.xyz/2016/01/15/%E5%BC%80%E5%A7%8B%E5%81%A5%E8%BA%AB/"/>
+    <id>http://www.luholi.xyz/2016/01/15/开始健身/</id>
+    <published>2016-01-15T04:03:40.000Z</published>
+    <updated>2016-12-14T02:47:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/ideal.JPG" alt="目标身材" title="">
+                </div>
+                <div class="image-caption">目标身材</div>
+            </figure>
+<p>####终于开始健身了，今天将是第三次去了，还是矫正体型，看来健身的道路很漫长啊。距离目标身材还很遥远，加油吧，骚年！</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;image-bubble&quot;&gt;
+                &lt;div class=&quot;img-lightbox&quot;&gt;
+                    &lt;div class=&quot;overlay&quot;&gt;&lt;/div&gt;
+                   
+    
+    </summary>
+    
+      <category term="生活" scheme="http://www.luholi.xyz/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+      <category term="碎碎念" scheme="http://www.luholi.xyz/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+    
+      <category term="健身" scheme="http://www.luholi.xyz/tags/%E5%81%A5%E8%BA%AB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CocoaPods的使用与安装</title>
+    <link href="http://www.luholi.xyz/2016/01/12/CocoaPods%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%AE%89%E8%A3%85/"/>
+    <id>http://www.luholi.xyz/2016/01/12/CocoaPods的使用与安装/</id>
+    <published>2016-01-12T05:07:11.000Z</published>
+    <updated>2016-12-14T02:41:39.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="什么是CocoaPods"><a href="#什么是CocoaPods" class="headerlink" title="什么是CocoaPods"></a>什么是CocoaPods</h2><p>CocoaPods是开发 OS X 和 iOS 应用程序的一个第三方库的依赖管理工具，而其本身是利用ruby的依赖管理gem进行构建的。因此，在解析整合过程中，最重要的几个gems分别是：CocoaPods/CocoaPods, CocoaPods/Core, 和 CocoaPods/Xcodeproj。<br>在我们的工程里面会用到JSONKit、AFNetWorking等第三方开源库，首次在工程中引入这些第三方库的时候，会涉及许多配置，尤其是在build phases和linker flags配置中过程中，会引起许多人为因素的错误。CocoaPods的出现简化了这一切，并且可以通过CocoaPods查找新的第三方库。<br><a id="more"></a></p>
+<h2 id="CocoaPods的工作原理"><a href="#CocoaPods的工作原理" class="headerlink" title="CocoaPods的工作原理"></a>CocoaPods的工作原理</h2><p>CocoaPods的原理是将所有的依赖库都放到另一个名为Pods的项目中，然后让主项目依赖Pods项目，这样，源码管理工作都从主项目移到了Pods项目中。Pods项目最终会编译成一个名为libPods.a的文件，主项目只需要依赖这个 .a文件即可。</p>
+<h2 id="CocoaPods的安装"><a href="#CocoaPods的安装" class="headerlink" title="CocoaPods的安装"></a>CocoaPods的安装</h2><p>上面已经提到了，CocoaPods是利用Ruby的依赖管理gem进行构建，因此安装CocoaPods需要在ruby的环境下。</p>
+<h3 id="1-Ruby环境搭建"><a href="#1-Ruby环境搭建" class="headerlink" title="1.Ruby环境搭建"></a>1.Ruby环境搭建</h3><p>Mac OS是自带ruby环境的，但是保险起见，还是需要更新一下。<br>a.查看当前ruby版本<br>打开Mac的terminal 输入ruby -v代码如下<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ruby -v</div><div class="line">ruby <span class="number">2.0</span>.0p645 (<span class="number">2015</span>-<span class="number">04</span>-<span class="number">13</span> revision <span class="number">50299</span>) [universal.x86_64-darwin15](<span class="comment">#)</span></div></pre></td></tr></table></figure></p>
+<p>b.更换ruby源<br>终端输入如下命令（ruby的软件源rubygems.org因为使用的亚马逊的云服务，所以被墙了，需要更新一下ruby的源，国内常用的镜像服务有淘宝阿里云的<a href="https://ruby.taobao.org/" target="_blank" rel="external"></a>，山东理工大学的<a href="http://ruby.sdutlinux.org/" target="_blank" rel="external"></a>,一般使用淘宝的）<br>gem sources –remove <a href="https://rubygems.org/" target="_blank" rel="external">https://rubygems.org/</a><br>gem sources -a <a href="https://ruby.taobao.org/" target="_blank" rel="external">https://ruby.taobao.org/</a><br>gem sources -l  （用来检查使用替换镜像位置成功）<br>代码如下<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ gem sources --remove <span class="string">https:</span><span class="comment">//rubygems.org/</span></div><div class="line"><span class="string">https:</span><span class="comment">//rubygems.org/ removed from sources</span></div><div class="line">$ gem sources -a <span class="string">https:</span><span class="comment">//ruby.taobao.org/</span></div><div class="line"><span class="string">https:</span><span class="comment">//ruby.taobao.org/ added to sources</span></div><div class="line">$ gem sources -l</div><div class="line">*** CURRENT SOURCES ***</div><div class="line"><span class="symbol"></span></div><div class="line">http:<span class="comment">//rubygems-china.oss.aliyuncs.com</span></div><div class="line"><span class="string">https:</span><span class="comment">//ruby.taobao.org/</span></div></pre></td></tr></table></figure></p>
+<h3 id="2-升级gem"><a href="#2-升级gem" class="headerlink" title="2.升级gem"></a>2.升级gem</h3><p>sudo gem update –system<br>升级成功后，代码如下<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/2016-01-12.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h3 id="3-下载安装CocoaPods"><a href="#3-下载安装CocoaPods" class="headerlink" title="3.下载安装CocoaPods"></a>3.下载安装CocoaPods</h3><p>安装CocoaPods（OS X 10.11以前）</p>
+<ul>
+<li>sudo gem install cocoapods<br>安装CocoaPods（10.11后苹果升级了安全策略）</li>
+<li>sudo gem install -n /usr/local/bin cocoapods<br>安装更新后，会有 gem installed提示</li>
+</ul>
+<p>所有的项目的Podspec文件都托管在<a href="https://github.com/CocoaPods/Specs。第一次执行pod" target="_blank" rel="external">https://github.com/CocoaPods/Specs。第一次执行pod</a> setup时，CocoaPods会将这些podspec索引文件更新到本地的 /.cocoapods/目录下，这个索引文件比较大，有80M左右。所以第一次更新时非常慢，一般更新了将近1个小时才完成。<br>一个叫akinliu的朋友在gitcafe和oschina上建立了CocoaPods索引库的镜像，因为gitcafe和oschina都是国内的服务器，所以在执行索引更新操作时，会快很多。如下操作可以将CocoaPods设置成使用gitcafe镜像：<br>1.移除原有服务器</p>
+<ul>
+<li>pod repo remove master<br>2.添加境内服务器（建议使用第一个）</li>
+<li>pod repo add master <a href="https://gitcafe.com/akuandev/Specs.git" target="_blank" rel="external">https://gitcafe.com/akuandev/Specs.git</a></li>
+<li>pod repo add master <a href="http://git.oschina.net/akuandev/Specs.git(开源中国较慢" target="_blank" rel="external">http://git.oschina.net/akuandev/Specs.git(开源中国较慢</a>)<br>使用及截图如下<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/89744051-0CCB-4D1E-9CC0-7AE6BCEFB0B1.png" alt="移除原有服务器" title="">
+                </div>
+                <div class="image-caption">移除原有服务器</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/4AF9C273-72BA-45C0-9F35-9E389EC9118B.png" alt="添加" title="">
+                </div>
+                <div class="image-caption">添加</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/77C9BAB1-E831-4C0A-BA3C-A670AE8464B9.png" alt="替换成功" title="">
+                </div>
+                <div class="image-caption">替换成功</div>
+            </figure>
+</li>
+</ul>
+<p>完成后，执行操作：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="built_in">setup</span></div></pre></td></tr></table></figure></p>
+<p>执行结束后代码如下图：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/2016-01-12%2012-2.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>至此，CocoaPods就完全安装结束，so easy！</p>
+<h2 id="CocoaPods的使用"><a href="#CocoaPods的使用" class="headerlink" title="CocoaPods的使用"></a>CocoaPods的使用</h2><h3 id="1-新建Podfile文件"><a href="#1-新建Podfile文件" class="headerlink" title="1.新建Podfile文件"></a>1.新建Podfile文件</h3><p>使用时需要在你的项目根目录下新建一个名为Podfile的文件，将依赖的库名字依次列在文件中即可<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">promote:</span> lhl$ cd <span class="regexp">/Users/</span>chengmei<span class="regexp">/Desktop/</span>Test </div><div class="line"><span class="string">promote:</span>Test lhl$ touch Podfile</div></pre></td></tr></table></figure></p>
+<p>这时候，在你的工程文件中就新建了一个名为Podfile的文件。</p>
+<h3 id="2-编辑Podfile文件"><a href="#2-编辑Podfile文件" class="headerlink" title="2.编辑Podfile文件"></a>2.编辑Podfile文件</h3><p>用文本编辑器打开刚才新建的Podfile文件，此时的文件应是空白的，Podfile 文件的格式应该类似以下：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">platform <span class="symbol">:ios</span>, <span class="string">'7.0'</span></div><div class="line">pod <span class="string">'AFNetworking'</span>， <span class="string">'&gt; 3.0.4'</span></div><div class="line">pod <span class="string">'LCTabBarController'</span>， <span class="string">'&gt; 1.2.2'</span></div><div class="line">pod <span class="string">'LCBannerView'</span></div></pre></td></tr></table></figure></p>
+<p><strong>注意</strong><br><em>*</em>a. platform 那一行，ios 三个字母都要小写，而且与前面的冒号之间不能有间隔。<br>b. 后面的版本号也可以不写，但是有些开源库对版本是有要求的，比如要在 iOS 7.0 以上才能运行，遇到这样的开源库就需要写上版本号。<br>c. platform 下面就是 CocoaPods 需要集成的开源库，根据你的需要确定集成成些库。</p>
+<hr>
+<h3 id="3-查找所需要的类库"><a href="#3-查找所需要的类库" class="headerlink" title="3.查找所需要的类库"></a>3.查找所需要的类库</h3><p>例如，我们需要在工程文件中添加AFNetworking，首先需要在 CocoaPods 里面先搜索是否有需要的库，在 Terminal 中输入：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">pod search AFNetworking</span></div></pre></td></tr></table></figure></p>
+<p>所显示代码如下：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/0BDE439B-CD6B-4A34-A7EE-2ED5C450AAFA.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">pod</span> <span class="string">'AFNetworking'</span>, <span class="string">'&gt; 3.0.4'</span></div></pre></td></tr></table></figure></p>
+<p>就是需要我们在Podfile文件里面写的,把它复制，粘贴进去，并保存。</p>
+<h3 id="4-执行导入命令"><a href="#4-执行导入命令" class="headerlink" title="4.执行导入命令"></a>4.执行导入命令</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cd /Users/chengmei/Desktop/Test</div><div class="line">$ pod install</div></pre></td></tr></table></figure>
+<p>导入成功后，如下截图所示<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/2016-01-12%2012.37.59.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>pod install命令执行成功后，会看到工程目录下多出CocoaPodsTest.xcworkspace、Podfile.lock文件和Pods目录。再看看刚才执行完pod install命令打印出来的内容的最后一行：<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="string">!</span>](<span class="link">#</span>) Please close any current Xcode sessions and use <span class="code">`Test.xcworkspace`</span> for this project from now on.</div></pre></td></tr></table></figure></p>
+<p>提示我们从现在起，我们需要使用CocoaPodsTest.xcworkspace文件来开发。</p>
+<h3 id="5-第三方库更新与添加"><a href="#5-第三方库更新与添加" class="headerlink" title="5.第三方库更新与添加"></a>5.第三方库更新与添加</h3><p>当需要添加第三方库时，只需要直接在Podfile里面添加第三方库信息，在terminal里面导入执行命令：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="keyword">cd</span> /Users/chengmei/Desktop/<span class="keyword">Test</span></div><div class="line">$ pod <span class="keyword">update</span></div></pre></td></tr></table></figure></p>
+<p>即可添加并更新成功。<br>至此，我们CocoaPods的安装与使用就全部结束，往后我们只需在.xcworkspace文件里面编写即可。</p>
+<h2 id="遇到过的坑"><a href="#遇到过的坑" class="headerlink" title="遇到过的坑"></a>遇到过的坑</h2><ol>
+<li>首先就是系统升级成10.11后，由于苹果加强了安全策略，原来的sudo gem install cocoapods命令不再起作用，在10.11以前的系统中任然适用。10.11后需要适用命令sudo gem install -n /usr/local/bin cocoapods</li>
+<li><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-01-12%2012.31.42.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+这个问题折腾我好久，最后发现是在ios, ‘7.0’这个逗号后面我多输入了一个空格。</li>
+</ol>
+<p>3<br><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[!] Invalid Podfile file: undefined local variable <span class="keyword">or</span> <span class="function"><span class="keyword">method</span> '<span class="title">en_US</span>' <span class="title">for</span> #&lt;<span class="title">Pod</span>:</span>:Podfile:<span class="number">0</span>x00000102a5d8b0&gt;. Updating CocoaPods might fix the issue.</div></pre></td></tr></table></figure></p>
+<p>此错误也是常见的，原因：单引号格式，可能是手动输入导致<br>解决办法：前往 系统偏好设置 - 键盘 - 文本 - 将“使用智能引号和破折号”一项取消勾选 - 再将 Podfile 里面的单（双）引号修改一下。<br><strong><em>如果遇到了神奇的报错，执行下面的命令</em></strong></p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">$</span> sudo gem update --<span class="keyword">system</span></div><div class="line"><span class="symbol">$</span> sudo gem install cocoapods</div><div class="line"><span class="symbol">$</span> pod setup</div></pre></td></tr></table></figure>
+<p>重装吧</p>
+<h2 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h2><p>1、pod install提速<br>每次执行pod install和pod update的时候，cocoapods都会默认更新一次spec仓库。这是一个比较耗时的操作。在确认spec版本库不需要更新时，给这两个命令加一个参数跳过spec版本库更新,可以明显提高这两个命令的执行速度。<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pod install --<span class="keyword">verbose</span> --<span class="keyword">no</span>-repo-<span class="keyword">update</span></div><div class="line">pod <span class="keyword">update</span> --<span class="keyword">verbose</span> --<span class="keyword">no</span>-repo-<span class="keyword">update</span></div></pre></td></tr></table></figure></p>
+<p>2、关于Podfile文件编辑时，第三方库版本号的各种写法<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">pod ‘AFNetworking’ <span class="comment">//不显式指定依赖库版本，表示每次都获取最新版本</span></div><div class="line">pod ‘AFNetworking’, ‘<span class="number">2.0</span>’ <span class="comment">//只使用2.0版本</span></div><div class="line">pod ‘AFNetworking’, ‘\&gt;<span class="number">2.0</span>′ <span class="comment">//使用高于2.0的版本</span></div><div class="line">pod ‘AFNetworking’, ‘\&gt;=<span class="number">2.0</span>′ <span class="comment">//使用大于或等于2.0的版本</span></div><div class="line">pod ‘AFNetworking’, ‘\&lt;<span class="number">2.0</span>′ <span class="comment">//使用小于2.0的版本</span></div><div class="line">pod ‘AFNetworking’, ‘\&lt;=<span class="number">2.0</span>′ <span class="comment">//使用小于或等于2.0的版本</span></div><div class="line">pod ‘AFNetworking’, ‘&gt;<span class="number">0.1</span><span class="number">.2</span>′ <span class="comment">//使用大于等于0.1.2但小于0.2的版本，相当于&gt;=0.1.2并且&lt;0.2.0</span></div><div class="line">pod ‘AFNetworking’, ‘&gt;<span class="number">0.1</span>′ <span class="comment">//使用大于等于0.1但小于1.0的版本</span></div><div class="line">pod ‘AFNetworking’, ‘&gt;<span class="number">0</span>′ <span class="comment">//高于0的版本，写这个限制和什么都不写是一个效果，都表示使用最新版本</span></div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;什么是CocoaPods&quot;&gt;&lt;a href=&quot;#什么是CocoaPods&quot; class=&quot;headerlink&quot; title=&quot;什么是CocoaPods&quot;&gt;&lt;/a&gt;什么是CocoaPods&lt;/h2&gt;&lt;p&gt;CocoaPods是开发 OS X 和 iOS 应用程序的一个第三方库的依赖管理工具，而其本身是利用ruby的依赖管理gem进行构建的。因此，在解析整合过程中，最重要的几个gems分别是：CocoaPods/CocoaPods, CocoaPods/Core, 和 CocoaPods/Xcodeproj。&lt;br&gt;在我们的工程里面会用到JSONKit、AFNetWorking等第三方开源库，首次在工程中引入这些第三方库的时候，会涉及许多配置，尤其是在build phases和linker flags配置中过程中，会引起许多人为因素的错误。CocoaPods的出现简化了这一切，并且可以通过CocoaPods查找新的第三方库。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="技术" scheme="http://www.luholi.xyz/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="iOS" scheme="http://www.luholi.xyz/tags/iOS/"/>
+    
+      <category term="工具" scheme="http://www.luholi.xyz/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2015年终小结</title>
+    <link href="http://www.luholi.xyz/2016/01/08/2015%E5%B9%B4%E7%BB%88%E5%B0%8F%E7%BB%93/"/>
+    <id>http://www.luholi.xyz/2016/01/08/2015年终小结/</id>
+    <published>2016-01-08T01:53:42.000Z</published>
+    <updated>2016-12-14T02:47:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>2015年已近过去，掐指一算从2014年来公司实习到正式入职也已经一年多了，非常感谢公司对我的培养和实习导师对我的教导。<a id="more"></a>工作至今，从最开始的小课桌，到安徽和教育，最云南，到现在的北京和教育，大大小小的项目也接触了五六个。在这一年的工作时间里，个人能力得到了很大的提升，虽不能完全独当一面但也能在大的项目中按照要求及时完成发放的任务，并即使处理反馈的各种问题单。希望在新的一年里个人能力能够更进一步，得到再一次的提升，迎接更加具有挑战性的工作。<br>在这一年的时间里，接触最多的还是北京的项目。这是一项很锻炼人的项目，在项目里能够学到很多东西，掌握很多新的技能。希望在新的一年中，能够为项目做出更大的贡献，在任务不是很紧张的时候，能够学习新的技术，得以运用到工作中来。</p>
+<p>#个人建议<br>1、在任务比较宽松的时候多一些技术交流类似的活动，可以让大家了解并熟悉新的技术，得以运用到工作中来。<br>2、使用团队协作工具，整个项目进度大家都能看到，让每个人更加合理规划自己的工作</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;2015年已近过去，掐指一算从2014年来公司实习到正式入职也已经一年多了，非常感谢公司对我的培养和实习导师对我的教导。
+    
+    </summary>
+    
+      <category term="吐槽" scheme="http://www.luholi.xyz/categories/%E5%90%90%E6%A7%BD/"/>
+    
+    
+      <category term="随笔" scheme="http://www.luholi.xyz/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+      <category term="碎碎念" scheme="http://www.luholi.xyz/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>实现iOS 9 Task Switcher动画［转载］</title>
+    <link href="http://www.luholi.xyz/2015/09/08/%E5%AE%9E%E7%8E%B0iOS-9-Task-Switcher%E5%8A%A8%E7%94%BB/"/>
+    <id>http://www.luholi.xyz/2015/09/08/实现iOS-9-Task-Switcher动画/</id>
+    <published>2015-09-08T07:04:13.000Z</published>
+    <updated>2016-12-14T02:47:33.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文转载自<a href="http://tech.glowing.com/cn/" target="_blank" rel="external">http://tech.glowing.com/cn/</a><br><strong>如有侵犯，立马删除</strong><br>原文链接:<a href="http://tech.glowing.com/cn/implement-ios9-task-switcher-animation/" target="_blank" rel="external">实现iOS 9 Task Switcher动画</a></p>
+<p>##升级到iOS 9以后，发现新的task switcher的动画蛮有趣的，于是就动手实现了下，最终效果如下～<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/demo.gif" alt="demo效果图" title="">
+                </div>
+                <div class="image-caption">demo效果图</div>
+            </figure><br><a id="more"></a></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>1    首先我们需要一个横向的scroll view，可以用UICollectionView，也可以自己实现一个。scroll view里每一页都是一张card，一屏5张card:</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">｜                        |</div><div class="line">｜<span class="keyword">card</span> <span class="keyword">card</span> <span class="keyword">card</span> <span class="keyword">card</span> <span class="keyword">card</span>|</div><div class="line">｜                        |</div></pre></td></tr></table></figure>
+<p>2    其次，我们需要在scrollViewDidScroll中判断每张card距离中心的距离，根据这个值来调整它的alpha，scale以及x轴的translation。</p>
+<p>alpha：右边的card alpha都是1，左边的越靠左alpha越小<br>scale： 从左往右依次变大<br>translation：除了中间的card，所有的card都会右偏，而为了让中间card大部分都露出来，右边的card偏移需要比左边大<br>开工</p>
+<h2 id="1-横向滚动的scroll-view"><a href="#1-横向滚动的scroll-view" class="headerlink" title="1. 横向滚动的scroll view"></a>1. 横向滚动的scroll view</h2><p>我们可以自己实现一个横向无限滚动的scroll view, 具体可以参考:<a href="http://tech.glowing.com/cn/practice-in-uiscrollview/" target="_blank" rel="external">http://tech.glowing.com/cn/practice-in-uiscrollview/</a><br>在scrollViewDidScroll中，我们提供一个delegate方法，告诉使用者每一页距离中心的位置，以便apply各种transform到这个view上，delegate方法如下：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@protocol</span> InfiniteScrollViewDelegate \&lt;NSObject\&gt;</div><div class="line">- (<span class="keyword">void</span>)<span class="string">updateView:</span>(UIView *)view <span class="string">withProgress:</span>(CGFloat)progress <span class="string">scrollDirection:</span>(ScrollDirection)direction;</div><div class="line"><span class="meta">@end</span></div></pre></td></tr></table></figure>
+<p>说明一下progress的含义，如果一屏有5个visible views的话，那么它的值会从－2变化到2：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">|<span class="string">                   </span>|</div><div class="line">|<span class="string">-2...-1...0...1...2</span>|</div><div class="line">|<span class="string">                   </span>|</div></pre></td></tr></table></figure>
+<h2 id="2-根据每一页的位置来设置它的transform"><a href="#2-根据每一页的位置来设置它的transform" class="headerlink" title="2. 根据每一页的位置来设置它的transform"></a>2. 根据每一页的位置来设置它的transform</h2><p>首先是alpha，中心右边的card alpha都是1，而左边的会越来越淡，所以我们可以这样写：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (progress \&gt;= 0)   </div><div class="line"><span class="keyword">view</span>.<span class="keyword">alpha</span> = 1;</div><div class="line">&#125; <span class="keyword">else</span> </div><div class="line"><span class="keyword">view</span>.<span class="keyword">alpha</span> = 1 - fabs(progress) * 0.2;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其次是scale，由左往右依次变大：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">CGAffineTransform transform</span> = CGAffineTransformIdentity;  </div><div class="line"><span class="attribute">CGFloat scale</span> = 1 + (progress) * 0.03;  </div><div class="line"><span class="attribute">transform</span> = CGAffineTransformScale(transform, scale, scale);</div></pre></td></tr></table></figure>
+<p>最后是x轴的translation，除了中间的card，所有的card都会往右偏，而为了让中间card大部分都露出来，右边的card偏移需要比左边大</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">CGFloat <span class="attr">translation</span> = <span class="number">0</span>;  </div><div class="line"><span class="keyword">if</span> (progress \&gt; <span class="number">0</span>)   </div><div class="line"><span class="attr">translation</span> = fabs(progress) * SCREEN_WIDTH / <span class="number">2.2</span>;</div><div class="line">&#125; <span class="keyword">else</span> </div><div class="line"><span class="attr">translation</span> = fabs(progress) * SCREEN_WIDTH / <span class="number">15</span>;</div><div class="line">&#125;</div><div class="line"><span class="attr">transform</span> = CGAffineTransformTranslate(transform, translation, <span class="number">0</span>);</div></pre></td></tr></table></figure>
+<p>完整的实现：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">-(<span class="keyword">void</span>)updateView:(<span class="built_in">UIView</span> *)view withProgress:(<span class="built_in">CGFloat</span>)progress scrollDirection:(ScrollDirection)direction</div><div class="line">&#123;</div><div class="line">    <span class="comment">// adjust z-index of each views</span></div><div class="line">    <span class="built_in">NSMutableArray</span> *views = [[<span class="keyword">self</span>.scrollView allViews] mutableCopy];</div><div class="line">    [views sortUsingComparator:^<span class="built_in">NSComparisonResult</span>(<span class="built_in">UIView</span> *view1, <span class="built_in">UIView</span> *view2) </div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> view1.tag &gt; view2.tag;</div><div class="line">    &#125;];</div><div class="line">    <span class="keyword">for</span> (<span class="built_in">UIView</span> *view <span class="keyword">in</span> views) </div><div class="line">    &#123;</div><div class="line">        [view.superview bringSubviewToFront:view];</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="comment">// alpha</span></div><div class="line"><span class="keyword">if</span> (progress &gt;= <span class="number">0</span>) </div><div class="line">&#123;</div><div class="line">    view.alpha = <span class="number">1</span>;</div><div class="line">&#125; </div><div class="line"><span class="keyword">else</span> </div><div class="line">&#123;</div><div class="line">    view.alpha = <span class="number">1</span> - fabs(progress) * <span class="number">0.2</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">CGAffineTransform</span> transform = <span class="built_in">CGAffineTransformIdentity</span>;    </div><div class="line"><span class="comment">// scale</span></div><div class="line"><span class="built_in">CGFloat</span> scale = <span class="number">1</span> + (progress) * <span class="number">0.03</span>;</div><div class="line">transform = <span class="built_in">CGAffineTransformScale</span>(transform, scale, scale);</div><div class="line"><span class="comment">// translation</span></div><div class="line"><span class="built_in">CGFloat</span> translation = <span class="number">0</span>;</div><div class="line"><span class="keyword">if</span> (progress &gt; <span class="number">0</span>) </div><div class="line">&#123;</div><div class="line">    translation = fabs(progress) * SCREEN_WIDTH / <span class="number">2.2</span>;</div><div class="line">&#125; </div><div class="line"><span class="keyword">else</span></div><div class="line">&#123;</div><div class="line">    translation = fabs(progress) * SCREEN_WIDTH / <span class="number">15</span>;</div><div class="line">&#125;</div><div class="line">transform = <span class="built_in">CGAffineTransformTranslate</span>(transform, translation, <span class="number">0</span>);</div><div class="line">view.transform = transform;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后是完整的demo代码：<a href="https://github.com/Glow-Inc/TaskSwitcherDemo" target="_blank" rel="external">https://github.com/Glow-Inc/TaskSwitcherDemo</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文转载自&lt;a href=&quot;http://tech.glowing.com/cn/&quot;&gt;http://tech.glowing.com/cn/&lt;/a&gt;&lt;br&gt;&lt;strong&gt;如有侵犯，立马删除&lt;/strong&gt;&lt;br&gt;原文链接:&lt;a href=&quot;http://tech.glowing.com/cn/implement-ios9-task-switcher-animation/&quot;&gt;实现iOS 9 Task Switcher动画&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;##升级到iOS 9以后，发现新的task switcher的动画蛮有趣的，于是就动手实现了下，最终效果如下～&lt;br&gt;&lt;figure class=&quot;image-bubble&quot;&gt;
+                &lt;div class=&quot;img-lightbox&quot;&gt;
+                    &lt;div class=&quot;overlay&quot;&gt;&lt;/div&gt;
+                    &lt;img src=&quot;/img/demo.gif&quot; alt=&quot;demo效果图&quot; title=&quot;&quot;&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;image-caption&quot;&gt;demo效果图&lt;/div&gt;
+            &lt;/figure&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="技术" scheme="http://www.luholi.xyz/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="iOS" scheme="http://www.luholi.xyz/tags/iOS/"/>
+    
+      <category term="转载" scheme="http://www.luholi.xyz/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS多线程</title>
+    <link href="http://www.luholi.xyz/2015/08/20/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    <id>http://www.luholi.xyz/2015/08/20/iOS多线程/</id>
+    <published>2015-08-20T08:55:52.000Z</published>
+    <updated>2016-12-14T02:48:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>iOS多线程分为四种</p>
+<ul>
+<li>Pthreads</li>
+<li>NSThread</li>
+<li>GCD</li>
+<li><p>NSOperation &amp; NSOperationQueue</p>
+<a id="more"></a>
+<h1 id="Pthreads"><a href="#Pthreads" class="headerlink" title="Pthreads"></a>Pthreads</h1><p>  POSIX线程（POSIX threads），简称Pthreads，是线程的POSIX标准。该标准定义了创建和操纵线程的一整套API。在类Unix操作系统（Unix、Linux、Mac OS X等）中，都使用Pthreads作为操作系统的线程。</p>
+<p>  简单地说，这是一套在很多操作系统上都通用的多线程API，所以移植性很强（然并卵），当然在 iOS 中也是可以的。不过这是基于C语言的框架，使用起来比较酸爽啦！感受一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event &#123;</div><div class="line">pthread_t thread;</div><div class="line">//创建一个线程并自动执行</div><div class="line">pthread_create(&amp;thread, NULL, start, NULL);</div><div class="line">&#125;</div><div class="line">void *start(void *data) &#123;</div><div class="line">NSLog(@&quot;%@&quot;, [NSThread currentThread]);</div><div class="line">return NULL;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>打印并输出：<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="number">2015-07-27</span> <span class="number">23</span>:<span class="number">57:21.689</span> testThread[<span class="number">10616</span>:<span class="number">2644653</span>] </div><div class="line">&lt;NSThread: <span class="number">0</span>x7fbb<span class="number">48d33690</span>&gt;&#123;number = <span class="number">2</span>, name = (null)&#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;iOS多线程分为四种&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pthreads&lt;/li&gt;
+&lt;li&gt;NSThread&lt;/li&gt;
+&lt;li&gt;GCD&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;NSOperation &amp;amp; NSOperationQueue&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="技术" scheme="http://www.luholi.xyz/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="iOS" scheme="http://www.luholi.xyz/tags/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NSCFString longValue</title>
+    <link href="http://www.luholi.xyz/2015/07/21/NSCFString-longValue/"/>
+    <id>http://www.luholi.xyz/2015/07/21/NSCFString-longValue/</id>
+    <published>2015-07-21T09:30:32.000Z</published>
+    <updated>2016-12-14T02:48:14.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>昨天在写一个字典数据的时候，在一个字典内有18对键值对<br><a id="more"></a><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/2015-07-20-1.png" alt="2015" title="">
+                </div>
+                <div class="image-caption">2015</div>
+            </figure><br>其中有一个id的值为long型的,我就觉得既然你的值是long型的，那我要取你的值不是轻轻松松么,于是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">long appID = [info[@&quot;id&quot;] longValue];</div></pre></td></tr></table></figure></p>
+<p>然后当然报错了，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-[__NSCFString longValue]: unrecognized selector sent to instance 0x9bf8e10</div><div class="line">Terminating app due to uncaught exception &apos;NSInvalidArgumentException&apos;, reason: &apos;-[__NSCFString longValue]: unrecognized selector sent to instance 0x9bf8e10&apos;</div></pre></td></tr></table></figure></p>
+<p>百思不得其解，不对啊，我之前用还是可以的，怎么就报错了呢。最后在stackoverflow上面找到了答案。<br>原来，@“id”所对应得值，是一个id类型的值，我们需要先将他强制转换成NSString类型的值，然后再将NSString类型的值转化成long型的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSString *strForId = dic[@&quot;id&quot;];</div><div class="line">long appID = [strForId longLongValue];</div></pre></td></tr></table></figure>
+<p>或者直接强制转换<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">long</span> appID ＝ （<span class="keyword">long</span>)［dic[@<span class="string">"id"</span>] longValue］;</div></pre></td></tr></table></figure></p>
+<p>果然再也不报错了～</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;昨天在写一个字典数据的时候，在一个字典内有18对键值对&lt;br&gt;
+    
+    </summary>
+    
+      <category term="其他" scheme="http://www.luholi.xyz/categories/%E5%85%B6%E4%BB%96/"/>
+    
+    
+      <category term="其他" scheme="http://www.luholi.xyz/tags/%E5%85%B6%E4%BB%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>我的第一篇文章</title>
+    <link href="http://www.luholi.xyz/2015/07/10/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
+    <id>http://www.luholi.xyz/2015/07/10/我的第一篇文章/</id>
+    <published>2015-07-10T09:13:45.000Z</published>
+    <updated>2016-12-14T02:47:47.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>#Hello World！<br>好吧，暂且叫它我的第一篇吧，虽说起步晚，可是质量也不高啊。。。真不是一个用心的博主啊</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;#Hello World！&lt;br&gt;好吧，暂且叫它我的第一篇吧，虽说起步晚，可是质量也不高啊。。。真不是一个用心的博主啊&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="纪念" scheme="http://www.luholi.xyz/categories/%E7%BA%AA%E5%BF%B5/"/>
+    
+    
+      <category term="随笔" scheme="http://www.luholi.xyz/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+      <category term="碎碎念" scheme="http://www.luholi.xyz/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+    
+  </entry>
+  
+</feed>

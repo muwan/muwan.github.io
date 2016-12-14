@@ -1,236 +1,185 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  
-  <title>Add SSH Key to Your Remote Client | 芝麻开源</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前段时间，买了Vultr家的VPS用作shadowsocks，最近突然很感兴趣，于是捣鼓了下，每次登录的时候都需要输入密码有点麻烦，就找到了如何用ssh登录的方法。">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Add SSH Key to Your Remote Client | 芝麻开源 | 对大海情有独钟却又怀有敬意，很懒的一个理科男。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="工具,VPS">
+    <meta name="description" content="前段时间，买了Vultr家的VPS用作shadowsocks，最近突然很感兴趣，于是捣鼓了下，每次登录的时候都需要输入密码有点麻烦，就找到了如何用ssh登录的方法。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Add SSH Key to Your Remote Client">
 <meta property="og:url" content="http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/index.html">
 <meta property="og:site_name" content="芝麻开源">
 <meta property="og:description" content="前段时间，买了Vultr家的VPS用作shadowsocks，最近突然很感兴趣，于是捣鼓了下，每次登录的时候都需要输入密码有点麻烦，就找到了如何用ssh登录的方法。">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/309640-f478035471497323.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2016-11-03T07:04:29.000Z">
+<meta property="og:updated_time" content="2016-12-14T02:41:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Add SSH Key to Your Remote Client">
 <meta name="twitter:description" content="前段时间，买了Vultr家的VPS用作shadowsocks，最近突然很感兴趣，于是捣鼓了下，每次登录的时候都需要输入密码有点麻烦，就找到了如何用ssh登录的方法。">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/309640-f478035471497323.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-  
-    <link rel="alternative" href="/atom.xml" title="芝麻开源" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/img/favicon.png">
-  
-  <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.2">
+    <script>window.lazyScripts=[]</script>
 </head>
+
 <body>
-  <div id="container">
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-	<header id="header" class="inner">
-		<a href="/" class="profilepic">
-			
-			<img lazy-src="/img/author.jpg" class="js-avatar">
-			
-		</a>
+    <div id="loading" class="active"></div>
 
-		<hgroup>
-		  <h1 class="header-author"><a href="/">muwan</a></h1>
-		</hgroup>
-
-		
-		<p class="header-subtitle">对大海情有独钟却又怀有敬意，很懒的一个理科男。</p>
-		
-
-		
-			<div class="switch-btn">
-				<div class="icon">
-					<div class="icon-ctn">
-						<div class="icon-wrap icon-house" data-idx="0">
-							<div class="birdhouse"></div>
-							<div class="birdhouse_holes"></div>
-						</div>
-						<div class="icon-wrap icon-ribbon hide" data-idx="1">
-							<div class="ribbon"></div>
-						</div>
-						
-						<div class="icon-wrap icon-link hide" data-idx="2">
-							<div class="loopback_l"></div>
-							<div class="loopback_r"></div>
-						</div>
-						
-						
-						<div class="icon-wrap icon-me hide" data-idx="3">
-							<div class="user"></div>
-							<div class="shoulder"></div>
-						</div>
-						
-					</div>
-					
-				</div>
-				<div class="tips-box hide">
-					<div class="tips-arrow"></div>
-					<ul class="tips-inner">
-						<li>菜单</li>
-						<li>标签</li>
-						
-						<li>友情链接</li>
-						
-						
-						<li>关于我</li>
-						
-					</ul>
-				</div>
-			</div>
-		
-
-		<div class="switch-area">
-			<div class="switch-wrap">
-				<section class="switch-part switch-part1">
-					<nav class="header-menu">
-						<ul>
-						
-							<li><a href="/">主页</a></li>
-				        
-							<li><a href="/archives">所有文章</a></li>
-				        
-							<li><a href="/tags/转载">转载</a></li>
-				        
-							<li><a href="/tags/iOS">iOS</a></li>
-				        
-							<li><a href="/tags/碎碎念">碎碎念</a></li>
-				        
-						</ul>
-					</nav>
-					<nav class="header-nav">
-						<div class="social">
-							
-								<a class="github" target="_blank" href="https://github.com/muwan" title="github">github</a>
-					        
-								<a class="mail" target="_blank" href="mailto:wanrumu@gmail.com" title="mail">mail</a>
-					        
-						</div>
-					</nav>
-				</section>
-				
-				
-				<section class="switch-part switch-part2">
-					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/健身/" style="font-size: 10px;">健身</a> <a href="/tags/工具/" style="font-size: 16.67px;">工具</a> <a href="/tags/碎碎念/" style="font-size: 16.67px;">碎碎念</a> <a href="/tags/笔记/" style="font-size: 13.33px;">笔记</a> <a href="/tags/翻墙/" style="font-size: 10px;">翻墙</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/随笔/" style="font-size: 13.33px;">随笔</a>
-					</div>
-				</section>
-				
-				
-				
-				<section class="switch-part switch-part3">
-					<div id="js-friends">
-					
-			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.crazyhao.com">施明皓的主页</a>
-			        
-			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://a1.chenky.com/">一个忙碌的程序猿</a>
-			        
-			        </div>
-				</section>
-				
-
-				
-				
-				<section class="switch-part switch-part4">
-				
-					<div id="js-aboutme">热爱旅行想要探索世界，可惜兜里没有钱。目前是一枚iOS开发者，这是我建立的QQ群: 414457229，目前有5人了，欢迎加入。</div>
-				</section>
-				
-			</div>
-		</div>
-	</header>				
-</div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-  	<div class="overlay">
-  		<div class="slider-trigger"></div>
-  		<h1 class="header-author js-mobile-header hide">muwan</h1>
-  	</div>
-	<div class="intrude-less">
-		<header id="header" class="inner">
-			<div class="profilepic">
-				<img lazy-src="/img/author.jpg" class="js-avatar">
-			</div>
-			<hgroup>
-			  <h1 class="header-author">muwan</h1>
-			</hgroup>
-			
-			<p class="header-subtitle">对大海情有独钟却又怀有敬意，很懒的一个理科男。</p>
-			
-			<nav class="header-menu">
-				<ul>
-				
-					<li><a href="/">主页</a></li>
-		        
-					<li><a href="/archives">所有文章</a></li>
-		        
-					<li><a href="/tags/转载">转载</a></li>
-		        
-					<li><a href="/tags/iOS">iOS</a></li>
-		        
-					<li><a href="/tags/碎碎念">碎碎念</a></li>
-		        
-		        <div class="clearfix"></div>
-				</ul>
-			</nav>
-			<nav class="header-nav">
-				<div class="social">
-					
-						<a class="github" target="_blank" href="https://github.com/muwan" title="github">github</a>
-			        
-						<a class="mail" target="_blank" href="mailto:wanrumu@gmail.com" title="mail">mail</a>
-			        
-				</div>
-			</nav>
-		</header>				
-	</div>
-</nav>
-      <div class="body-wrap"><article id="post-add-SSH-Key-to-Your-remote-clint" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/11/03/add-SSH-Key-to-Your-remote-clint/" class="article-date">
-  	<time datetime="2016-11-03T05:26:30.000Z" itemprop="datePublished">2016-11-03</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Add SSH Key to Your Remote Client
-    </h1>
-  
-
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VPS/">VPS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工具/">工具</a></li></ul>
-	</div>
-
-        
-
-        <div class="clearfix"></div>
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">muwan</h5>
+          <a href="mailto:wanrumu@gmail.com" title="wanrumu@gmail.com" class="mail">wanrumu@gmail.com</a>
+        </hgroup>
       </div>
-      
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/muwan" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Add SSH Key to Your Remote Client</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Add SSH Key to Your Remote Client</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-11-03T05:26:30.000Z" itemprop="datePublished" class="page-time">
+  2016-11-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+            
+        </h5>
+    </div>
+
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>前段时间，买了<a href="http://www.vultr.com/?ref=7026654-3B" target="_blank" rel="external">Vultr</a>家的VPS用作shadowsocks，最近突然很感兴趣，于是捣鼓了下，每次登录的时候都需要输入密码有点麻烦，就找到了如何用ssh登录的方法。<br><a id="more"></a></p>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#准备工作"><span class="post-toc-number">1.</span> <span class="post-toc-text">准备工作</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#工作原理"><span class="post-toc-number">2.</span> <span class="post-toc-text">工作原理</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#开始准备"><span class="post-toc-number">3.</span> <span class="post-toc-text">开始准备</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-add-SSH-Key-to-Your-remote-clint"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Add SSH Key to Your Remote Client</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-11-3 13:26" datetime="2016-11-03T05:26:30.000Z"  itemprop="datePublished">2016-11-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>前段时间，买了<a href="http://www.vultr.com/?ref=7026654-3B" target="_blank" rel="external">Vultr</a>家的VPS用作shadowsocks，最近突然很感兴趣，于是捣鼓了下，每次登录的时候都需要输入密码有点麻烦，就找到了如何用ssh登录的方法。<br><a id="more"></a></p>
 <h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>Mac、VPS（安装的是ubuntu 16.0）</p>
 <h1 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h1><p>ssh除了使用密码验证外，还提供了一种公私密钥的验证方式。客户端生成一个私钥，并生成一个与之对应的公钥，然后将公钥上传到服务器上。</p>
 <h1 id="开始准备"><a href="#开始准备" class="headerlink" title="开始准备"></a>开始准备</h1><ol>
@@ -238,7 +187,13 @@
 </li>
 </ol>
 <p>然后一路回车，生成你自己的密钥对，成功截图如下</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/309640-f478035471497323.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="密钥对截图"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/309640-f478035471497323.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="密钥对截图" title="">
+                </div>
+                <div class="image-caption">密钥对截图</div>
+            </figure>
 <ol>
 <li>将公钥复制到ssh服务器<br>将前一步骤生成的公钥~/id_rsa.pub文件，复制到ssh服务器对应用户下的~/.ssh/authorized_keys文件,可以有多种方式，这里只介绍常用的一种。<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">brew install ssh-<span class="keyword">copy</span>-<span class="built_in">id</span></div><div class="line">ssh-<span class="keyword">copy</span>-<span class="built_in">id</span> username@hostname  <span class="comment">#将username和hostname替换为你的ssh服务器用户名和IP</span></div></pre></td></tr></table></figure>
 </li>
@@ -253,139 +208,276 @@
 <p>ssh name<br>```<br>就能远程登录我们的VPS啦～</p>
 <p>写在最后<br>这篇文章多亏了我们的黄小贱同学 </p>
 
-      
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2016-12-14T02:41:29.000Z" title="2016-12-14 10:41" itemprop="dateUpdated">2016年12月14日 10:41</time>
+</span><br>
+
+
+        这里写留言或版权声明：<a href="/2016/11/03/add-SSH-Key-to-Your-remote-clint/" target="_blank" rel="external">http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/</a>
     </div>
-    
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2016/12/06/Xcode8-Uses-Charts-Objective-C/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
+    <footer>
+        <a href="http://www.luholi.xyz">
+            <img src="/img/avatar.jpg" alt="muwan">
+            muwan
+        </a>
+    </footer>
+</blockquote>
+
         
-          Xcode8在Objective-C中不要用Cocoapods集成Charts（全是坑！！！）
-        
-      </div>
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VPS/">VPS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工具/">工具</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/&title=《Add SSH Key to Your Remote Client》 — 芝麻开源&pic=http://www.luholi.xyz/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/&title=《Add SSH Key to Your Remote Client》 — 芝麻开源&source=前段时间，买了Vultr家的VPS用作shadowsocks，最近突然很感兴趣，于是捣鼓了下，每次登录的时候都需要输入密码有点麻烦，就找到了如何用ssh登..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Add SSH Key to Your Remote Client》 — 芝麻开源&url=http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/&via=http://www.luholi.xyz" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
     </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
   
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/12/06/Xcode8-Uses-Charts-Objective-C/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Xcode8在Objective-C中不要用Cocoapods集成Charts（全是坑！！！）</h4>
+      </a>
+    </div>
   
-    <a href="/2016/10/27/Mac上搭建shadowsocks服务/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Mac上搭建shadowsocks服务</div>
-      <strong class="article-nav-caption">></strong>
-    </a>
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/10/27/Mac上搭建shadowsocks服务/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Mac上搭建shadowsocks服务</h4>
+      </a>
+    </div>
   
 </nav>
 
-  
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="add-SSH-Key-to-Your-remote-clint" data-title="Add SSH Key to Your Remote Client" data-url="http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'zhimakaiyuan', theme: 'none'};
+lazyScripts.push('/js/embed.min.js?v=1.4.2');
+
+
+</script>
+
+
+
+
+
+
+
 </article>
 
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        大爷，赏个辣条呗🙏
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
 
-<div class="share">
-	<!-- JiaThis Button BEGIN -->
-	<div class="jiathis_style">
-		<span class="jiathis_txt">分享到：</span>
-		<a class="jiathis_button_tsina"></a>
-		<a class="jiathis_button_cqq"></a>
-		<a class="jiathis_button_douban"></a>
-		<a class="jiathis_button_weixin"></a>
-		<a class="jiathis_button_tumblr"></a>
-		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	</div>
-	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
-	<!-- JiaThis Button END -->
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
 </div>
 
 
 
-<div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="add-SSH-Key-to-Your-remote-clint" data-title="Add SSH Key to Your Remote Client" data-url="http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"zhimakaiyuan"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
 </div>
 
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
 
 
-
-</div>
-      <footer id="footer">
-  <div class="outer">
-    <div id="footer-info">
-    	<div class="footer-left">
-    		&copy; 2016 muwan
-    	</div>
-      	<div class="footer-right">
-      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
-	</div>
+        <p>
+            <span><a href="" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
     </div>
-      	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-	</script>
-	</br>
-	<span id="busuanzi_container_site_uv" style="font-family:sans-serif;color:#2B2B2B" >您是本博客的第<span id="busuanzi_value_site_uv"></span>个小伙伴
-	</span>
-  </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>芝麻开源 &copy; 2015 - 2016</span>
+        </p>
+    </div>
 </footer>
-    </div>
-    
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
 
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/&title=《Add SSH Key to Your Remote Client》 — 芝麻开源&pic=http://www.luholi.xyz/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/&title=《Add SSH Key to Your Remote Client》 — 芝麻开源&source=前段时间，买了Vultr家的VPS用作shadowsocks，最近突然很感兴趣，于是捣鼓了下，每次登录的时候都需要输入密码有点麻烦，就找到了如何用ssh登..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Add SSH Key to Your Remote Client》 — 芝麻开源&url=http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/&via=http://www.luholi.xyz" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuklEQVR42u3aQW7jMAwF0N7/0h1gtp3E/1NipwWeV0EbW35aiAzJj4/4+vx7vfr7q/8mT3j/tM8v18fGhYeHhzd69VfX+cKzZ+b3PrwJHh4e3hrv/VH+9Tv5puShJQ8/yTvj4eHh/QReuxHvNyVJtZONw8PDw/tdvHbJJI3Gw8PD+y28PDluD/SE2iblK7UWPDw8vJjXNsB+wufF/h4eHh7eQVc9uW6FlraYG70bHh4e3gKvXSZPYduiQ5t2F0VhPDw8vKu82c/+pHg6KzS0CfTDd/Dw8PAWeCfHfVLYbVtfs6GrKO7h4eHhrfHatn1eknj//Pq4zwMYHh4e3lVe22pqU+12my6PDuDh4eGt8dqDe1Z02BgUeCgT4+Hh4a3xZpjkJWZFjfzJdZUaDw8P7ypvVn6dHfFtGywpW/zjMx4eHt4Cb9iMj0cH2pGFNmwkG42Hh4e3x5sNXZ2UX0/CSV28wMPDw1vg3ZpEyNPfvHw8WwUPDw9vg5entrf+fjJGkGx9NHSFh4eHd4l3UmBtm2TtRrStODw8PLw9XnJwJ8f6rNDQjnnNCr54eHh4G7y2pTQbvUqS45OkPOrs4eHh4R3z8oLprcQ6T5fbNtjLXwx4eHh4C7y8DZ8XXk+CRx7THu7Cw8PDW+bN0utkOOAkEc9HGR5GB/Dw8PAu8drCQd4wy0u3s7GA4agBHh4e3jEvv+2ktZ9v1vt76yEtPDw8vAVe26a6C24HC9r0Gg8PD2+DNxuxmh3ceUjIE+uHtfDw8PAWeNeiSlmobQNJvmV4eHh438Nrg8GswJpsXDI6UK+Ch4eHt8abLdxGm7ZYPAtdxXwEHh4e3jfy8ubW3RZam4jj4eHh/V/eSUNrVsZNChwP5Q88PDy8Nd5JWaENEidNtbo0jIeHh7fAmzXAZqnwecqeByQ8PDy8Bd4foYjaT2BqjAMAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
-	var yiliaConfig = {
-		fancybox: true,
-		mathjax: true,
-		animate: true,
-		isHome: false,
-		isPost: true,
-		isArchive: false,
-		isTag: false,
-		isCategory: false,
-		open_in_new: false
-	}
-</script>
-<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-<script src="/js/main.js"></script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
 
 
 
-
-
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    }
-});
-
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';                 
-    }       
-});
 </script>
 
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="/js/main.min.js?v=1.4.2"></script>
 
 
-  </div>
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
 </body>
 </html>
