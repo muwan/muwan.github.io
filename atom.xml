@@ -4,9 +4,9 @@
   <subtitle>对大海情有独钟却又怀有敬意，很懒的一个理科男。</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://www.luholi.xyz/"/>
+  <link href="http://www.zhimakaiyuan.com/"/>
   <updated>2016-12-14T02:45:48.000Z</updated>
-  <id>http://www.luholi.xyz/</id>
+  <id>http://www.zhimakaiyuan.com/</id>
   
   <author>
     <name>muwan</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>Xcode8在Objective-C中不要用Cocoapods集成Charts（全是坑！！！）</title>
-    <link href="http://www.luholi.xyz/2016/12/06/Xcode8-Uses-Charts-Objective-C/"/>
-    <id>http://www.luholi.xyz/2016/12/06/Xcode8-Uses-Charts-Objective-C/</id>
+    <link href="http://www.zhimakaiyuan.com/2016/12/06/Xcode8-Uses-Charts-Objective-C/"/>
+    <id>http://www.zhimakaiyuan.com/2016/12/06/Xcode8-Uses-Charts-Objective-C/</id>
     <published>2016-12-06T09:04:26.000Z</published>
     <updated>2016-12-14T02:45:48.000Z</updated>
     
@@ -32,19 +32,19 @@
     
     </summary>
     
-      <category term="吐槽" scheme="http://www.luholi.xyz/categories/%E5%90%90%E6%A7%BD/"/>
+      <category term="吐槽" scheme="http://www.zhimakaiyuan.com/categories/%E5%90%90%E6%A7%BD/"/>
     
-      <category term="技术" scheme="http://www.luholi.xyz/categories/%E5%90%90%E6%A7%BD/%E6%8A%80%E6%9C%AF/"/>
+      <category term="技术" scheme="http://www.zhimakaiyuan.com/categories/%E5%90%90%E6%A7%BD/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="iOS" scheme="http://www.luholi.xyz/tags/iOS/"/>
+      <category term="iOS" scheme="http://www.zhimakaiyuan.com/tags/iOS/"/>
     
   </entry>
   
   <entry>
     <title>Add SSH Key to Your Remote Client</title>
-    <link href="http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/"/>
-    <id>http://www.luholi.xyz/2016/11/03/add-SSH-Key-to-Your-remote-clint/</id>
+    <link href="http://www.zhimakaiyuan.com/2016/11/03/add-SSH-Key-to-Your-remote-clint/"/>
+    <id>http://www.zhimakaiyuan.com/2016/11/03/add-SSH-Key-to-Your-remote-clint/</id>
     <published>2016-11-03T05:26:30.000Z</published>
     <updated>2016-12-14T02:41:29.000Z</updated>
     
@@ -84,19 +84,19 @@
     
     </summary>
     
-      <category term="技术" scheme="http://www.luholi.xyz/categories/%E6%8A%80%E6%9C%AF/"/>
+      <category term="技术" scheme="http://www.zhimakaiyuan.com/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="工具" scheme="http://www.luholi.xyz/tags/%E5%B7%A5%E5%85%B7/"/>
+      <category term="工具" scheme="http://www.zhimakaiyuan.com/tags/%E5%B7%A5%E5%85%B7/"/>
     
-      <category term="VPS" scheme="http://www.luholi.xyz/tags/VPS/"/>
+      <category term="VPS" scheme="http://www.zhimakaiyuan.com/tags/VPS/"/>
     
   </entry>
   
   <entry>
     <title>Mac上搭建shadowsocks服务</title>
-    <link href="http://www.luholi.xyz/2016/10/27/Mac%E4%B8%8A%E6%90%AD%E5%BB%BAshadowsocks%E6%9C%8D%E5%8A%A1/"/>
-    <id>http://www.luholi.xyz/2016/10/27/Mac上搭建shadowsocks服务/</id>
+    <link href="http://www.zhimakaiyuan.com/2016/10/27/Mac%E4%B8%8A%E6%90%AD%E5%BB%BAshadowsocks%E6%9C%8D%E5%8A%A1/"/>
+    <id>http://www.zhimakaiyuan.com/2016/10/27/Mac上搭建shadowsocks服务/</id>
     <published>2016-10-27T06:27:24.000Z</published>
     <updated>2016-12-14T02:42:17.000Z</updated>
     
@@ -136,21 +136,21 @@
     
     </summary>
     
-      <category term="技术" scheme="http://www.luholi.xyz/categories/%E6%8A%80%E6%9C%AF/"/>
+      <category term="技术" scheme="http://www.zhimakaiyuan.com/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="工具" scheme="http://www.luholi.xyz/tags/%E5%B7%A5%E5%85%B7/"/>
+      <category term="工具" scheme="http://www.zhimakaiyuan.com/tags/%E5%B7%A5%E5%85%B7/"/>
     
-      <category term="翻墙" scheme="http://www.luholi.xyz/tags/%E7%BF%BB%E5%A2%99/"/>
+      <category term="翻墙" scheme="http://www.zhimakaiyuan.com/tags/%E7%BF%BB%E5%A2%99/"/>
     
-      <category term="Shadowsocks" scheme="http://www.luholi.xyz/tags/Shadowsocks/"/>
+      <category term="Shadowsocks" scheme="http://www.zhimakaiyuan.com/tags/Shadowsocks/"/>
     
   </entry>
   
   <entry>
     <title>Effective-Objective-C 2.0笔记</title>
-    <link href="http://www.luholi.xyz/2016/10/10/Effective-Objective-C-2-0%E7%AC%94%E8%AE%B0/"/>
-    <id>http://www.luholi.xyz/2016/10/10/Effective-Objective-C-2-0笔记/</id>
+    <link href="http://www.zhimakaiyuan.com/2016/10/10/Effective-Objective-C-2-0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://www.zhimakaiyuan.com/2016/10/10/Effective-Objective-C-2-0笔记/</id>
     <published>2016-10-10T02:51:38.000Z</published>
     <updated>2016-12-14T02:41:47.000Z</updated>
     
@@ -169,19 +169,19 @@
     
     </summary>
     
-      <category term="学习" scheme="http://www.luholi.xyz/categories/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="http://www.zhimakaiyuan.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
     
-      <category term="iOS" scheme="http://www.luholi.xyz/tags/iOS/"/>
+      <category term="iOS" scheme="http://www.zhimakaiyuan.com/tags/iOS/"/>
     
-      <category term="笔记" scheme="http://www.luholi.xyz/tags/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="http://www.zhimakaiyuan.com/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>Effective-Objective-C 2.0笔记（概览）</title>
-    <link href="http://www.luholi.xyz/2016/02/01/Effective-Objective-C-2-0%E7%AC%94%E8%AE%B0%EF%BC%88%E6%A6%82%E8%A7%88%EF%BC%89/"/>
-    <id>http://www.luholi.xyz/2016/02/01/Effective-Objective-C-2-0笔记（概览）/</id>
+    <link href="http://www.zhimakaiyuan.com/2016/02/01/Effective-Objective-C-2-0%E7%AC%94%E8%AE%B0%EF%BC%88%E6%A6%82%E8%A7%88%EF%BC%89/"/>
+    <id>http://www.zhimakaiyuan.com/2016/02/01/Effective-Objective-C-2-0笔记（概览）/</id>
     <published>2016-02-01T07:19:23.000Z</published>
     <updated>2016-12-14T02:41:57.000Z</updated>
     
@@ -211,19 +211,19 @@
     
     </summary>
     
-      <category term="学习" scheme="http://www.luholi.xyz/categories/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="http://www.zhimakaiyuan.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
     
-      <category term="iOS" scheme="http://www.luholi.xyz/tags/iOS/"/>
+      <category term="iOS" scheme="http://www.zhimakaiyuan.com/tags/iOS/"/>
     
-      <category term="笔记" scheme="http://www.luholi.xyz/tags/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="http://www.zhimakaiyuan.com/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>开始健身</title>
-    <link href="http://www.luholi.xyz/2016/01/15/%E5%BC%80%E5%A7%8B%E5%81%A5%E8%BA%AB/"/>
-    <id>http://www.luholi.xyz/2016/01/15/开始健身/</id>
+    <link href="http://www.zhimakaiyuan.com/2016/01/15/%E5%BC%80%E5%A7%8B%E5%81%A5%E8%BA%AB/"/>
+    <id>http://www.zhimakaiyuan.com/2016/01/15/开始健身/</id>
     <published>2016-01-15T04:03:40.000Z</published>
     <updated>2016-12-14T02:47:24.000Z</updated>
     
@@ -246,19 +246,19 @@
     
     </summary>
     
-      <category term="生活" scheme="http://www.luholi.xyz/categories/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="http://www.zhimakaiyuan.com/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-      <category term="碎碎念" scheme="http://www.luholi.xyz/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+      <category term="碎碎念" scheme="http://www.zhimakaiyuan.com/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
     
-      <category term="健身" scheme="http://www.luholi.xyz/tags/%E5%81%A5%E8%BA%AB/"/>
+      <category term="健身" scheme="http://www.zhimakaiyuan.com/tags/%E5%81%A5%E8%BA%AB/"/>
     
   </entry>
   
   <entry>
     <title>CocoaPods的使用与安装</title>
-    <link href="http://www.luholi.xyz/2016/01/12/CocoaPods%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%AE%89%E8%A3%85/"/>
-    <id>http://www.luholi.xyz/2016/01/12/CocoaPods的使用与安装/</id>
+    <link href="http://www.zhimakaiyuan.com/2016/01/12/CocoaPods%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%AE%89%E8%A3%85/"/>
+    <id>http://www.zhimakaiyuan.com/2016/01/12/CocoaPods的使用与安装/</id>
     <published>2016-01-12T05:07:11.000Z</published>
     <updated>2016-12-14T02:41:39.000Z</updated>
     
@@ -364,19 +364,19 @@
     
     </summary>
     
-      <category term="技术" scheme="http://www.luholi.xyz/categories/%E6%8A%80%E6%9C%AF/"/>
+      <category term="技术" scheme="http://www.zhimakaiyuan.com/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="iOS" scheme="http://www.luholi.xyz/tags/iOS/"/>
+      <category term="iOS" scheme="http://www.zhimakaiyuan.com/tags/iOS/"/>
     
-      <category term="工具" scheme="http://www.luholi.xyz/tags/%E5%B7%A5%E5%85%B7/"/>
+      <category term="工具" scheme="http://www.zhimakaiyuan.com/tags/%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   
   <entry>
     <title>2015年终小结</title>
-    <link href="http://www.luholi.xyz/2016/01/08/2015%E5%B9%B4%E7%BB%88%E5%B0%8F%E7%BB%93/"/>
-    <id>http://www.luholi.xyz/2016/01/08/2015年终小结/</id>
+    <link href="http://www.zhimakaiyuan.com/2016/01/08/2015%E5%B9%B4%E7%BB%88%E5%B0%8F%E7%BB%93/"/>
+    <id>http://www.zhimakaiyuan.com/2016/01/08/2015年终小结/</id>
     <published>2016-01-08T01:53:42.000Z</published>
     <updated>2016-12-14T02:47:16.000Z</updated>
     
@@ -390,19 +390,19 @@
     
     </summary>
     
-      <category term="吐槽" scheme="http://www.luholi.xyz/categories/%E5%90%90%E6%A7%BD/"/>
+      <category term="吐槽" scheme="http://www.zhimakaiyuan.com/categories/%E5%90%90%E6%A7%BD/"/>
     
     
-      <category term="随笔" scheme="http://www.luholi.xyz/tags/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://www.zhimakaiyuan.com/tags/%E9%9A%8F%E7%AC%94/"/>
     
-      <category term="碎碎念" scheme="http://www.luholi.xyz/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+      <category term="碎碎念" scheme="http://www.zhimakaiyuan.com/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
     
   </entry>
   
   <entry>
     <title>实现iOS 9 Task Switcher动画［转载］</title>
-    <link href="http://www.luholi.xyz/2015/09/08/%E5%AE%9E%E7%8E%B0iOS-9-Task-Switcher%E5%8A%A8%E7%94%BB/"/>
-    <id>http://www.luholi.xyz/2015/09/08/实现iOS-9-Task-Switcher动画/</id>
+    <link href="http://www.zhimakaiyuan.com/2015/09/08/%E5%AE%9E%E7%8E%B0iOS-9-Task-Switcher%E5%8A%A8%E7%94%BB/"/>
+    <id>http://www.zhimakaiyuan.com/2015/09/08/实现iOS-9-Task-Switcher动画/</id>
     <published>2015-09-08T07:04:13.000Z</published>
     <updated>2016-12-14T02:47:33.000Z</updated>
     
@@ -446,19 +446,19 @@
     
     </summary>
     
-      <category term="技术" scheme="http://www.luholi.xyz/categories/%E6%8A%80%E6%9C%AF/"/>
+      <category term="技术" scheme="http://www.zhimakaiyuan.com/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="iOS" scheme="http://www.luholi.xyz/tags/iOS/"/>
+      <category term="iOS" scheme="http://www.zhimakaiyuan.com/tags/iOS/"/>
     
-      <category term="转载" scheme="http://www.luholi.xyz/tags/%E8%BD%AC%E8%BD%BD/"/>
+      <category term="转载" scheme="http://www.zhimakaiyuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
   </entry>
   
   <entry>
     <title>iOS多线程</title>
-    <link href="http://www.luholi.xyz/2015/08/20/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    <id>http://www.luholi.xyz/2015/08/20/iOS多线程/</id>
+    <link href="http://www.zhimakaiyuan.com/2015/08/20/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    <id>http://www.zhimakaiyuan.com/2015/08/20/iOS多线程/</id>
     <published>2015-08-20T08:55:52.000Z</published>
     <updated>2016-12-14T02:48:04.000Z</updated>
     
@@ -488,17 +488,17 @@
     
     </summary>
     
-      <category term="技术" scheme="http://www.luholi.xyz/categories/%E6%8A%80%E6%9C%AF/"/>
+      <category term="技术" scheme="http://www.zhimakaiyuan.com/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="iOS" scheme="http://www.luholi.xyz/tags/iOS/"/>
+      <category term="iOS" scheme="http://www.zhimakaiyuan.com/tags/iOS/"/>
     
   </entry>
   
   <entry>
     <title>NSCFString longValue</title>
-    <link href="http://www.luholi.xyz/2015/07/21/NSCFString-longValue/"/>
-    <id>http://www.luholi.xyz/2015/07/21/NSCFString-longValue/</id>
+    <link href="http://www.zhimakaiyuan.com/2015/07/21/NSCFString-longValue/"/>
+    <id>http://www.zhimakaiyuan.com/2015/07/21/NSCFString-longValue/</id>
     <published>2015-07-21T09:30:32.000Z</published>
     <updated>2016-12-14T02:48:14.000Z</updated>
     
@@ -522,17 +522,17 @@
     
     </summary>
     
-      <category term="其他" scheme="http://www.luholi.xyz/categories/%E5%85%B6%E4%BB%96/"/>
+      <category term="其他" scheme="http://www.zhimakaiyuan.com/categories/%E5%85%B6%E4%BB%96/"/>
     
     
-      <category term="其他" scheme="http://www.luholi.xyz/tags/%E5%85%B6%E4%BB%96/"/>
+      <category term="其他" scheme="http://www.zhimakaiyuan.com/tags/%E5%85%B6%E4%BB%96/"/>
     
   </entry>
   
   <entry>
     <title>我的第一篇文章</title>
-    <link href="http://www.luholi.xyz/2015/07/10/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
-    <id>http://www.luholi.xyz/2015/07/10/我的第一篇文章/</id>
+    <link href="http://www.zhimakaiyuan.com/2015/07/10/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
+    <id>http://www.zhimakaiyuan.com/2015/07/10/我的第一篇文章/</id>
     <published>2015-07-10T09:13:45.000Z</published>
     <updated>2016-12-14T02:47:47.000Z</updated>
     
@@ -546,12 +546,12 @@
     
     </summary>
     
-      <category term="纪念" scheme="http://www.luholi.xyz/categories/%E7%BA%AA%E5%BF%B5/"/>
+      <category term="纪念" scheme="http://www.zhimakaiyuan.com/categories/%E7%BA%AA%E5%BF%B5/"/>
     
     
-      <category term="随笔" scheme="http://www.luholi.xyz/tags/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://www.zhimakaiyuan.com/tags/%E9%9A%8F%E7%AC%94/"/>
     
-      <category term="碎碎念" scheme="http://www.luholi.xyz/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+      <category term="碎碎念" scheme="http://www.zhimakaiyuan.com/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
     
   </entry>
   
