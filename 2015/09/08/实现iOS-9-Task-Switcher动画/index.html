@@ -122,7 +122,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/健身/" style="font-size: 10px;">健身</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/工具/" style="font-size: 16.67px;">工具</a> <a href="/tags/碎碎念/" style="font-size: 16.67px;">碎碎念</a> <a href="/tags/笔记/" style="font-size: 13.33px;">笔记</a> <a href="/tags/翻墙/" style="font-size: 10px;">翻墙</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/随笔/" style="font-size: 13.33px;">随笔</a>
+						<a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/健身/" style="font-size: 10px;">健身</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/工具/" style="font-size: 16.67px;">工具</a> <a href="/tags/瞎折腾/" style="font-size: 10px;">瞎折腾</a> <a href="/tags/碎碎念/" style="font-size: 16.67px;">碎碎念</a> <a href="/tags/笔记/" style="font-size: 13.33px;">笔记</a> <a href="/tags/翻墙/" style="font-size: 10px;">翻墙</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/随笔/" style="font-size: 13.33px;">随笔</a>
 					</div>
 				</section>
 				
@@ -238,13 +238,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>本文转载自<a href="http://tech.glowing.com/cn/" target="_blank" rel="external">http://tech.glowing.com/cn/</a><br><strong>如有侵犯，立马删除</strong><br>原文链接:<a href="http://tech.glowing.com/cn/implement-ios9-task-switcher-animation/" target="_blank" rel="external">实现iOS 9 Task Switcher动画</a></p>
-<p>##升级到iOS 9以后，发现新的task switcher的动画蛮有趣的，于是就动手实现了下，最终效果如下～<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/demo.gif" alt="demo效果图" title="">
-                </div>
-                <div class="image-caption">demo效果图</div>
-            </figure><br><a id="more"></a></p>
+<p>##升级到iOS 9以后，发现新的task switcher的动画蛮有趣的，于是就动手实现了下，最终效果如下～<br><img src="/img/demo.gif" alt="demo效果图"><br><a id="more"></a></p>
 <h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>1    首先我们需要一个横向的scroll view，可以用UICollectionView，也可以自己实现一个。scroll view里每一页都是一张card，一屏5张card:</p>
 <figure class="highlight gams"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">｜                        |</div><div class="line">｜<span class="keyword">card</span> <span class="keyword">card</span> <span class="keyword">card</span> <span class="keyword">card</span> <span class="keyword">card</span>|</div><div class="line">｜                        |</div></pre></td></tr></table></figure>
 <p>2    其次，我们需要在scrollViewDidScroll中判断每张card距离中心的距离，根据这个值来调整它的alpha，scale以及x轴的translation。</p>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>用Let&#39;s encrypt 免费给自己的博客加上https之小白版 | 芝麻开源</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近公司任务不是很重，适配iOS 10 ATS 已经成为了项目这一个月的任务，杨老大负责任的把这个重担一个人扛下了，因此我等小民就只能自己去研究了，于是就寻思着给自己的博客加上ssl验证，有个小绿锁🔒 看起来确实是舒坦很多。在这里就记录下全过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Let's encrypt 免费给自己的博客加上https之小白版">
+<meta property="og:url" content="http://www.zhimakaiyuan.com/2016/12/17/https-for-lets-encrypt/index.html">
+<meta property="og:site_name" content="芝麻开源">
+<meta property="og:description" content="最近公司任务不是很重，适配iOS 10 ATS 已经成为了项目这一个月的任务，杨老大负责任的把这个重担一个人扛下了，因此我等小民就只能自己去研究了，于是就寻思着给自己的博客加上ssl验证，有个小绿锁🔒 看起来确实是舒坦很多。在这里就记录下全过程。">
+<meta property="og:image" content="http://www.zhimakaiyuan.com/img/2016-12-16-nginx-letsencrypt.png">
+<meta property="og:updated_time" content="2016-12-17T05:50:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用Let's encrypt 免费给自己的博客加上https之小白版">
+<meta name="twitter:description" content="最近公司任务不是很重，适配iOS 10 ATS 已经成为了项目这一个月的任务，杨老大负责任的把这个重担一个人扛下了，因此我等小民就只能自己去研究了，于是就寻思着给自己的博客加上ssl验证，有个小绿锁🔒 看起来确实是舒坦很多。在这里就记录下全过程。">
+<meta name="twitter:image" content="http://www.zhimakaiyuan.com/img/2016-12-16-nginx-letsencrypt.png">
+  
+    <link rel="alternative" href="/atom.xml" title="芝麻开源" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/author.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">muwan</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">对大海情有独钟却又怀有敬意，很懒的一个理科男。</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/转载">转载</a></li>
+				        
+							<li><a href="/tags/iOS">iOS</a></li>
+				        
+							<li><a href="/tags/碎碎念">碎碎念</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/muwan" title="github">github</a>
+					        
+								<a class="mail" target="_blank" href="mailto:wanrumu@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/健身/" style="font-size: 10px;">健身</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/工具/" style="font-size: 16.67px;">工具</a> <a href="/tags/瞎折腾/" style="font-size: 10px;">瞎折腾</a> <a href="/tags/碎碎念/" style="font-size: 16.67px;">碎碎念</a> <a href="/tags/笔记/" style="font-size: 13.33px;">笔记</a> <a href="/tags/翻墙/" style="font-size: 10px;">翻墙</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/随笔/" style="font-size: 13.33px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.crazyhao.com">施明皓的主页</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://a1.chenky.com/">一个忙碌的程序猿</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">热爱旅行想要探索世界，可惜兜里没有钱。目前是一枚iOS开发者，这是我建立的QQ群: 414457229，目前有5人了，欢迎加入。</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">muwan</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/author.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">muwan</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">对大海情有独钟却又怀有敬意，很懒的一个理科男。</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/转载">转载</a></li>
+		        
+					<li><a href="/tags/iOS">iOS</a></li>
+		        
+					<li><a href="/tags/碎碎念">碎碎念</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/muwan" title="github">github</a>
+			        
+						<a class="mail" target="_blank" href="mailto:wanrumu@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-https-for-lets-encrypt" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/17/https-for-lets-encrypt/" class="article-date">
+  	<time datetime="2016-12-17T05:47:56.000Z" itemprop="datePublished">2016-12-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用Let&#39;s encrypt 免费给自己的博客加上https之小白版
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/https/">https</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/瞎折腾/">瞎折腾</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近公司任务不是很重，适配iOS 10 ATS 已经成为了项目这一个月的任务，杨老大负责任的把这个重担一个人扛下了，因此我等小民就只能自己去研究了，于是就寻思着给自己的博客加上ssl验证，有个小绿锁🔒 看起来确实是舒坦很多。在这里就记录下全过程。<br><a id="more"></a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>HTTPS目前已经成为各大主流网站的标配，未来必将成为一种趋势，很多个人博客现在也都加入了HTTPS的阵营。HTTPS好处多多，可以防止各种攻击劫持，运营商广告植入，客户传输信息泄露等问题。为了让HTTPS能够全面普及，<a href="https://letsencrypt.org/" target="_blank" rel="external">Let’s Encrypt</a>项目应运而生，它由互联网安全研究小组ISRG（Internet Security Research Group）提供服务，ISRG是来自美国加利福尼亚州的一个公益组织。Let’s Encrypt 得到了 Mozilla、Cisco和 Chrome 等众多公司和机构的支持。</p>
+<h1 id="关于Let’s-Encryot"><a href="#关于Let’s-Encryot" class="headerlink" title="关于Let’s Encryot"></a>关于Let’s Encryot</h1><p>Let’s Encrypt 是一个新的 CA，他能够提供一种非常容易的方式来获取和安装免费的 TLS/SSL 证书，从而在 web 服务器上启用 HTTPS 加密。他通过提供软件客户端 letsencrypt 来简化这个过程，它企图自动完成大部分所需的必要步骤。当前，Let’s Encrypt 仍然处在公开测试阶段，他整个获取和安装证书的流程只在 Apache 服务器上实现了全部自动化。然而 Let’s Encrypt 也可以很容易的在其他不同的服务器上获取和安装免费的 SSL 证书。<br><img src="/img/2016-12-16-nginx-letsencrypt.png" alt="验证流程"></p>
+<p>申请 Let’s Encrypt 证书不仅免费、代码开源，而且配置简单，不过每次申请只有90天的有效期，但可以通过脚本定期更新，配置好之后一劳永逸。</p>
+<p>下面就开始来一起看看吧～</p>
+<h1 id="第一步：创建-LET’S-ENCRYPT-账号（如何你没有的话-并生成CSR文件"><a href="#第一步：创建-LET’S-ENCRYPT-账号（如何你没有的话-并生成CSR文件" class="headerlink" title="第一步：创建 LET’S ENCRYPT 账号（如何你没有的话),并生成CSR文件"></a>第一步：创建 LET’S ENCRYPT 账号（如何你没有的话),并生成CSR文件</h1><p>为了区分其他，我们现创建一个文件夹，用来单独存放账号、证书和key</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">mkdir</span> ssl</div><div class="line"><span class="built_in">cd</span> ssl</div></pre></td></tr></table></figure>
+<p>Let’s Encrypt使用一个私钥来进行账号的创建与登陆，因此我们需要使用openssl创建一个account.key。首先我们需要看下我们的openssl的安装目录，并记录下openssl.cnf 文件的地址。</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">openssl <span class="built_in">version</span> –<span class="keyword">a</span></div></pre></td></tr></table></figure>
+<p>从这里我们可以看到当出openssl的安装路径</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">OpenSSL <span class="number">1.0</span><span class="number">.2</span>g  <span class="number">1</span> Mar <span class="number">2016</span></div><div class="line">built <span class="string">on:</span> reproducible build, date unspecified</div><div class="line"><span class="string">platform:</span> debian-amd64</div><div class="line"><span class="string">options:</span>  bn(<span class="number">64</span>,<span class="number">64</span>) rc4(<span class="number">16</span>x,<span class="keyword">int</span>) des(idx,cisc,<span class="number">16</span>,<span class="keyword">int</span>) blowfish(idx) </div><div class="line"><span class="string">compiler:</span> cc -I. -I.. -I..<span class="regexp">/include  -fPIC -DOPENSSL_PIC -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -m64 -DL_ENDIAN -g -O2 -fdebug-prefix-map=/</span>build<span class="regexp">/openssl-wIGtVG/</span>openssl<span class="number">-1.0</span><span class="number">.2</span>g=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=<span class="number">2</span> -Wl,-Bsymbolic-functions -Wl,-z,relro -Wa,--noexecstack -Wall -DMD32_REG_T=<span class="keyword">int</span> -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM -DECP_NISTZ256_ASM</div><div class="line"><span class="string">OPENSSLDIR:</span> <span class="string">"/usr/lib/ssl"</span> <span class="comment">//这个就是我们需要的openssl的路径了</span></div></pre></td></tr></table></figure>
+<p>这一步完成后，我们开始我们的第一步</p>
+<h2 id="创建Let’s-Encrypt私钥"><a href="#创建Let’s-Encrypt私钥" class="headerlink" title="创建Let’s Encrypt私钥"></a>创建Let’s Encrypt私钥</h2><p>首先进入我们刚刚的ssl 文件夹，然后生成私钥<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd ssl</div><div class="line">openssl genrsa <span class="number">4096</span> &gt; account.<span class="type">key</span></div></pre></td></tr></table></figure></p>
+<h2 id="创建CSR-Certificate-Signing-Request，证书签名请求-文件"><a href="#创建CSR-Certificate-Signing-Request，证书签名请求-文件" class="headerlink" title="创建CSR(Certificate Signing Request，证书签名请求) 文件"></a>创建CSR(Certificate Signing Request，证书签名请求) 文件</h2><blockquote>
+<p>ACME协议 (Let’s Encrypt所使用的) 需要一个csr文件，用来进行证书签名和证书更新。</p>
+</blockquote>
+<p>将需要加密的域名加到下面的代码中，目前一张证书最多可以加密 100 个域名，注意命令行中的域名换成你自己的域名：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">openssl genrsa <span class="number">4096</span> &gt; <span class="built_in">domain</span>.<span class="built_in">key</span></div><div class="line"></div><div class="line">openssl req -<span class="built_in">new</span> -sha256 -<span class="built_in">key</span> <span class="built_in">domain</span>.<span class="built_in">key</span> -subj <span class="string">"/"</span> -reqexts SAN -config &lt;(cat /usr/lib/ssl/openssl.cnf &lt;(<span class="built_in">printf</span> <span class="string">"[SAN]\nsubjectAltName=DNS:yoursite.com,DNS:www.yoursite.com"</span>)) &gt; <span class="built_in">domain</span>.csr</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：openssl.cnf 文件的位置可能会因为linux版本的不同而有变，我们只需要在上一步中的openssl 路径后面加上/openssl.cnf </p>
+</blockquote>
+<p>现在我们已经生成了csr和私钥，接下来就到了比较纠结的一步了，需要证明你拥有该域名</p>
+<h2 id="配置域名验证"><a href="#配置域名验证" class="headerlink" title="配置域名验证"></a>配置域名验证</h2><p>CA 在签发 DV（Domain Validation）证书时，需要验证域名所有权。传统 CA 的验证方式一般是往 admin@youmail.com 发验证邮件，而 Let’s Encrypt 是在你的服务器上生成一个随机验证文件，再通过创建 CSR 时指定的域名访问，如果可以访问则表明你对这个域名有控制权。 首先创建用于存放验证文件的目录，然后通过 “.well-known/acme-challenge/“ 这个URL来访问到验证文件. 注意: Let’s Encrypt 会对你的服务器做一次http请求来进行验证，因此你需要保证80端口能够访问：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">mkdir</span> -p /<span class="built_in">var</span>/www/challenges</div></pre></td></tr></table></figure>
+<p>然后配置一个 HTTP 服务，以 Nginx 为例：(注意：这里的端口是80，不是443）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//这个是新增加的一个servr</div><div class="line">server &#123;</div><div class="line"></div><div class="line">listen 80;</div><div class="line">server_name yoursite.com www.yoursite.com;</div><div class="line"></div><div class="line"><span class="keyword">if</span> ( <span class="variable">$request_uri</span> !~ <span class="string">"/.well-known/acme-challenge/*"</span> ) &#123; <span class="comment"># 让 Let's Encrypt 成功访问到验证文件不受 301 影响</span></div><div class="line"><span class="built_in">return</span> 301 https://yoursite.com<span class="variable">$request_uri</span>; <span class="comment"># 注意进行301重定向到https，否则通过http仍能访问你的站点</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">location /.well-known/acme-challenge/ &#123;</div><div class="line"><span class="built_in">alias</span> /var/www/challenges/;</div><div class="line">try_files <span class="variable">$uri</span> =404;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">#...你的其他配置</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>这个验证服务以后更新证书还要用到，需要一直保留。</p>
+</blockquote>
+<h2 id="获取网站证书"><a href="#获取网站证书" class="headerlink" title="获取网站证书"></a>获取网站证书</h2><p>先回到我们的ssl目录，然后把 acme-tiny 脚本保存到 ssl 目录</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd</div><div class="line">cd ssl</div><div class="line">wget https:<span class="comment">//raw.githubusercontent.com/diafygi/acme-tiny/master/acme_tiny.py</span></div><div class="line">sudo chmod +x acme_tiny<span class="selector-class">.py</span>  </div><div class="line">python acme_tiny<span class="selector-class">.py</span> --account-key ./account<span class="selector-class">.key</span> --csr ./domain<span class="selector-class">.csr</span> --acme-dir /var/www/challenges/ &gt; ./signed.crt</div></pre></td></tr></table></figure>
+<p>如果一切正常，当前目录下就会生成一个 signed.crt，这就是申请好的证书文件。</p>
+<h2 id="安装证书"><a href="#安装证书" class="headerlink" title="安装证书"></a>安装证书</h2><p>证书生成后，就可以把它配置在web 服务器上了，需要注意的是，Nginx需要追加一个Let’s Encrypt的中间证书，在 Nginx 配置中，需要把中间证书和网站证书合在一起：<br>``<br>wget -O - <a href="https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem" target="_blank" rel="external">https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem</a> &gt; intermediate.pem<br>cat signed.crt intermediate.pem &gt; chained.pem</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">最终，修改 Nginx 中有关证书的配置并 reload 服务即可：</div><div class="line"></div><div class="line"><span class="meta">## 修改 Nginx 中有关证书的配置并 reload 服务</span></div></pre></td></tr></table></figure>
+<p>server {<br>listen 443;<br>server_name yoursite.com, www.yoursite.com;</p>
+<p>ssl on;<br>ssl_certificate /path/to/chained.pem;<br>ssl_certificate_key /path/to/domain.key;<br>ssl_session_timeout 5m;<br>ssl_protocols TLSv1 TLSv1.1 TLSv1.2;<br>ssl_ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA;<br>ssl_session_cache shared:SSL:50m;<br>ssl_prefer_server_ciphers on;</p>
+<p>#…你的其他配置<br>}</p>
+<p>server {</p>
+<p>listen 80;<br>server_name yoursite.com www.yoursite.com;</p>
+<p>if ( $request_uri !~ “/.well-known/acme-challenge/*” ) { # 让 Let’s Encrypt 成功访问到验证文件不受 301 影响<br>return 301 <a href="https://yoursite.com$request_uri" target="_blank" rel="external">https://yoursite.com$request_uri</a>; # 注意进行<br>301重定向到https，否则通过http仍能访问你的站点<br>}</p>
+<p>location /.well-known/acme-challenge/ {<br>alias /var/www/challenges/;<br>try_files $uri =404;<br>}</p>
+<p>#…你的其他配置<br>}</p>
+<h2 id="大功告成"><a href="#大功告成" class="headerlink" title="大功告成"></a>大功告成</h2><p>好了，现在就能重启你的nginx<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx <span class="_">-s</span> reload</div></pre></td></tr></table></figure></p>
+<h1 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h1><p>恭喜！你的网站已经使用上了HTTPS。 但Let’s Encrypt 证书有效期只有90天, 所以需要定期更新。现在只需要写一个更新脚本并把它放到定时任务中即可。</p>
+<p>在ssl的文件夹内进行如下操作<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cd</span></div><div class="line"><span class="keyword">cd</span> ssl</div><div class="line">touch renew_cert.<span class="keyword">sh</span></div><div class="line"><span class="keyword">vi</span> renew_cert.<span class="keyword">sh</span></div></pre></td></tr></table></figure></p>
+<p>然后在renew_cert.sh中输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/sh</span></div><div class="line">python /root/ssl/acme_tiny.py --account-key /root/ssl/account.key --csr /root/ssl/domain.csr --acme-dir /var/www/challenges/ &gt; /tmp/signed.crt || <span class="built_in">exit</span></div><div class="line">wget -O - https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem &gt; intermediate.pem</div><div class="line">cat /tmp/signed.crt intermediate.pem &gt; /root/ssl/chained.pem</div><div class="line">service nginx reload</div></pre></td></tr></table></figure></p>
+<p>定时任务可以设置为每个月执行一次：<br><figure class="highlight basic"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">0 </span><span class="number">0</span> <span class="number">1</span> * * /root/ssl/acme-tiny/renew_cert.sh <span class="number">2</span>&gt;&gt; /var/<span class="keyword">log</span>/acme_tine.<span class="keyword">log</span></div></pre></td></tr></table></figure></p>
+<p>以上就是整个的全过程了。欢迎享受HTTPS之旅～</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/06/Xcode8-Uses-Charts-Objective-C/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Xcode8在Objective-C中集成Charts 3.0（全是坑！！！）</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="https-for-lets-encrypt" data-title="用Let&#39;s encrypt 免费给自己的博客加上https之小白版" data-url="http://www.zhimakaiyuan.com/2016/12/17/https-for-lets-encrypt/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"zhimakaiyuan"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 muwan
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+	</div>
+    </div>
+      	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	</br>
+	<span id="busuanzi_container_site_uv" style="font-family:sans-serif;color:#2B2B2B" >您是本博客的第<span id="busuanzi_value_site_uv"></span>个小伙伴
+	</span>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

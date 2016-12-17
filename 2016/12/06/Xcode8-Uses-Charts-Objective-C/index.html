@@ -3,18 +3,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Xcode8在Objective-C中不要用Cocoapods集成Charts（全是坑！！！） | 芝麻开源</title>
+  <title>Xcode8在Objective-C中集成Charts 3.0（全是坑！！！） | 芝麻开源</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="用cocoapods集成Charts说多了都是泪，全是坑！">
+  <meta name="description" content="用cocoapods集成Charts说多了都是泪，全是坑！不过全都搞好以后，画图表还是很方便的。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Xcode8在Objective-C中不要用Cocoapods集成Charts（全是坑！！！）">
+<meta property="og:title" content="Xcode8在Objective-C中集成Charts 3.0（全是坑！！！）">
 <meta property="og:url" content="http://www.zhimakaiyuan.com/2016/12/06/Xcode8-Uses-Charts-Objective-C/index.html">
 <meta property="og:site_name" content="芝麻开源">
-<meta property="og:description" content="用cocoapods集成Charts说多了都是泪，全是坑！">
-<meta property="og:updated_time" content="2016-12-14T02:45:48.000Z">
+<meta property="og:description" content="用cocoapods集成Charts说多了都是泪，全是坑！不过全都搞好以后，画图表还是很方便的。">
+<meta property="og:image" content="http://www.zhimakaiyuan.com/img/swift_link.png">
+<meta property="og:image" content="http://www.zhimakaiyuan.com/img/2016_12_16creat_header.png">
+<meta property="og:image" content="http://www.zhimakaiyuan.com/img/SimulatorScreenShot20161216.png">
+<meta property="og:updated_time" content="2016-12-16T08:08:21.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xcode8在Objective-C中不要用Cocoapods集成Charts（全是坑！！！）">
-<meta name="twitter:description" content="用cocoapods集成Charts说多了都是泪，全是坑！">
+<meta name="twitter:title" content="Xcode8在Objective-C中集成Charts 3.0（全是坑！！！）">
+<meta name="twitter:description" content="用cocoapods集成Charts说多了都是泪，全是坑！不过全都搞好以后，画图表还是很方便的。">
+<meta name="twitter:image" content="http://www.zhimakaiyuan.com/img/swift_link.png">
   
     <link rel="alternative" href="/atom.xml" title="芝麻开源" type="application/atom+xml">
   
@@ -117,7 +121,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/健身/" style="font-size: 10px;">健身</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/工具/" style="font-size: 16.67px;">工具</a> <a href="/tags/碎碎念/" style="font-size: 16.67px;">碎碎念</a> <a href="/tags/笔记/" style="font-size: 13.33px;">笔记</a> <a href="/tags/翻墙/" style="font-size: 10px;">翻墙</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/随笔/" style="font-size: 13.33px;">随笔</a>
+						<a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/健身/" style="font-size: 10px;">健身</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/工具/" style="font-size: 16.67px;">工具</a> <a href="/tags/瞎折腾/" style="font-size: 10px;">瞎折腾</a> <a href="/tags/碎碎念/" style="font-size: 16.67px;">碎碎念</a> <a href="/tags/笔记/" style="font-size: 13.33px;">笔记</a> <a href="/tags/翻墙/" style="font-size: 10px;">翻墙</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/随笔/" style="font-size: 13.33px;">随笔</a>
 					</div>
 				</section>
 				
@@ -208,7 +212,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Xcode8在Objective-C中不要用Cocoapods集成Charts（全是坑！！！）
+      Xcode8在Objective-C中集成Charts 3.0（全是坑！！！）
     </h1>
   
 
@@ -232,8 +236,36 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>用cocoapods集成Charts说多了都是泪，全是坑！<br><a id="more"></a><br> 不知咋滴，一大早起来后把项目clean了一下，然后把pod文件全删了，重新运行<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="keyword">install</span></div></pre></td></tr></table></figure></p>
-<p>然后再clean，居然好了。。。</p>
+        <p>用cocoapods集成Charts说多了都是泪，全是坑！不过全都搞好以后，画图表还是很方便的。<br><a id="more"></a><br> 不知咋滴，一大早起来后把项目clean了一下，然后把pod文件全删了，重新运行<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="keyword">install</span></div></pre></td></tr></table></figure></p>
+<p>然后再clean，居然好了。。。<br>下面记录下踩坑的整个过程</p>
+<h1 id="Charts-是何方神圣"><a href="#Charts-是何方神圣" class="headerlink" title="Charts 是何方神圣"></a>Charts 是何方神圣</h1><p>Charts是一套非常漂亮的开源图表组件，它是<a href="https://github.com/PhilJay/MPAndroidChart" target="_blank" rel="external">MPAndroidChart</a>在苹果端的移植版本，同时支持iOS/tvOS/OSX平台，开源地址<a href="https://github.com/danielgindi/Charts" target="_blank" rel="external">Github</a>。</p>
+<p>同时，Charts是用 Swift 语言编写的，能够在 Swift 和 Objc 工程中使用。</p>
+<h1 id="使用环境"><a href="#使用环境" class="headerlink" title="使用环境"></a>使用环境</h1><ul>
+<li>Xcode 8.0 / Swift 3.0 (如果要支持 Swift 2.3 ，请查看 <a href="https://github.com/danielgindi/Charts/tree/v2.3.0" target="_blank" rel="external">Charts 2.3</a>)</li>
+<li>iOS &gt;= 8.0</li>
+<li>tvOS &gt;= 9.0</li>
+<li>macOS &gt;= 10.11</li>
+</ul>
+<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><p>本文使用的是通过cocopods 来安装的，中间的过程有点曲折</p>
+<h2 id="通过-cocoapods-集成"><a href="#通过-cocoapods-集成" class="headerlink" title="通过 cocoapods 集成"></a>通过 cocoapods 集成</h2><p>如果项目还未使用cocoapods，可用终端在根目录下输入<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">pod init</span></div></pre></td></tr></table></figure></p>
+<p>然后在项目的 Podfile 文件中添加 Charts<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">pod</span> <span class="string">'Charts'</span>, <span class="string">'~&gt; 3.0'</span></div></pre></td></tr></table></figure></p>
+<p>如果不出意外的话，会在安装过程中报个小错</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[!] Pods written <span class="keyword">in</span> Swift can only be integrated <span class="keyword">as</span> frameworks; <span class="keyword">add</span> `use_frameworks!` <span class="keyword">to</span> your Podfile <span class="keyword">or</span> target <span class="keyword">to</span> opt <span class="keyword">into</span> <span class="keyword">using</span> it. The Swift Pod being used <span class="keyword">is</span>: Charts</div></pre></td></tr></table></figure>
+<p>恭喜踩到了第一个坑</p>
+<h3 id="为什么呢"><a href="#为什么呢" class="headerlink" title="为什么呢"></a>为什么呢</h3><p>原来根据苹果的相关政策，在 Swift项目中苹果将不允许你私自包含静态库了，因此我们的解决办法是,在 podfile 文件中 添加这么一句<br><figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pod <span class="string">'Charts'</span>, <span class="string">'~&gt; 3.0'</span></div><div class="line">use_frameworks!</div></pre></td></tr></table></figure></p>
+<p>use_frameworks！选项是告诉 CocoaPods 使用 framework 而不是静态库。这在 Swift 项目中是必选。</p>
+<p>完成之后，我们开始导入</p>
+<h3 id="导入库"><a href="#导入库" class="headerlink" title="导入库"></a>导入库</h3><p>在项目的根目录下，输入<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="keyword">install</span></div></pre></td></tr></table></figure></p>
+<p>静待几分钟后，会有提示倒入成功<br>这时候，我们需要打开 xcworkspace 文件,<strong>注意哦，是 xcworkspace 不再是原来的 xcodeproj文件了 </strong></p>
+<p>因为我们的项目是 OC 的，而 Charts 是用 Swift 编写的，所以需要创建一个桥接文件<br><img src="/img/swift_link.png" alt="桥接"><br>完成后，会有提示是否需要桥接，点击 Create Bridging Header</p>
+<p><img src="/img/2016_12_16creat_header.png" alt="提示"></p>
+<blockquote>
+<p>执行完这一步后，如果有报错之类的，可以先把项目 clean 一下 <em>敲黑板</em>  <em>这是一道送分题，千万不能忘</em></p>
+</blockquote>
+<p>接着在桥接文件 项目名-Bridging-Header.h 中，写上要引用的 Swift 头文件。<br><figure class="highlight xl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">import</span> <span class="built_in">Charts</span>;</div></pre></td></tr></table></figure></p>
+<h1 id="大功告成"><a href="#大功告成" class="headerlink" title="大功告成"></a>大功告成</h1><h1 id="进入测试阶段"><a href="#进入测试阶段" class="headerlink" title="进入测试阶段"></a>进入测试阶段</h1><p>在ViewController.m中加入如下代码：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">[<span class="keyword">super</span> viewDidLoad];</div><div class="line"><span class="keyword">self</span>.view.backgroundColor = [<span class="built_in">UIColor</span> colorWithRed:<span class="number">0.184</span> green:<span class="number">1.000</span> blue:<span class="number">0.738</span> alpha:<span class="number">1.000</span>];</div><div class="line">lineView = [[LineChartView alloc]initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="keyword">self</span>.view.bounds.size.height / <span class="number">3.0</span>f,[<span class="built_in">UIScreen</span> mainScreen].bounds.size.width, [<span class="built_in">UIScreen</span> mainScreen].bounds.size.height / <span class="number">3.0</span>)];</div><div class="line">lineView.backgroundColor = [<span class="built_in">UIColor</span> colorWithRed:<span class="number">0.184</span> green:<span class="number">1.000</span> blue:<span class="number">0.738</span> alpha:<span class="number">1.000</span>];</div><div class="line">[<span class="keyword">self</span>.view addSubview:lineView];</div><div class="line"></div><div class="line">lineView.dragEnabled = <span class="literal">YES</span>;<span class="comment">//是否拖拽，</span></div><div class="line">lineView.drawGridBackgroundEnabled = <span class="literal">NO</span>;<span class="comment">//绘制网格背景</span></div><div class="line">lineView.scaleXEnabled = <span class="literal">NO</span>;</div><div class="line">lineView.pinchZoomEnabled = <span class="literal">NO</span>;</div><div class="line">lineView.descriptionText = <span class="string">@"每月收入支出图"</span>;</div><div class="line"><span class="comment">//X轴设置</span></div><div class="line">ChartXAxis *xAxis = lineView.xAxis;</div><div class="line">xAxis.labelPosition = XAxisLabelPositionBothSided;<span class="comment">//X轴样式</span></div><div class="line">xAxis.drawLabelsEnabled = <span class="literal">YES</span>;<span class="comment">//X轴是否需要绘制文字</span></div><div class="line">xAxis.drawAxisLineEnabled = <span class="literal">YES</span>;<span class="comment">//X轴绘制</span></div><div class="line">xAxis.drawGridLinesEnabled = <span class="literal">NO</span>;<span class="comment">//X轴网格绘制</span></div><div class="line">xAxis.axisLineWidth = <span class="number">0.4</span>f;<span class="comment">//数轴宽度</span></div><div class="line">[xAxis setLabelCount:<span class="number">10</span> force:<span class="literal">NO</span>];<span class="comment">//X轴数量一般默认是6个</span></div><div class="line"></div><div class="line"><span class="comment">//Y轴设置</span></div><div class="line">ChartYAxis *yAxis = lineView.leftAxis;</div><div class="line">yAxis.spaceTop = <span class="number">.5</span>f;<span class="comment">//Y轴顶部的最大值的百分比</span></div><div class="line">yAxis.labelFont = [<span class="built_in">UIFont</span> fontWithName:<span class="string">@"HelveticaNeue-Light"</span> size:<span class="number">12.</span>f];</div><div class="line">[yAxis setLabelCount:<span class="number">5</span> force:<span class="literal">NO</span>];<span class="comment">//Y轴坐标个数</span></div><div class="line">yAxis.labelTextColor = [<span class="built_in">UIColor</span> blackColor];<span class="comment">//Y轴坐标文字颜色</span></div><div class="line">yAxis.labelPosition = YAxisLabelPositionInsideChart;</div><div class="line">yAxis.drawGridLinesEnabled = <span class="literal">NO</span>;<span class="comment">//Y轴网格</span></div><div class="line">yAxis.axisLineColor = <span class="built_in">UIColor</span>.blackColor;</div><div class="line"></div><div class="line">lineView.rightAxis.enabled = <span class="literal">NO</span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> count = <span class="number">30</span>;</div><div class="line"><span class="keyword">double</span> range = <span class="number">10</span>;</div><div class="line">[<span class="keyword">self</span> setDataCount:count range:range];</div><div class="line"></div><div class="line">[lineView animateWithXAxisDuration:<span class="number">3</span> yAxisDuration:<span class="number">3</span>];</div><div class="line"><span class="comment">// Do any additional setup after loading the view, typically from a nib.</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后随机配置一下数据，就能看到两条曲线了<br>完美🤗<br><img src="/img/SimulatorScreenShot20161216.png" alt="成功截图"><br>demo地址：<a href="https://github.com/muwan/ChartsDemo" target="_blank" rel="external">ChartsDemo</a></p>
+<h1 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h1><p><a href="http://www.jianshu.com/p/6bf9e2d8e9db" target="_blank" rel="external">Cocoapods 安装参考</a><br><a href="http://www.jianshu.com/p/3af5fd275f05" target="_blank" rel="external">Swift静态库参考</a></p>
 
       
     </div>
@@ -242,6 +274,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2016/12/17/https-for-lets-encrypt/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          用Let&#39;s encrypt 免费给自己的博客加上https之小白版
+        
+      </div>
+    </a>
   
   
     <a href="/2016/11/03/add-SSH-Key-to-Your-remote-clint/" id="article-nav-older" class="article-nav-link-wrap">
@@ -274,7 +315,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="Xcode8-Uses-Charts-Objective-C" data-title="Xcode8在Objective-C中不要用Cocoapods集成Charts（全是坑！！！）" data-url="http://www.zhimakaiyuan.com/2016/12/06/Xcode8-Uses-Charts-Objective-C/"></div>
+	<div class="ds-thread" data-thread-key="Xcode8-Uses-Charts-Objective-C" data-title="Xcode8在Objective-C中集成Charts 3.0（全是坑！！！）" data-url="http://www.zhimakaiyuan.com/2016/12/06/Xcode8-Uses-Charts-Objective-C/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

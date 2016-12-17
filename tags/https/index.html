@@ -3,20 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>NSCFString longValue | 芝麻开源</title>
+  <title>Tag: https | 芝麻开源</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="昨天在写一个字典数据的时候，在一个字典内有18对键值对">
-<meta property="og:type" content="article">
-<meta property="og:title" content="NSCFString longValue">
-<meta property="og:url" content="http://www.zhimakaiyuan.com/2015/07/21/NSCFString-longValue/index.html">
+  <meta name="description" content="热爱旅行想要探索世界，可惜兜里没有钱。目前是一枚iOS开发者，414457229是我建立的QQ群，目前有4人了，欢迎加入。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="芝麻开源">
+<meta property="og:url" content="http://www.zhimakaiyuan.com/tags/https/index.html">
 <meta property="og:site_name" content="芝麻开源">
-<meta property="og:description" content="昨天在写一个字典数据的时候，在一个字典内有18对键值对">
-<meta property="og:image" content="http://www.zhimakaiyuan.com/img/2015-07-20-1.png">
-<meta property="og:updated_time" content="2016-12-14T02:48:14.000Z">
+<meta property="og:description" content="热爱旅行想要探索世界，可惜兜里没有钱。目前是一枚iOS开发者，414457229是我建立的QQ群，目前有4人了，欢迎加入。">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NSCFString longValue">
-<meta name="twitter:description" content="昨天在写一个字典数据的时候，在一个字典内有18对键值对">
-<meta name="twitter:image" content="http://www.zhimakaiyuan.com/img/2015-07-20-1.png">
+<meta name="twitter:title" content="芝麻开源">
+<meta name="twitter:description" content="热爱旅行想要探索世界，可惜兜里没有钱。目前是一枚iOS开发者，414457229是我建立的QQ群，目前有4人了，欢迎加入。">
   
     <link rel="alternative" href="/atom.xml" title="芝麻开源" type="application/atom+xml">
   
@@ -193,121 +190,53 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-NSCFString-longValue" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap">
   
-    <div class="article-meta">
-      <a href="/2015/07/21/NSCFString-longValue/" class="article-date">
-  	<time datetime="2015-07-21T09:30:32.000Z" itemprop="datePublished">2015-07-21</time>
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2016" class="archive-year">2016</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2016/12/17/https-for-lets-encrypt/" class="archive-article-date">
+  	<time datetime="2016-12-17T05:47:56.000Z" itemprop="datePublished">Dec 17</time>
 </a>
-    </div>
+        </div>
+    	 
   
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      NSCFString longValue
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/12/17/https-for-lets-encrypt/">用Let&#39;s encrypt 免费给自己的博客加上https之小白版</a>
     </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/https/">https</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/瞎折腾/">瞎折腾</a></li></ul>
 	</div>
 
-        
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/其他/">其他</a>
-	</div>
+          
 
-
+        </div>
         <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>昨天在写一个字典数据的时候，在一个字典内有18对键值对<br><a id="more"></a><br><img src="/img/2015-07-20-1.png" alt="2015"><br>其中有一个id的值为long型的,我就觉得既然你的值是long型的，那我要取你的值不是轻轻松松么,于是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">long appID = [info[@&quot;id&quot;] longValue];</div></pre></td></tr></table></figure></p>
-<p>然后当然报错了，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-[__NSCFString longValue]: unrecognized selector sent to instance 0x9bf8e10</div><div class="line">Terminating app due to uncaught exception &apos;NSInvalidArgumentException&apos;, reason: &apos;-[__NSCFString longValue]: unrecognized selector sent to instance 0x9bf8e10&apos;</div></pre></td></tr></table></figure></p>
-<p>百思不得其解，不对啊，我之前用还是可以的，怎么就报错了呢。最后在stackoverflow上面找到了答案。<br>原来，@“id”所对应得值，是一个id类型的值，我们需要先将他强制转换成NSString类型的值，然后再将NSString类型的值转化成long型的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSString *strForId = dic[@&quot;id&quot;];</div><div class="line">long appID = [strForId longLongValue];</div></pre></td></tr></table></figure>
-<p>或者直接强制转换<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">long</span> appID ＝ （<span class="keyword">long</span>)［dic[@<span class="string">"id"</span>] longValue］;</div></pre></td></tr></table></figure></p>
-<p>果然再也不报错了～</p>
-
-      
-    </div>
-    
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2015/08/20/iOS多线程/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          iOS多线程
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2015/07/10/我的第一篇文章/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">我的第一篇文章</div>
-      <strong class="article-nav-caption">></strong>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
 
-
-<div class="share">
-	<!-- JiaThis Button BEGIN -->
-	<div class="jiathis_style">
-		<span class="jiathis_txt">分享到：</span>
-		<a class="jiathis_button_tsina"></a>
-		<a class="jiathis_button_cqq"></a>
-		<a class="jiathis_button_douban"></a>
-		<a class="jiathis_button_weixin"></a>
-		<a class="jiathis_button_tumblr"></a>
-		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	</div>
-	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
-	<!-- JiaThis Button END -->
-</div>
-
-
-
-<div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="NSCFString-longValue" data-title="NSCFString longValue" data-url="http://www.zhimakaiyuan.com/2015/07/21/NSCFString-longValue/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"zhimakaiyuan"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
-
-
+    
 
 </div>
       <footer id="footer">
@@ -338,9 +267,9 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false
 	}

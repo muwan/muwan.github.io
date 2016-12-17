@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhimakaiyuan.com/"/>
-  <updated>2016-12-14T02:45:48.000Z</updated>
+  <updated>2016-12-17T05:50:33.000Z</updated>
   <id>http://www.zhimakaiyuan.com/</id>
   
   <author>
@@ -16,19 +16,117 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Xcode8在Objective-C中不要用Cocoapods集成Charts（全是坑！！！）</title>
-    <link href="http://www.zhimakaiyuan.com/2016/12/06/Xcode8-Uses-Charts-Objective-C/"/>
-    <id>http://www.zhimakaiyuan.com/2016/12/06/Xcode8-Uses-Charts-Objective-C/</id>
-    <published>2016-12-06T09:04:26.000Z</published>
-    <updated>2016-12-14T02:45:48.000Z</updated>
+    <title>用Let&#39;s encrypt 免费给自己的博客加上https之小白版</title>
+    <link href="http://www.zhimakaiyuan.com/2016/12/17/https-for-lets-encrypt/"/>
+    <id>http://www.zhimakaiyuan.com/2016/12/17/https-for-lets-encrypt/</id>
+    <published>2016-12-17T05:47:56.000Z</published>
+    <updated>2016-12-17T05:50:33.000Z</updated>
     
-    <content type="html"><![CDATA[<p>用cocoapods集成Charts说多了都是泪，全是坑！<br><a id="more"></a><br> 不知咋滴，一大早起来后把项目clean了一下，然后把pod文件全删了，重新运行<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="keyword">install</span></div></pre></td></tr></table></figure></p>
-<p>然后再clean，居然好了。。。</p>
+    <content type="html"><![CDATA[<p>最近公司任务不是很重，适配iOS 10 ATS 已经成为了项目这一个月的任务，杨老大负责任的把这个重担一个人扛下了，因此我等小民就只能自己去研究了，于是就寻思着给自己的博客加上ssl验证，有个小绿锁🔒 看起来确实是舒坦很多。在这里就记录下全过程。<br><a id="more"></a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>HTTPS目前已经成为各大主流网站的标配，未来必将成为一种趋势，很多个人博客现在也都加入了HTTPS的阵营。HTTPS好处多多，可以防止各种攻击劫持，运营商广告植入，客户传输信息泄露等问题。为了让HTTPS能够全面普及，<a href="https://letsencrypt.org/" target="_blank" rel="external">Let’s Encrypt</a>项目应运而生，它由互联网安全研究小组ISRG（Internet Security Research Group）提供服务，ISRG是来自美国加利福尼亚州的一个公益组织。Let’s Encrypt 得到了 Mozilla、Cisco和 Chrome 等众多公司和机构的支持。</p>
+<h1 id="关于Let’s-Encryot"><a href="#关于Let’s-Encryot" class="headerlink" title="关于Let’s Encryot"></a>关于Let’s Encryot</h1><p>Let’s Encrypt 是一个新的 CA，他能够提供一种非常容易的方式来获取和安装免费的 TLS/SSL 证书，从而在 web 服务器上启用 HTTPS 加密。他通过提供软件客户端 letsencrypt 来简化这个过程，它企图自动完成大部分所需的必要步骤。当前，Let’s Encrypt 仍然处在公开测试阶段，他整个获取和安装证书的流程只在 Apache 服务器上实现了全部自动化。然而 Let’s Encrypt 也可以很容易的在其他不同的服务器上获取和安装免费的 SSL 证书。<br><img src="/img/2016-12-16-nginx-letsencrypt.png" alt="验证流程"></p>
+<p>申请 Let’s Encrypt 证书不仅免费、代码开源，而且配置简单，不过每次申请只有90天的有效期，但可以通过脚本定期更新，配置好之后一劳永逸。</p>
+<p>下面就开始来一起看看吧～</p>
+<h1 id="第一步：创建-LET’S-ENCRYPT-账号（如何你没有的话-并生成CSR文件"><a href="#第一步：创建-LET’S-ENCRYPT-账号（如何你没有的话-并生成CSR文件" class="headerlink" title="第一步：创建 LET’S ENCRYPT 账号（如何你没有的话),并生成CSR文件"></a>第一步：创建 LET’S ENCRYPT 账号（如何你没有的话),并生成CSR文件</h1><p>为了区分其他，我们现创建一个文件夹，用来单独存放账号、证书和key</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">mkdir</span> ssl</div><div class="line"><span class="built_in">cd</span> ssl</div></pre></td></tr></table></figure>
+<p>Let’s Encrypt使用一个私钥来进行账号的创建与登陆，因此我们需要使用openssl创建一个account.key。首先我们需要看下我们的openssl的安装目录，并记录下openssl.cnf 文件的地址。</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">openssl <span class="built_in">version</span> –<span class="keyword">a</span></div></pre></td></tr></table></figure>
+<p>从这里我们可以看到当出openssl的安装路径</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">OpenSSL <span class="number">1.0</span><span class="number">.2</span>g  <span class="number">1</span> Mar <span class="number">2016</span></div><div class="line">built <span class="string">on:</span> reproducible build, date unspecified</div><div class="line"><span class="string">platform:</span> debian-amd64</div><div class="line"><span class="string">options:</span>  bn(<span class="number">64</span>,<span class="number">64</span>) rc4(<span class="number">16</span>x,<span class="keyword">int</span>) des(idx,cisc,<span class="number">16</span>,<span class="keyword">int</span>) blowfish(idx) </div><div class="line"><span class="string">compiler:</span> cc -I. -I.. -I..<span class="regexp">/include  -fPIC -DOPENSSL_PIC -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -m64 -DL_ENDIAN -g -O2 -fdebug-prefix-map=/</span>build<span class="regexp">/openssl-wIGtVG/</span>openssl<span class="number">-1.0</span><span class="number">.2</span>g=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=<span class="number">2</span> -Wl,-Bsymbolic-functions -Wl,-z,relro -Wa,--noexecstack -Wall -DMD32_REG_T=<span class="keyword">int</span> -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM -DECP_NISTZ256_ASM</div><div class="line"><span class="string">OPENSSLDIR:</span> <span class="string">"/usr/lib/ssl"</span> <span class="comment">//这个就是我们需要的openssl的路径了</span></div></pre></td></tr></table></figure>
+<p>这一步完成后，我们开始我们的第一步</p>
+<h2 id="创建Let’s-Encrypt私钥"><a href="#创建Let’s-Encrypt私钥" class="headerlink" title="创建Let’s Encrypt私钥"></a>创建Let’s Encrypt私钥</h2><p>首先进入我们刚刚的ssl 文件夹，然后生成私钥<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd ssl</div><div class="line">openssl genrsa <span class="number">4096</span> &gt; account.<span class="type">key</span></div></pre></td></tr></table></figure></p>
+<h2 id="创建CSR-Certificate-Signing-Request，证书签名请求-文件"><a href="#创建CSR-Certificate-Signing-Request，证书签名请求-文件" class="headerlink" title="创建CSR(Certificate Signing Request，证书签名请求) 文件"></a>创建CSR(Certificate Signing Request，证书签名请求) 文件</h2><blockquote>
+<p>ACME协议 (Let’s Encrypt所使用的) 需要一个csr文件，用来进行证书签名和证书更新。</p>
+</blockquote>
+<p>将需要加密的域名加到下面的代码中，目前一张证书最多可以加密 100 个域名，注意命令行中的域名换成你自己的域名：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">openssl genrsa <span class="number">4096</span> &gt; <span class="built_in">domain</span>.<span class="built_in">key</span></div><div class="line"></div><div class="line">openssl req -<span class="built_in">new</span> -sha256 -<span class="built_in">key</span> <span class="built_in">domain</span>.<span class="built_in">key</span> -subj <span class="string">"/"</span> -reqexts SAN -config &lt;(cat /usr/lib/ssl/openssl.cnf &lt;(<span class="built_in">printf</span> <span class="string">"[SAN]\nsubjectAltName=DNS:yoursite.com,DNS:www.yoursite.com"</span>)) &gt; <span class="built_in">domain</span>.csr</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：openssl.cnf 文件的位置可能会因为linux版本的不同而有变，我们只需要在上一步中的openssl 路径后面加上/openssl.cnf </p>
+</blockquote>
+<p>现在我们已经生成了csr和私钥，接下来就到了比较纠结的一步了，需要证明你拥有该域名</p>
+<h2 id="配置域名验证"><a href="#配置域名验证" class="headerlink" title="配置域名验证"></a>配置域名验证</h2><p>CA 在签发 DV（Domain Validation）证书时，需要验证域名所有权。传统 CA 的验证方式一般是往 admin@youmail.com 发验证邮件，而 Let’s Encrypt 是在你的服务器上生成一个随机验证文件，再通过创建 CSR 时指定的域名访问，如果可以访问则表明你对这个域名有控制权。 首先创建用于存放验证文件的目录，然后通过 “.well-known/acme-challenge/“ 这个URL来访问到验证文件. 注意: Let’s Encrypt 会对你的服务器做一次http请求来进行验证，因此你需要保证80端口能够访问：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">mkdir</span> -p /<span class="built_in">var</span>/www/challenges</div></pre></td></tr></table></figure>
+<p>然后配置一个 HTTP 服务，以 Nginx 为例：(注意：这里的端口是80，不是443）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//这个是新增加的一个servr</div><div class="line">server &#123;</div><div class="line"></div><div class="line">listen 80;</div><div class="line">server_name yoursite.com www.yoursite.com;</div><div class="line"></div><div class="line"><span class="keyword">if</span> ( <span class="variable">$request_uri</span> !~ <span class="string">"/.well-known/acme-challenge/*"</span> ) &#123; <span class="comment"># 让 Let's Encrypt 成功访问到验证文件不受 301 影响</span></div><div class="line"><span class="built_in">return</span> 301 https://yoursite.com<span class="variable">$request_uri</span>; <span class="comment"># 注意进行301重定向到https，否则通过http仍能访问你的站点</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">location /.well-known/acme-challenge/ &#123;</div><div class="line"><span class="built_in">alias</span> /var/www/challenges/;</div><div class="line">try_files <span class="variable">$uri</span> =404;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">#...你的其他配置</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>这个验证服务以后更新证书还要用到，需要一直保留。</p>
+</blockquote>
+<h2 id="获取网站证书"><a href="#获取网站证书" class="headerlink" title="获取网站证书"></a>获取网站证书</h2><p>先回到我们的ssl目录，然后把 acme-tiny 脚本保存到 ssl 目录</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd</div><div class="line">cd ssl</div><div class="line">wget https:<span class="comment">//raw.githubusercontent.com/diafygi/acme-tiny/master/acme_tiny.py</span></div><div class="line">sudo chmod +x acme_tiny<span class="selector-class">.py</span>  </div><div class="line">python acme_tiny<span class="selector-class">.py</span> --account-key ./account<span class="selector-class">.key</span> --csr ./domain<span class="selector-class">.csr</span> --acme-dir /var/www/challenges/ &gt; ./signed.crt</div></pre></td></tr></table></figure>
+<p>如果一切正常，当前目录下就会生成一个 signed.crt，这就是申请好的证书文件。</p>
+<h2 id="安装证书"><a href="#安装证书" class="headerlink" title="安装证书"></a>安装证书</h2><p>证书生成后，就可以把它配置在web 服务器上了，需要注意的是，Nginx需要追加一个Let’s Encrypt的中间证书，在 Nginx 配置中，需要把中间证书和网站证书合在一起：<br>``<br>wget -O - <a href="https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem" target="_blank" rel="external">https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem</a> &gt; intermediate.pem<br>cat signed.crt intermediate.pem &gt; chained.pem</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">最终，修改 Nginx 中有关证书的配置并 reload 服务即可：</div><div class="line"></div><div class="line"><span class="meta">## 修改 Nginx 中有关证书的配置并 reload 服务</span></div></pre></td></tr></table></figure>
+<p>server {<br>listen 443;<br>server_name yoursite.com, www.yoursite.com;</p>
+<p>ssl on;<br>ssl_certificate /path/to/chained.pem;<br>ssl_certificate_key /path/to/domain.key;<br>ssl_session_timeout 5m;<br>ssl_protocols TLSv1 TLSv1.1 TLSv1.2;<br>ssl_ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA;<br>ssl_session_cache shared:SSL:50m;<br>ssl_prefer_server_ciphers on;</p>
+<p>#…你的其他配置<br>}</p>
+<p>server {</p>
+<p>listen 80;<br>server_name yoursite.com www.yoursite.com;</p>
+<p>if ( $request_uri !~ “/.well-known/acme-challenge/*” ) { # 让 Let’s Encrypt 成功访问到验证文件不受 301 影响<br>return 301 <a href="https://yoursite.com$request_uri" target="_blank" rel="external">https://yoursite.com$request_uri</a>; # 注意进行<br>301重定向到https，否则通过http仍能访问你的站点<br>}</p>
+<p>location /.well-known/acme-challenge/ {<br>alias /var/www/challenges/;<br>try_files $uri =404;<br>}</p>
+<p>#…你的其他配置<br>}</p>
+<h2 id="大功告成"><a href="#大功告成" class="headerlink" title="大功告成"></a>大功告成</h2><p>好了，现在就能重启你的nginx<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx <span class="_">-s</span> reload</div></pre></td></tr></table></figure></p>
+<h1 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h1><p>恭喜！你的网站已经使用上了HTTPS。 但Let’s Encrypt 证书有效期只有90天, 所以需要定期更新。现在只需要写一个更新脚本并把它放到定时任务中即可。</p>
+<p>在ssl的文件夹内进行如下操作<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cd</span></div><div class="line"><span class="keyword">cd</span> ssl</div><div class="line">touch renew_cert.<span class="keyword">sh</span></div><div class="line"><span class="keyword">vi</span> renew_cert.<span class="keyword">sh</span></div></pre></td></tr></table></figure></p>
+<p>然后在renew_cert.sh中输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/sh</span></div><div class="line">python /root/ssl/acme_tiny.py --account-key /root/ssl/account.key --csr /root/ssl/domain.csr --acme-dir /var/www/challenges/ &gt; /tmp/signed.crt || <span class="built_in">exit</span></div><div class="line">wget -O - https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem &gt; intermediate.pem</div><div class="line">cat /tmp/signed.crt intermediate.pem &gt; /root/ssl/chained.pem</div><div class="line">service nginx reload</div></pre></td></tr></table></figure></p>
+<p>定时任务可以设置为每个月执行一次：<br><figure class="highlight basic"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">0 </span><span class="number">0</span> <span class="number">1</span> * * /root/ssl/acme-tiny/renew_cert.sh <span class="number">2</span>&gt;&gt; /var/<span class="keyword">log</span>/acme_tine.<span class="keyword">log</span></div></pre></td></tr></table></figure></p>
+<p>以上就是整个的全过程了。欢迎享受HTTPS之旅～</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;用cocoapods集成Charts说多了都是泪，全是坑！&lt;br&gt;
+      &lt;p&gt;最近公司任务不是很重，适配iOS 10 ATS 已经成为了项目这一个月的任务，杨老大负责任的把这个重担一个人扛下了，因此我等小民就只能自己去研究了，于是就寻思着给自己的博客加上ssl验证，有个小绿锁🔒 看起来确实是舒坦很多。在这里就记录下全过程。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="https" scheme="http://www.zhimakaiyuan.com/tags/https/"/>
+    
+      <category term="瞎折腾" scheme="http://www.zhimakaiyuan.com/tags/%E7%9E%8E%E6%8A%98%E8%85%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Xcode8在Objective-C中集成Charts 3.0（全是坑！！！）</title>
+    <link href="http://www.zhimakaiyuan.com/2016/12/06/Xcode8-Uses-Charts-Objective-C/"/>
+    <id>http://www.zhimakaiyuan.com/2016/12/06/Xcode8-Uses-Charts-Objective-C/</id>
+    <published>2016-12-06T09:04:26.000Z</published>
+    <updated>2016-12-16T08:08:21.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>用cocoapods集成Charts说多了都是泪，全是坑！不过全都搞好以后，画图表还是很方便的。<br><a id="more"></a><br> 不知咋滴，一大早起来后把项目clean了一下，然后把pod文件全删了，重新运行<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="keyword">install</span></div></pre></td></tr></table></figure></p>
+<p>然后再clean，居然好了。。。<br>下面记录下踩坑的整个过程</p>
+<h1 id="Charts-是何方神圣"><a href="#Charts-是何方神圣" class="headerlink" title="Charts 是何方神圣"></a>Charts 是何方神圣</h1><p>Charts是一套非常漂亮的开源图表组件，它是<a href="https://github.com/PhilJay/MPAndroidChart" target="_blank" rel="external">MPAndroidChart</a>在苹果端的移植版本，同时支持iOS/tvOS/OSX平台，开源地址<a href="https://github.com/danielgindi/Charts" target="_blank" rel="external">Github</a>。</p>
+<p>同时，Charts是用 Swift 语言编写的，能够在 Swift 和 Objc 工程中使用。</p>
+<h1 id="使用环境"><a href="#使用环境" class="headerlink" title="使用环境"></a>使用环境</h1><ul>
+<li>Xcode 8.0 / Swift 3.0 (如果要支持 Swift 2.3 ，请查看 <a href="https://github.com/danielgindi/Charts/tree/v2.3.0" target="_blank" rel="external">Charts 2.3</a>)</li>
+<li>iOS &gt;= 8.0</li>
+<li>tvOS &gt;= 9.0</li>
+<li>macOS &gt;= 10.11</li>
+</ul>
+<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><p>本文使用的是通过cocopods 来安装的，中间的过程有点曲折</p>
+<h2 id="通过-cocoapods-集成"><a href="#通过-cocoapods-集成" class="headerlink" title="通过 cocoapods 集成"></a>通过 cocoapods 集成</h2><p>如果项目还未使用cocoapods，可用终端在根目录下输入<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">pod init</span></div></pre></td></tr></table></figure></p>
+<p>然后在项目的 Podfile 文件中添加 Charts<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">pod</span> <span class="string">'Charts'</span>, <span class="string">'~&gt; 3.0'</span></div></pre></td></tr></table></figure></p>
+<p>如果不出意外的话，会在安装过程中报个小错</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[!] Pods written <span class="keyword">in</span> Swift can only be integrated <span class="keyword">as</span> frameworks; <span class="keyword">add</span> `use_frameworks!` <span class="keyword">to</span> your Podfile <span class="keyword">or</span> target <span class="keyword">to</span> opt <span class="keyword">into</span> <span class="keyword">using</span> it. The Swift Pod being used <span class="keyword">is</span>: Charts</div></pre></td></tr></table></figure>
+<p>恭喜踩到了第一个坑</p>
+<h3 id="为什么呢"><a href="#为什么呢" class="headerlink" title="为什么呢"></a>为什么呢</h3><p>原来根据苹果的相关政策，在 Swift项目中苹果将不允许你私自包含静态库了，因此我们的解决办法是,在 podfile 文件中 添加这么一句<br><figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pod <span class="string">'Charts'</span>, <span class="string">'~&gt; 3.0'</span></div><div class="line">use_frameworks!</div></pre></td></tr></table></figure></p>
+<p>use_frameworks！选项是告诉 CocoaPods 使用 framework 而不是静态库。这在 Swift 项目中是必选。</p>
+<p>完成之后，我们开始导入</p>
+<h3 id="导入库"><a href="#导入库" class="headerlink" title="导入库"></a>导入库</h3><p>在项目的根目录下，输入<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="keyword">install</span></div></pre></td></tr></table></figure></p>
+<p>静待几分钟后，会有提示倒入成功<br>这时候，我们需要打开 xcworkspace 文件,<strong>注意哦，是 xcworkspace 不再是原来的 xcodeproj文件了 </strong></p>
+<p>因为我们的项目是 OC 的，而 Charts 是用 Swift 编写的，所以需要创建一个桥接文件<br><img src="/img/swift_link.png" alt="桥接"><br>完成后，会有提示是否需要桥接，点击 Create Bridging Header</p>
+<p><img src="/img/2016_12_16creat_header.png" alt="提示"></p>
+<blockquote>
+<p>执行完这一步后，如果有报错之类的，可以先把项目 clean 一下 <em>敲黑板</em>  <em>这是一道送分题，千万不能忘</em></p>
+</blockquote>
+<p>接着在桥接文件 项目名-Bridging-Header.h 中，写上要引用的 Swift 头文件。<br><figure class="highlight xl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">import</span> <span class="built_in">Charts</span>;</div></pre></td></tr></table></figure></p>
+<h1 id="大功告成"><a href="#大功告成" class="headerlink" title="大功告成"></a>大功告成</h1><h1 id="进入测试阶段"><a href="#进入测试阶段" class="headerlink" title="进入测试阶段"></a>进入测试阶段</h1><p>在ViewController.m中加入如下代码：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">[<span class="keyword">super</span> viewDidLoad];</div><div class="line"><span class="keyword">self</span>.view.backgroundColor = [<span class="built_in">UIColor</span> colorWithRed:<span class="number">0.184</span> green:<span class="number">1.000</span> blue:<span class="number">0.738</span> alpha:<span class="number">1.000</span>];</div><div class="line">lineView = [[LineChartView alloc]initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="keyword">self</span>.view.bounds.size.height / <span class="number">3.0</span>f,[<span class="built_in">UIScreen</span> mainScreen].bounds.size.width, [<span class="built_in">UIScreen</span> mainScreen].bounds.size.height / <span class="number">3.0</span>)];</div><div class="line">lineView.backgroundColor = [<span class="built_in">UIColor</span> colorWithRed:<span class="number">0.184</span> green:<span class="number">1.000</span> blue:<span class="number">0.738</span> alpha:<span class="number">1.000</span>];</div><div class="line">[<span class="keyword">self</span>.view addSubview:lineView];</div><div class="line"></div><div class="line">lineView.dragEnabled = <span class="literal">YES</span>;<span class="comment">//是否拖拽，</span></div><div class="line">lineView.drawGridBackgroundEnabled = <span class="literal">NO</span>;<span class="comment">//绘制网格背景</span></div><div class="line">lineView.scaleXEnabled = <span class="literal">NO</span>;</div><div class="line">lineView.pinchZoomEnabled = <span class="literal">NO</span>;</div><div class="line">lineView.descriptionText = <span class="string">@"每月收入支出图"</span>;</div><div class="line"><span class="comment">//X轴设置</span></div><div class="line">ChartXAxis *xAxis = lineView.xAxis;</div><div class="line">xAxis.labelPosition = XAxisLabelPositionBothSided;<span class="comment">//X轴样式</span></div><div class="line">xAxis.drawLabelsEnabled = <span class="literal">YES</span>;<span class="comment">//X轴是否需要绘制文字</span></div><div class="line">xAxis.drawAxisLineEnabled = <span class="literal">YES</span>;<span class="comment">//X轴绘制</span></div><div class="line">xAxis.drawGridLinesEnabled = <span class="literal">NO</span>;<span class="comment">//X轴网格绘制</span></div><div class="line">xAxis.axisLineWidth = <span class="number">0.4</span>f;<span class="comment">//数轴宽度</span></div><div class="line">[xAxis setLabelCount:<span class="number">10</span> force:<span class="literal">NO</span>];<span class="comment">//X轴数量一般默认是6个</span></div><div class="line"></div><div class="line"><span class="comment">//Y轴设置</span></div><div class="line">ChartYAxis *yAxis = lineView.leftAxis;</div><div class="line">yAxis.spaceTop = <span class="number">.5</span>f;<span class="comment">//Y轴顶部的最大值的百分比</span></div><div class="line">yAxis.labelFont = [<span class="built_in">UIFont</span> fontWithName:<span class="string">@"HelveticaNeue-Light"</span> size:<span class="number">12.</span>f];</div><div class="line">[yAxis setLabelCount:<span class="number">5</span> force:<span class="literal">NO</span>];<span class="comment">//Y轴坐标个数</span></div><div class="line">yAxis.labelTextColor = [<span class="built_in">UIColor</span> blackColor];<span class="comment">//Y轴坐标文字颜色</span></div><div class="line">yAxis.labelPosition = YAxisLabelPositionInsideChart;</div><div class="line">yAxis.drawGridLinesEnabled = <span class="literal">NO</span>;<span class="comment">//Y轴网格</span></div><div class="line">yAxis.axisLineColor = <span class="built_in">UIColor</span>.blackColor;</div><div class="line"></div><div class="line">lineView.rightAxis.enabled = <span class="literal">NO</span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> count = <span class="number">30</span>;</div><div class="line"><span class="keyword">double</span> range = <span class="number">10</span>;</div><div class="line">[<span class="keyword">self</span> setDataCount:count range:range];</div><div class="line"></div><div class="line">[lineView animateWithXAxisDuration:<span class="number">3</span> yAxisDuration:<span class="number">3</span>];</div><div class="line"><span class="comment">// Do any additional setup after loading the view, typically from a nib.</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后随机配置一下数据，就能看到两条曲线了<br>完美🤗<br><img src="/img/SimulatorScreenShot20161216.png" alt="成功截图"><br>demo地址：<a href="https://github.com/muwan/ChartsDemo" target="_blank" rel="external">ChartsDemo</a></p>
+<h1 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h1><p><a href="http://www.jianshu.com/p/6bf9e2d8e9db" target="_blank" rel="external">Cocoapods 安装参考</a><br><a href="http://www.jianshu.com/p/3af5fd275f05" target="_blank" rel="external">Swift静态库参考</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;用cocoapods集成Charts说多了都是泪，全是坑！不过全都搞好以后，画图表还是很方便的。&lt;br&gt;
     
     </summary>
     
@@ -56,13 +154,7 @@
 </li>
 </ol>
 <p>然后一路回车，生成你自己的密钥对，成功截图如下</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/309640-f478035471497323.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="密钥对截图" title="">
-                </div>
-                <div class="image-caption">密钥对截图</div>
-            </figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/309640-f478035471497323.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="密钥对截图"></p>
 <ol>
 <li>将公钥复制到ssh服务器<br>将前一步骤生成的公钥~/id_rsa.pub文件，复制到ssh服务器对应用户下的~/.ssh/authorized_keys文件,可以有多种方式，这里只介绍常用的一种。<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">brew install ssh-<span class="keyword">copy</span>-<span class="built_in">id</span></div><div class="line">ssh-<span class="keyword">copy</span>-<span class="built_in">id</span> username@hostname  <span class="comment">#将username和hostname替换为你的ssh服务器用户名和IP</span></div></pre></td></tr></table></figure>
 </li>
@@ -105,13 +197,7 @@
 <h1 id="需要准备哪些"><a href="#需要准备哪些" class="headerlink" title="需要准备哪些"></a>需要准备哪些</h1><p>电脑（Mac）、vps（ubuntu 16 ＊ 64）</p>
 <h1 id="shadowsocks-服务器安装"><a href="#shadowsocks-服务器安装" class="headerlink" title="shadowsocks 服务器安装"></a>shadowsocks 服务器安装</h1><h2 id="登陆你的远程服务器"><a href="#登陆你的远程服务器" class="headerlink" title="登陆你的远程服务器"></a>登陆你的远程服务器</h2><p>打开Mac自带的终端<br>ssh root@你的ip -p 你的ssh端口，若没有特殊分配，一般都是22</p>
 <h2 id="更新源软件"><a href="#更新源软件" class="headerlink" title="更新源软件"></a>更新源软件</h2><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root<span class="variable">@localhost:</span>~# sudo apt-get update</div></pre></td></tr></table></figure>
-<p>更新完成后，会有提示<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/update-2016-10-27.png" alt="更新源" title="">
-                </div>
-                <div class="image-caption">更新源</div>
-            </figure></p>
+<p>更新完成后，会有提示<br><img src="/img/update-2016-10-27.png" alt="更新源"></p>
 <h2 id="安装PIP环境"><a href="#安装PIP环境" class="headerlink" title="安装PIP环境"></a>安装PIP环境</h2><p><del>root@localhost:~# sudo apt-get install python-pip</del><br>由于原作者已经不再更新 pip 下的源代码，故不再使用 pip 安装 Shadowsocks。</p>
 <h2 id="安装shadowsocks"><a href="#安装shadowsocks" class="headerlink" title="安装shadowsocks"></a>安装shadowsocks</h2><p> <del>pip install shadowsocks</del></p>
 <p>由于原作者已经不再更新 pip 下的源代码，故不再使用 pip 安装 Shadowsocks，而是改为下载 Github 的 master 分支来安装。如果在一段时间后，版本升级了，则先卸载，并再次执行本脚本就可以升级为最新版。这里采用了<a href="https://teddysun.com/342.html" target="_blank" rel="external">秋水逸冰的博客</a>，采用该一键安装 Python 版 Shadowsocks 的最新版，同时安装了 Python 包管理工具 pip。</p>
@@ -227,22 +313,15 @@
     <published>2016-01-15T04:03:40.000Z</published>
     <updated>2016-12-14T02:47:24.000Z</updated>
     
-    <content type="html"><![CDATA[<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/ideal.JPG" alt="目标身材" title="">
-                </div>
-                <div class="image-caption">目标身材</div>
-            </figure>
+    <content type="html"><![CDATA[<p><img src="/img/ideal.JPG" alt="目标身材"></p>
 <p>####终于开始健身了，今天将是第三次去了，还是矫正体型，看来健身的道路很漫长啊。距离目标身材还很遥远，加油吧，骚年！</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;figure class=&quot;image-bubble&quot;&gt;
-                &lt;div class=&quot;img-lightbox&quot;&gt;
-                    &lt;div class=&quot;overlay&quot;&gt;&lt;/div&gt;
-                   
+      &lt;p&gt;&lt;img src=&quot;/img/ideal.JPG&quot; alt=&quot;目标身材&quot;&gt;&lt;/p&gt;
+&lt;p&gt;####终于开始健身了，今天将是第三次去了，还是矫正体型，看来健身的道路很漫长啊。距离目标身材还很遥远，加油吧，骚年！&lt;/p&gt;
+
     
     </summary>
     
@@ -267,13 +346,7 @@
 <h2 id="CocoaPods的安装"><a href="#CocoaPods的安装" class="headerlink" title="CocoaPods的安装"></a>CocoaPods的安装</h2><p>上面已经提到了，CocoaPods是利用Ruby的依赖管理gem进行构建，因此安装CocoaPods需要在ruby的环境下。</p>
 <h3 id="1-Ruby环境搭建"><a href="#1-Ruby环境搭建" class="headerlink" title="1.Ruby环境搭建"></a>1.Ruby环境搭建</h3><p>Mac OS是自带ruby环境的，但是保险起见，还是需要更新一下。<br>a.查看当前ruby版本<br>打开Mac的terminal 输入ruby -v代码如下<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ruby -v</div><div class="line">ruby <span class="number">2.0</span>.0p645 (<span class="number">2015</span>-<span class="number">04</span>-<span class="number">13</span> revision <span class="number">50299</span>) [universal.x86_64-darwin15](<span class="comment">#)</span></div></pre></td></tr></table></figure></p>
 <p>b.更换ruby源<br>终端输入如下命令（ruby的软件源rubygems.org因为使用的亚马逊的云服务，所以被墙了，需要更新一下ruby的源，国内常用的镜像服务有淘宝阿里云的<a href="https://ruby.taobao.org/" target="_blank" rel="external"></a>，山东理工大学的<a href="http://ruby.sdutlinux.org/" target="_blank" rel="external"></a>,一般使用淘宝的）<br>gem sources –remove <a href="https://rubygems.org/" target="_blank" rel="external">https://rubygems.org/</a><br>gem sources -a <a href="https://ruby.taobao.org/" target="_blank" rel="external">https://ruby.taobao.org/</a><br>gem sources -l  （用来检查使用替换镜像位置成功）<br>代码如下<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ gem sources --remove <span class="string">https:</span><span class="comment">//rubygems.org/</span></div><div class="line"><span class="string">https:</span><span class="comment">//rubygems.org/ removed from sources</span></div><div class="line">$ gem sources -a <span class="string">https:</span><span class="comment">//ruby.taobao.org/</span></div><div class="line"><span class="string">https:</span><span class="comment">//ruby.taobao.org/ added to sources</span></div><div class="line">$ gem sources -l</div><div class="line">*** CURRENT SOURCES ***</div><div class="line"><span class="symbol"></span></div><div class="line">http:<span class="comment">//rubygems-china.oss.aliyuncs.com</span></div><div class="line"><span class="string">https:</span><span class="comment">//ruby.taobao.org/</span></div></pre></td></tr></table></figure></p>
-<h3 id="2-升级gem"><a href="#2-升级gem" class="headerlink" title="2.升级gem"></a>2.升级gem</h3><p>sudo gem update –system<br>升级成功后，代码如下<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/2016-01-12.PNG" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
+<h3 id="2-升级gem"><a href="#2-升级gem" class="headerlink" title="2.升级gem"></a>2.升级gem</h3><p>sudo gem update –system<br>升级成功后，代码如下<br><img src="/img/2016-01-12.PNG" alt=""></p>
 <h3 id="3-下载安装CocoaPods"><a href="#3-下载安装CocoaPods" class="headerlink" title="3.下载安装CocoaPods"></a>3.下载安装CocoaPods</h3><p>安装CocoaPods（OS X 10.11以前）</p>
 <ul>
 <li>sudo gem install cocoapods<br>安装CocoaPods（10.11后苹果升级了安全策略）</li>
@@ -283,72 +356,26 @@
 <ul>
 <li>pod repo remove master<br>2.添加境内服务器（建议使用第一个）</li>
 <li>pod repo add master <a href="https://gitcafe.com/akuandev/Specs.git" target="_blank" rel="external">https://gitcafe.com/akuandev/Specs.git</a></li>
-<li>pod repo add master <a href="http://git.oschina.net/akuandev/Specs.git(开源中国较慢" target="_blank" rel="external">http://git.oschina.net/akuandev/Specs.git(开源中国较慢</a>)<br>使用及截图如下<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/89744051-0CCB-4D1E-9CC0-7AE6BCEFB0B1.png" alt="移除原有服务器" title="">
-                </div>
-                <div class="image-caption">移除原有服务器</div>
-            </figure>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/4AF9C273-72BA-45C0-9F35-9E389EC9118B.png" alt="添加" title="">
-                </div>
-                <div class="image-caption">添加</div>
-            </figure>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/77C9BAB1-E831-4C0A-BA3C-A670AE8464B9.png" alt="替换成功" title="">
-                </div>
-                <div class="image-caption">替换成功</div>
-            </figure>
-</li>
+<li>pod repo add master <a href="http://git.oschina.net/akuandev/Specs.git(开源中国较慢" target="_blank" rel="external">http://git.oschina.net/akuandev/Specs.git(开源中国较慢</a>)<br>使用及截图如下<br><img src="/img/89744051-0CCB-4D1E-9CC0-7AE6BCEFB0B1.png" alt="" title="移除原有服务器"><br><img src="/img/4AF9C273-72BA-45C0-9F35-9E389EC9118B.png" alt="" title="添加 repo 镜像国内服务器"><br><img src="/img/77C9BAB1-E831-4C0A-BA3C-A670AE8464B9.png" alt="" title="替换成功"></li>
 </ul>
 <p>完成后，执行操作：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="built_in">setup</span></div></pre></td></tr></table></figure></p>
-<p>执行结束后代码如下图：<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/2016-01-12%2012-2.PNG" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure><br>至此，CocoaPods就完全安装结束，so easy！</p>
+<p>执行结束后代码如下图：<br><img src="/img/2016-01-12%2012-2.PNG" alt=""><br>至此，CocoaPods就完全安装结束，so easy！</p>
 <h2 id="CocoaPods的使用"><a href="#CocoaPods的使用" class="headerlink" title="CocoaPods的使用"></a>CocoaPods的使用</h2><h3 id="1-新建Podfile文件"><a href="#1-新建Podfile文件" class="headerlink" title="1.新建Podfile文件"></a>1.新建Podfile文件</h3><p>使用时需要在你的项目根目录下新建一个名为Podfile的文件，将依赖的库名字依次列在文件中即可<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">promote:</span> lhl$ cd <span class="regexp">/Users/</span>chengmei<span class="regexp">/Desktop/</span>Test </div><div class="line"><span class="string">promote:</span>Test lhl$ touch Podfile</div></pre></td></tr></table></figure></p>
 <p>这时候，在你的工程文件中就新建了一个名为Podfile的文件。</p>
 <h3 id="2-编辑Podfile文件"><a href="#2-编辑Podfile文件" class="headerlink" title="2.编辑Podfile文件"></a>2.编辑Podfile文件</h3><p>用文本编辑器打开刚才新建的Podfile文件，此时的文件应是空白的，Podfile 文件的格式应该类似以下：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">platform <span class="symbol">:ios</span>, <span class="string">'7.0'</span></div><div class="line">pod <span class="string">'AFNetworking'</span>， <span class="string">'&gt; 3.0.4'</span></div><div class="line">pod <span class="string">'LCTabBarController'</span>， <span class="string">'&gt; 1.2.2'</span></div><div class="line">pod <span class="string">'LCBannerView'</span></div></pre></td></tr></table></figure></p>
 <p><strong>注意</strong><br><em>*</em>a. platform 那一行，ios 三个字母都要小写，而且与前面的冒号之间不能有间隔。<br>b. 后面的版本号也可以不写，但是有些开源库对版本是有要求的，比如要在 iOS 7.0 以上才能运行，遇到这样的开源库就需要写上版本号。<br>c. platform 下面就是 CocoaPods 需要集成的开源库，根据你的需要确定集成成些库。</p>
 <hr>
 <h3 id="3-查找所需要的类库"><a href="#3-查找所需要的类库" class="headerlink" title="3.查找所需要的类库"></a>3.查找所需要的类库</h3><p>例如，我们需要在工程文件中添加AFNetworking，首先需要在 CocoaPods 里面先搜索是否有需要的库，在 Terminal 中输入：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">pod search AFNetworking</span></div></pre></td></tr></table></figure></p>
-<p>所显示代码如下：<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/0BDE439B-CD6B-4A34-A7EE-2ED5C450AAFA.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure><br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">pod</span> <span class="string">'AFNetworking'</span>, <span class="string">'&gt; 3.0.4'</span></div></pre></td></tr></table></figure></p>
+<p>所显示代码如下：<br><img src="/img/0BDE439B-CD6B-4A34-A7EE-2ED5C450AAFA.png" alt=""><br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">pod</span> <span class="string">'AFNetworking'</span>, <span class="string">'&gt; 3.0.4'</span></div></pre></td></tr></table></figure></p>
 <p>就是需要我们在Podfile文件里面写的,把它复制，粘贴进去，并保存。</p>
 <h3 id="4-执行导入命令"><a href="#4-执行导入命令" class="headerlink" title="4.执行导入命令"></a>4.执行导入命令</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cd /Users/chengmei/Desktop/Test</div><div class="line">$ pod install</div></pre></td></tr></table></figure>
-<p>导入成功后，如下截图所示<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/2016-01-12%2012.37.59.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure><br>pod install命令执行成功后，会看到工程目录下多出CocoaPodsTest.xcworkspace、Podfile.lock文件和Pods目录。再看看刚才执行完pod install命令打印出来的内容的最后一行：<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="string">!</span>](<span class="link">#</span>) Please close any current Xcode sessions and use <span class="code">`Test.xcworkspace`</span> for this project from now on.</div></pre></td></tr></table></figure></p>
+<p>导入成功后，如下截图所示<br><img src="/img/2016-01-12%2012.37.59.png" alt=""><br>pod install命令执行成功后，会看到工程目录下多出CocoaPodsTest.xcworkspace、Podfile.lock文件和Pods目录。再看看刚才执行完pod install命令打印出来的内容的最后一行：<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="string">!</span>](<span class="link">#</span>) Please close any current Xcode sessions and use <span class="code">`Test.xcworkspace`</span> for this project from now on.</div></pre></td></tr></table></figure></p>
 <p>提示我们从现在起，我们需要使用CocoaPodsTest.xcworkspace文件来开发。</p>
 <h3 id="5-第三方库更新与添加"><a href="#5-第三方库更新与添加" class="headerlink" title="5.第三方库更新与添加"></a>5.第三方库更新与添加</h3><p>当需要添加第三方库时，只需要直接在Podfile里面添加第三方库信息，在terminal里面导入执行命令：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="keyword">cd</span> /Users/chengmei/Desktop/<span class="keyword">Test</span></div><div class="line">$ pod <span class="keyword">update</span></div></pre></td></tr></table></figure></p>
 <p>即可添加并更新成功。<br>至此，我们CocoaPods的安装与使用就全部结束，往后我们只需在.xcworkspace文件里面编写即可。</p>
 <h2 id="遇到过的坑"><a href="#遇到过的坑" class="headerlink" title="遇到过的坑"></a>遇到过的坑</h2><ol>
 <li>首先就是系统升级成10.11后，由于苹果加强了安全策略，原来的sudo gem install cocoapods命令不再起作用，在10.11以前的系统中任然适用。10.11后需要适用命令sudo gem install -n /usr/local/bin cocoapods</li>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-01-12%2012.31.42.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-这个问题折腾我好久，最后发现是在ios, ‘7.0’这个逗号后面我多输入了一个空格。</li>
+<li><img src="/img/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-01-12%2012.31.42.png" alt=""><br>这个问题折腾我好久，最后发现是在ios, ‘7.0’这个逗号后面我多输入了一个空格。</li>
 </ol>
 <p>3<br><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[!] Invalid Podfile file: undefined local variable <span class="keyword">or</span> <span class="function"><span class="keyword">method</span> '<span class="title">en_US</span>' <span class="title">for</span> #&lt;<span class="title">Pod</span>:</span>:Podfile:<span class="number">0</span>x00000102a5d8b0&gt;. Updating CocoaPods might fix the issue.</div></pre></td></tr></table></figure></p>
 <p>此错误也是常见的，原因：单引号格式，可能是手动输入导致<br>解决办法：前往 系统偏好设置 - 键盘 - 文本 - 将“使用智能引号和破折号”一项取消勾选 - 再将 Podfile 里面的单（双）引号修改一下。<br><strong><em>如果遇到了神奇的报错，执行下面的命令</em></strong></p>
@@ -407,13 +434,7 @@
     <updated>2016-12-14T02:47:33.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文转载自<a href="http://tech.glowing.com/cn/" target="_blank" rel="external">http://tech.glowing.com/cn/</a><br><strong>如有侵犯，立马删除</strong><br>原文链接:<a href="http://tech.glowing.com/cn/implement-ios9-task-switcher-animation/" target="_blank" rel="external">实现iOS 9 Task Switcher动画</a></p>
-<p>##升级到iOS 9以后，发现新的task switcher的动画蛮有趣的，于是就动手实现了下，最终效果如下～<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/demo.gif" alt="demo效果图" title="">
-                </div>
-                <div class="image-caption">demo效果图</div>
-            </figure><br><a id="more"></a></p>
+<p>##升级到iOS 9以后，发现新的task switcher的动画蛮有趣的，于是就动手实现了下，最终效果如下～<br><img src="/img/demo.gif" alt="demo效果图"><br><a id="more"></a></p>
 <h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>1    首先我们需要一个横向的scroll view，可以用UICollectionView，也可以自己实现一个。scroll view里每一页都是一张card，一屏5张card:</p>
 <figure class="highlight gams"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">｜                        |</div><div class="line">｜<span class="keyword">card</span> <span class="keyword">card</span> <span class="keyword">card</span> <span class="keyword">card</span> <span class="keyword">card</span>|</div><div class="line">｜                        |</div></pre></td></tr></table></figure>
 <p>2    其次，我们需要在scrollViewDidScroll中判断每张card距离中心的距离，根据这个值来调整它的alpha，scale以及x轴的translation。</p>
@@ -436,13 +457,7 @@
     <summary type="html">
     
       &lt;p&gt;本文转载自&lt;a href=&quot;http://tech.glowing.com/cn/&quot;&gt;http://tech.glowing.com/cn/&lt;/a&gt;&lt;br&gt;&lt;strong&gt;如有侵犯，立马删除&lt;/strong&gt;&lt;br&gt;原文链接:&lt;a href=&quot;http://tech.glowing.com/cn/implement-ios9-task-switcher-animation/&quot;&gt;实现iOS 9 Task Switcher动画&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;##升级到iOS 9以后，发现新的task switcher的动画蛮有趣的，于是就动手实现了下，最终效果如下～&lt;br&gt;&lt;figure class=&quot;image-bubble&quot;&gt;
-                &lt;div class=&quot;img-lightbox&quot;&gt;
-                    &lt;div class=&quot;overlay&quot;&gt;&lt;/div&gt;
-                    &lt;img src=&quot;/img/demo.gif&quot; alt=&quot;demo效果图&quot; title=&quot;&quot;&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;image-caption&quot;&gt;demo效果图&lt;/div&gt;
-            &lt;/figure&gt;&lt;br&gt;
+&lt;p&gt;##升级到iOS 9以后，发现新的task switcher的动画蛮有趣的，于是就动手实现了下，最终效果如下～&lt;br&gt;&lt;img src=&quot;/img/demo.gif&quot; alt=&quot;demo效果图&quot;&gt;&lt;br&gt;
     
     </summary>
     
@@ -502,13 +517,7 @@
     <published>2015-07-21T09:30:32.000Z</published>
     <updated>2016-12-14T02:48:14.000Z</updated>
     
-    <content type="html"><![CDATA[<p>昨天在写一个字典数据的时候，在一个字典内有18对键值对<br><a id="more"></a><br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/2015-07-20-1.png" alt="2015" title="">
-                </div>
-                <div class="image-caption">2015</div>
-            </figure><br>其中有一个id的值为long型的,我就觉得既然你的值是long型的，那我要取你的值不是轻轻松松么,于是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">long appID = [info[@&quot;id&quot;] longValue];</div></pre></td></tr></table></figure></p>
+    <content type="html"><![CDATA[<p>昨天在写一个字典数据的时候，在一个字典内有18对键值对<br><a id="more"></a><br><img src="/img/2015-07-20-1.png" alt="2015"><br>其中有一个id的值为long型的,我就觉得既然你的值是long型的，那我要取你的值不是轻轻松松么,于是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">long appID = [info[@&quot;id&quot;] longValue];</div></pre></td></tr></table></figure></p>
 <p>然后当然报错了，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-[__NSCFString longValue]: unrecognized selector sent to instance 0x9bf8e10</div><div class="line">Terminating app due to uncaught exception &apos;NSInvalidArgumentException&apos;, reason: &apos;-[__NSCFString longValue]: unrecognized selector sent to instance 0x9bf8e10&apos;</div></pre></td></tr></table></figure></p>
 <p>百思不得其解，不对啊，我之前用还是可以的，怎么就报错了呢。最后在stackoverflow上面找到了答案。<br>原来，@“id”所对应得值，是一个id类型的值，我们需要先将他强制转换成NSString类型的值，然后再将NSString类型的值转化成long型的。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSString *strForId = dic[@&quot;id&quot;];</div><div class="line">long appID = [strForId longLongValue];</div></pre></td></tr></table></figure>
